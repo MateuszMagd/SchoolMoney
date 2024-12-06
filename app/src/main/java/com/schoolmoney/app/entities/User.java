@@ -14,7 +14,7 @@ public class User {
     private Long id;
 
     @Column(unique = true)
-    private String userSessionId;
+    private String sessionId;
     @Nonnull
     private UserType userType;
     @Nonnull
@@ -28,10 +28,10 @@ public class User {
     @ManyToOne
     private Bills bills;
 
-    public User(@Nonnull String email,@Nonnull String password, @Nonnull String salt,@Nonnull String pesel, byte[] photo) {
-        this.userSessionId = UUID.randomUUID().toString();
+    public User(@Nonnull String email,@Nonnull String password, @Nonnull String salt,@Nonnull String pesel, byte[] photo, Bills bills) {
+        this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
-        // this.bills = // <- here will be bills
+        this.bills = bills;
 
         this.email = email;
         this.password = password;
@@ -40,9 +40,8 @@ public class User {
         this.photo = photo;
     }
     public User() {
-        this.userSessionId = UUID.randomUUID().toString();
+        this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
-        // this.bills = // <- here will be bills
     }
 
     @Nonnull

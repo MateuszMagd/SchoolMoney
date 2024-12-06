@@ -3,37 +3,38 @@ package com.schoolmoney.app.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 import java.util.UUID;
 
 @Entity
-public class Bills {
+public class ClassMessages {
     @Id
-    private long id;
+    private Long id;
     @Column(unique = true)
     private String sessionId;
-    @Column(unique = true)
-    private String billsNumber;
 
-    public Bills(String billsNumber) {
+    @ManyToOne
+    private Class classId;
+
+    public ClassMessages(Class classId) {
         this.sessionId = UUID.randomUUID().toString();
-        this.billsNumber = billsNumber;
+        this.classId = classId;
     }
 
-    public Bills() {
+    public ClassMessages() {
         this.sessionId = UUID.randomUUID().toString();
     }
-
 
     public String getSessionId() {
         return sessionId;
     }
 
-    public String getBillsNumber() {
-        return billsNumber;
+    public Class getClassId() {
+        return classId;
     }
 
-    public void setBillsNumber(String billsNumber) {
-        this.billsNumber = billsNumber;
+    public void setClassId(Class classid) {
+        this.classId = classid;
     }
 }
