@@ -10,6 +10,7 @@ import java.util.UUID;
 @Entity
 public class Child {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String sessionId;
@@ -21,12 +22,21 @@ public class Child {
     private LocalDate birthday;
     @Nonnull
     private String pesel;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length = 16777215)
     private byte[] photo;
 
     @ManyToOne
     private Class classId;
 
     @ManyToMany
+    @JoinTable(
+            name = "user_child",
+            joinColumns = @JoinColumn(name = "child_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> parents;
 
     public Child(@Nonnull String name, @Nonnull String lastName, @Nonnull LocalDate birthday, @Nonnull String pesel, byte[] photo, Class classId, List<User> parents) {

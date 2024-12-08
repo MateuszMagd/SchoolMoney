@@ -1,9 +1,7 @@
 package com.schoolmoney.app.entities;
 
 import com.schoolmoney.app.enums.StatusType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -12,12 +10,18 @@ import java.util.UUID;
 @Entity
 public class Fund {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(unique = true)
     private String sessionId;
     private String fundName;
     private String description;
     private float moneyPerKid;
     private float moneyEarned;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length = 16777215)
     private byte[] photo;
     private LocalDate startDate;
     private LocalDate endDate;

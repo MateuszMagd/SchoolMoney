@@ -8,6 +8,7 @@ import java.util.UUID;
 @Entity
 public class Messages {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true)

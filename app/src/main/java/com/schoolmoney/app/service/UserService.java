@@ -9,6 +9,7 @@ import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
 
+
 @Service
 public class UserService implements IUserService {
     private final UserRepository userRepository;
@@ -19,14 +20,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int addUser(User user) {
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
         throw new UnsupportedOperationException("Feature incomplete.");
-        //return 0;
+        //return null;
     }
 
     @Override
     public List<User> getAllUsers() {
-        throw new UnsupportedOperationException("Feature incomplete.");
-        //return null;
+        return userRepository.findAll();
     }
 }

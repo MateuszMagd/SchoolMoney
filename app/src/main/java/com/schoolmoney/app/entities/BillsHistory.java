@@ -2,10 +2,7 @@ package com.schoolmoney.app.entities;
 
 import com.schoolmoney.app.enums.OperationType;
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -13,6 +10,7 @@ import java.util.UUID;
 @Entity
 public class BillsHistory {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(unique = true)
     private String sessionId;

@@ -1,14 +1,13 @@
 package com.schoolmoney.app.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
 public class Bills {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column(unique = true)
     private String sessionId;

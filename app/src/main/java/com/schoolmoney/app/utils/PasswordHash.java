@@ -19,5 +19,11 @@ public class PasswordHash {
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
+
+    public static boolean verifyPassword(String password, String salt, String passwordToVerify) throws NoSuchAlgorithmException{
+        String hashedPassword = hashPasswordWithSalt(password, salt);
+        String hashedPasswordToVerify = hashPasswordWithSalt(passwordToVerify, salt);
+        return hashedPassword.equals(hashedPasswordToVerify);
+    }
 }
 
