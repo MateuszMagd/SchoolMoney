@@ -21,4 +21,21 @@ public class ChildService implements IChildService {
     public List<Child> getChildrenByParentEmail(String email) {
         return childRepository.findChildrenByParentEmail(email);
     }
+
+    @Override
+    public Child getChildBySessionId(String sessionId) {
+        return childRepository.findBySessionId(sessionId);
+    }
+
+    @Override
+    public void saveChild(Child child) {
+        childRepository.save(child);
+    }
+
+    @Override
+    public List<Child> getAllChildren() {
+        return childRepository.findAll();
+    }
+
+
 }

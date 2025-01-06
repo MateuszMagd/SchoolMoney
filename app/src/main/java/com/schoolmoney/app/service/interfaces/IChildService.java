@@ -7,4 +7,10 @@ import java.util.List;
 
 public interface IChildService {
     List<Child> getChildrenByParentEmail(String email);
+
+    Child getChildBySessionId(String sessionId);
+
+    void saveChild(Child child);
+
+    List<Child> getAllChildren();
 }

@@ -44,23 +44,33 @@ public class RunAtStart {
             String salt = PasswordHash.generateSalt();
 
             User parent1 = new User("example@gmail.com", PasswordHash.hashPasswordWithSalt("test", salt), salt,
-                                    "11122233399", Utils.loadPhoto("default.png"), null);
+                                    "11122233399", "John","Kristin", Utils.loadPhoto("default.png"), null);
 
             User parent2 = new User("example.parent2@gmail.com", PasswordHash.hashPasswordWithSalt("test2", salt), salt,
-                                    "99988877711", Utils.loadPhoto("default.png"), null);
+                                    "99988877711","Anna","Kristin", Utils.loadPhoto("default.png"), null);
 
             User parent3 = new User("example.parent3@gmail.com", PasswordHash.hashPasswordWithSalt("test3", salt), salt,
-                                    "55566677728", Utils.loadPhoto("default.png"), null);
+                                    "55566677728","Mateusz","Mag", Utils.loadPhoto("default.png"), null);
 
             userRepository.save(parent1);
             userRepository.save(parent2);
             userRepository.save(parent3);
+
+            User admin = new User("admin@gmail.com", PasswordHash.hashPasswordWithSalt("test", salt), salt,
+                                    "000000000", "Admin", "Admin", Utils.loadPhoto("default.png"), null);
+            admin.setUserType(UserType.ADMIN);
+
+            userRepository.save(admin);
             // <---------------- KIDS --------------------->
             System.out.println("[Starting] Adding test kids. . .");
-            Child child1 = new Child("Mateusz", "Magdziński", LocalDate.of(2017, 2, 10),
+            Child child1 = new Child("Mateusz", "Kristin", LocalDate.of(2017, 2, 10),
                                     "11211311400", Utils.loadPhoto("default.png"), null, List.of(parent1, parent2));
 
+            Child child2 = new Child("Anna", "Kristin", LocalDate.of(2017, 2, 10),
+                    "11211311400", Utils.loadPhoto("default.png"), null, List.of(parent1, parent2));
+
             childRepository.save(child1);
+            childRepository.save(child2);
 
             // <---------------- ADMIN -------------------->
             System.out.println("[Starting] All done! Get started!");

@@ -26,8 +26,7 @@ public class UserService implements IUserService {
 
     @Override
     public User getUserByEmail(String email) {
-        throw new UnsupportedOperationException("Feature incomplete.");
-        //return null;
+        return userRepository.getUserByEmail(email);
     }
 
     @Override

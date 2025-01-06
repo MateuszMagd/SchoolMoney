@@ -31,6 +31,7 @@ public class AuthController {
 
             return ResponseEntity.ok(response);
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }

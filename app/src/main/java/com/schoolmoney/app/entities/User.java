@@ -31,6 +31,8 @@ public class User implements UserDetails {
     @Nonnull
     private String salt;
     private String pesel;
+    private String firstName;
+    private String lastName;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -39,7 +41,7 @@ public class User implements UserDetails {
     @ManyToOne
     private Bills bills;
 
-    public User(@Nonnull String email,@Nonnull String password, @Nonnull String salt,@Nonnull String pesel, byte[] photo, Bills bills) {
+    public User(@Nonnull String email, @Nonnull String password, @Nonnull String salt, String pesel, String firstName, String lastName, byte[] photo, Bills bills) {
         this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
         this.bills = bills;
@@ -48,11 +50,17 @@ public class User implements UserDetails {
         this.password = password;
         this.salt = salt;
         this.pesel = pesel;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.photo = photo;
     }
     public User() {
         this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 
     @Nonnull
@@ -76,6 +84,22 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(userType.name()));
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Nonnull

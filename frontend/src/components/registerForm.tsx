@@ -1,9 +1,13 @@
 'use client';
 
+import { addNewUser } from "@/connection/userAPI";
+import { NewUserRegister } from "@/data/interfacesUser";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 const RegisterForm = () => {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -34,10 +38,19 @@ const RegisterForm = () => {
             setError('Wprowadz prawidłowy adres email');
             return;
         }
+        // Create a new user object
+        const newUser: NewUserRegister = {
+            email: formData.email,
+            password: formData.password,
+            firstName: formData.name,
+            lastName: formData.lastName,
+        };
 
         setError('');
-        // THERE WILL BE API CONNECTION TO BACKEND
+        addNewUser(newUser)
         alert('Zarejestrowano użytkownika: ' + formData.name);
+        
+        router.push(`/`);
     };
 
     return (

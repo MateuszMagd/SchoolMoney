@@ -21,11 +21,11 @@ public class AuthService {
 
         // Check if user exists in database
         if(user == null)
-            throw new Exception("Invalid email or password.");
+            throw new Exception("User doesn't exist!");
 
         // Check if password is correct.
         if(!PasswordHash.verifyPassword(user.getPassword(), user.getSalt(), password))
-            throw new Exception("Invalid email or password.");
+            throw new Exception("Invalid email or password!");
 
         return JwtTokenUtil.generateToken(user.getEmail(), user.getUserType());
     }

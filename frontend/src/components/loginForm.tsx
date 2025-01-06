@@ -1,9 +1,13 @@
 'use client';
 
+import { loginUser } from "@/connection/userAPI";
+import { isLogged } from "@/data/tokenHandler";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 
 const LoginForm = () => {
+    const router = useRouter();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -34,8 +38,10 @@ const LoginForm = () => {
         }
 
         setError('');
-        // THERE WILL BE API CONNECTION TO BACKEND
-        alert('Zarejestrowano użytkownika: ' + formData.email);
+        loginUser(formData.email, formData.password);
+        if(isLogged()) {
+            router.push(`/`);
+        }
     };
 
     return (

@@ -1,5 +1,12 @@
+"use client"
+
 // page.tsx
 import RouterButton from "@/components/routerButton"
+import  { isLogged, clearToken } from "@/data/tokenHandler";
+
+function test() {
+  alert(isLogged());
+}
 
 export default function Home() {
   return (
@@ -12,6 +19,8 @@ export default function Home() {
         <RouterButton page="transactions" buttonString = "Przelewy"/>
         <RouterButton page="class" buttonString = "Klasa"/>
         <RouterButton page="chat" buttonString = "Chat"/>
+        <button onClick={test}>Show me if logged!</button>
+        <button onClick={clearToken}>Logout!</button>
       </main>
       <footer className="">
         

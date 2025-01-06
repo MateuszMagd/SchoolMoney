@@ -21,9 +21,9 @@ public class PasswordHash {
     }
 
     public static boolean verifyPassword(String password, String salt, String passwordToVerify) throws NoSuchAlgorithmException{
-        String hashedPassword = hashPasswordWithSalt(password, salt);
         String hashedPasswordToVerify = hashPasswordWithSalt(passwordToVerify, salt);
-        return hashedPassword.equals(hashedPasswordToVerify);
+
+        return password.equals(hashedPasswordToVerify);
     }
 }
 
