@@ -6,23 +6,8 @@ import { ChildInfo } from "@/data/interfacesUser";
 import { editChild, getChildBySessionId } from "@/connection/childAPI";
 import RouterButton from '@/components/routerButton';
 
-const ChildEditPage =() => {
-  const { id } = useParams();
-  const [formData, setFormData] = useState<ChildInfo | null>(null);
-
-  useEffect(() => {
-    const getChildData = async () => {
-      if (id && typeof id === "string") {
-        const data = await getChildBySessionId(id);
-        setFormData(data);
-      }
-      else {
-        alert("Invalid id");
-      }
-    };
-
-    getChildData();
-  }, []);
+const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
+  const [formData, setFormData] = useState<ChildInfo | null>(childInfo);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!formData) return;

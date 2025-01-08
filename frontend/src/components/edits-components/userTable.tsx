@@ -41,12 +41,12 @@ const UsersPage = () => {
         return <div className="flex flex-row justify-normal min-h-screen text-red-500">{error}</div>
     }
 
-    const handleDelete = (email: string) => {
-        window.location.href = `/admin/delete/user/${email}`;
+    const handleDelete = (sessionId: string) => {
+        window.location.href = `/admin/main/edit/delete/user/${sessionId}`;
     }
 
-    const handleModify = (email: string) => {
-        window.location.href = `/admin/modify/user/${email}`;
+    const handleModify = (sessionId: string) => {
+        window.location.href = `/admin/main/edit/modify/user/${sessionId}`;
     }
 
     return (

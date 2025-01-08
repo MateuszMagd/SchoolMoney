@@ -5,7 +5,12 @@ import com.schoolmoney.app.entities.User;
 import java.util.List;
 
 public interface IUserService {
-    User addUser(User user);
+    void addUser(User user);
+
+    User modifyUser(User user);
+
+    void deleteUser(User user);
+
     User getUserByEmail(String email);
     List<User> getAllUsers();
 

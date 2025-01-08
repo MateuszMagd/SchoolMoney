@@ -1,28 +1,13 @@
 "use client"
 
-import { useRouter, useParams } from 'next/navigation';
-import { useEffect, useState } from "react";
-import { ChildInfo } from "@/data/interfacesUser";
-import { editChild, getChildBySessionId } from "@/connection/childAPI";
+import { useState } from "react";
+import { UserInfoExtended } from "@/data/interfacesUser";
+import { modifyUser } from '@/connection/adminAPI';
 import RouterButton from '@/components/routerButton';
 
-const ChildEditPage =() => {
-  const { id } = useParams();
-  const [formData, setFormData] = useState<ChildInfo | null>(null);
-
-  useEffect(() => {
-    const getChildData = async () => {
-      if (id && typeof id === "string") {
-        const data = await getChildBySessionId(id);
-        setFormData(data);
-      }
-      else {
-        alert("Invalid id");
-      }
-    };
-
-    getChildData();
-  }, []);
+const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
+  const [formData, setFormData] = useState<UserInfoExtended | null>(userInfo);
+  const [repeatPassword, setRepeatPassword] = useState<string | null>(userInfo.password);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!formData) return;
@@ -36,13 +21,18 @@ const ChildEditPage =() => {
     });
   };
 
+  const handleChangeReapeatPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(!repeatPassword) return;
+    const { value } = e.target;
+    setRepeatPassword(value);
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData);
     // send data to the server
-    if (formData)
-      editChild(formData);
+    if (formData && repeatPassword === formData.password)
+      modifyUser(formData);
   };  
 
   return (
@@ -93,13 +83,41 @@ const ChildEditPage =() => {
 
             <div className="mb-4">
               <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
-                Birth Date:
+                Email:
               </label>
               <input
                 type="date"
                 id="birthDate"
                 name="birthDate"
-                value={formData.birthDate || ""}
+                value={formData.email || ""}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+                Password:
+              </label>
+              <input
+                type="password"
+                id="birthDate"
+                name="birthDate"
+                value={repeatPassword || ""}
+                onChange={handleChangeReapeatPassword}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+                Repeat Password:
+              </label>
+              <input
+                type="password"
+                id="birthDate"
+                name="birthDate"
+                value={formData.password || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
@@ -135,4 +153,4 @@ const ChildEditPage =() => {
   )
 };
 
-export default ChildEditPage;
+export default UserFormAdmin;

@@ -1,5 +1,6 @@
 package com.schoolmoney.app.dto;
 
+import com.schoolmoney.app.enums.UserType;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
@@ -17,5 +18,6 @@ public class UserDto {
     @Basic(fetch = FetchType.LAZY)
     @Column(length = 16777215)
     private byte[] photo ;
+    private UserType userType;
 }
 

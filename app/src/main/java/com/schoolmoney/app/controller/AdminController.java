@@ -3,13 +3,16 @@ package com.schoolmoney.app.controller;
 import com.schoolmoney.app.authenticate.JwtTokenUtil;
 import com.schoolmoney.app.dto.ChildDto;
 import com.schoolmoney.app.dto.UserDto;
+import com.schoolmoney.app.dto.UserInfoDto;
 import com.schoolmoney.app.entities.Child;
 import com.schoolmoney.app.entities.User;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.service.interfaces.IChildService;
 import com.schoolmoney.app.service.interfaces.IUserService;
+import com.schoolmoney.app.utils.PasswordHash;
 import com.schoolmoney.app.utils.converters.ChildToChildDtoConverter;
 import com.schoolmoney.app.utils.converters.UserToUserDtoConverter;
+import com.schoolmoney.app.utils.converters.UserToUserInfoDtoConverter;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,15 +61,12 @@ public class AdminController {
     public ResponseEntity<?> getAllChildren(@RequestHeader("Authorization") String token) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
-            System.out.println(claims.get("typ", String.class));
             if(!claims.get("typ", String.class).equals("ADMIN")) {
-                System.out.println("TYP ZLY LOL");
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
             }
 
             List<Child> child = childService.getAllChildren();
             if(child == null) {
-                System.out.println("CHILD NULL");
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
             }
 
@@ -75,24 +75,78 @@ public class AdminController {
             return ResponseEntity.ok(userDtos);
         }
         catch (Exception e) {
-            System.out.println("EXCEPTION");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }
 
-    @PostMapping("/user/modify")
-    public ResponseEntity<?> modifyUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userDto) {
+    @GetMapping("/user/{email}")
+    public ResponseEntity<?> getUserByEmail(@RequestHeader("Authorization") String token, @PathVariable String email) {
         try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if(!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+            User user = userService.getUserByEmail(email);
+            if(user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Didn't find user with this email");
+            }
+            UserInfoDto userDto = UserToUserInfoDtoConverter.UserToUserDto(user);
+
+            return ResponseEntity.ok(userDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+    }
+
+    @PostMapping("/user/modify/{email}")
+    public ResponseEntity<?> modifyUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userDto, @PathVariable String email) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if(!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access - You are not admin");
+            }
+
+            User user = userService.getUserByEmail(email);
+            if(user == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
+            }
+
+            user.setUserType(userDto.getUserType());
+            user.setEmail(userDto.getEmail());
+            user.setPesel(userDto.getPesel());
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+
+            user.setPhoto(userDto.getPhoto());
+
+            // TODO: Change it when it should be changed
+            String salt = PasswordHash.generateSalt();
+            user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
+            user.setSalt(salt);
+
+            userService.modifyUser(user);
             return ResponseEntity.ok("Ok");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }
 
-    @PostMapping("/user/delete")
-    public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userDto) {
+    @DeleteMapping("/user/delete/{email}")
+    public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token, @PathVariable String email) {
         try {
-            return ResponseEntity.ok("Ok");
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if(!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+            User user = userService.getUserByEmail(email);
+            if(user == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
+            }
+
+            userService.deleteUser(user);
+
+
+            return ResponseEntity.ok("Ok - User has been deleted");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
@@ -101,6 +155,25 @@ public class AdminController {
     @PostMapping("/user/add")
     public ResponseEntity<?> addUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userDto) {
         try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if(!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+
+            User user = new User();
+            user.setUserType(userDto.getUserType());
+            user.setEmail(userDto.getEmail());
+            user.setPesel(userDto.getPesel());
+            user.setFirstName(userDto.getFirstName());
+            user.setLastName(userDto.getLastName());
+            user.setPhoto(userDto.getPhoto());
+
+            String salt = PasswordHash.generateSalt();
+            user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
+            user.setSalt(salt);
+
+            userService.addUser(user);
+
             return ResponseEntity.ok("Ok");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");

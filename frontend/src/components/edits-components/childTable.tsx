@@ -42,15 +42,15 @@ const ChildrenPage = () => {
     }
 
     const handleDelete = (sessionId: string) => {
-        window.location.href = `/admin/delete/user/${sessionId}`;
+        window.location.href = `/admin/edit/delete/user/${sessionId}`;
     }
 
     const handleModify = (sessionId: string) => {
-        window.location.href = `/admin/modify/user/${sessionId}`;
+        window.location.href = `/admin/edit/modify/user/${sessionId}`;
     }
 
     const handleShowParent = (sessionId: string) => {
-        window.location.href = `/admin/show/parent/${sessionId}`;
+        window.location.href = `/admin/edit/show/parent/${sessionId}`;
     }
 
     return (
