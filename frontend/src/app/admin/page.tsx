@@ -21,7 +21,7 @@ const Page = () => {
             router.push(`/`);
             return
         }
-        if(userType != UserType.Admin) {
+        if(userType != UserType.ADMIN) {
             alert("You are not an admin.");
             router.push(`/`);
             return

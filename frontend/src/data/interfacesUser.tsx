@@ -8,16 +8,16 @@ export interface UserInfo {
     lastName: string,
     photo: string,
     pesel: string,
-    userRole: UserType,
+    userType: UserType,
 };
 
 export interface ChildInfo {
-    sessionId: string,
-    firstName: string,
-    lastName: string,
+    sessionId?: string,
+    firstName?: string,
+    lastName?: string,
     photo: string,
-    birthDate: string,
-    pesel: string,
+    birthDate?: string,
+    pesel?: string,
 };
 
 // --------------- Register Interfaces---------------

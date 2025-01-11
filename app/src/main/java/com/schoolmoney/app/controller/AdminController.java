@@ -110,28 +110,37 @@ public class AdminController {
             if(user == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
             }
+            if(user.getUserType() != UserType.ADMIN || user.getUserType() != UserType.PARENT)
+                user.setUserType(userDto.getUserType());
+            if(userDto.getEmail() != null)
+                user.setEmail(userDto.getEmail());
+            if(userDto.getPesel() != null)
+                user.setPesel(userDto.getPesel());
+            if(userDto.getFirstName() != null)
+                user.setFirstName(userDto.getFirstName());
+            if(userDto.getLastName() != null)
+                user.setLastName(userDto.getLastName());
+            if(userDto.getPhoto() != null)
+                user.setPhoto(userDto.getPhoto());
 
-            user.setUserType(userDto.getUserType());
-            user.setEmail(userDto.getEmail());
-            user.setPesel(userDto.getPesel());
-            user.setFirstName(userDto.getFirstName());
-            user.setLastName(userDto.getLastName());
-
-            user.setPhoto(userDto.getPhoto());
-
-            // TODO: Change it when it should be changed
-            String salt = PasswordHash.generateSalt();
-            user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
-            user.setSalt(salt);
-
+            if(userDto.getPassword() != null)
+            {
+                if(!user.getPassword().equals(userDto.getPassword()))
+                {
+                    String salt = PasswordHash.generateSalt();
+                    user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
+                    user.setSalt(salt);
+                }
+            }
             userService.modifyUser(user);
             return ResponseEntity.ok("Ok");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }
 
-    @DeleteMapping("/user/delete/{email}")
+    @PostMapping("/user/delete/{email}")
     public ResponseEntity<?> deleteUser(@RequestHeader("Authorization") String token, @PathVariable String email) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
@@ -141,6 +150,28 @@ public class AdminController {
             User user = userService.getUserByEmail(email);
             if(user == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
+            }
+
+            // This could be a better but welp
+            if(user.getUserType() == UserType.ADMIN) {
+                List<User> users = userService.getAllUsers();
+                int admin_number = 0;
+                for(User userr: users) {
+                    if(userr.getUserType() == UserType.ADMIN)
+                        admin_number += 1;
+                }
+
+                if(admin_number <= 1)
+                    return ResponseEntity.status(HttpStatus.CONFLICT).body("There is only one admin");
+            }
+
+            List<Child> children = childService.getChildrenByParentEmail(email);
+            for(Child child: children) {
+                List<User> parents = child.getParents();
+                parents.remove(user);
+                child.setParents(parents);
+
+                childService.saveChild(child);
             }
 
             userService.deleteUser(user);

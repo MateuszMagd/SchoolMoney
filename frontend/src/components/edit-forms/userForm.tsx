@@ -4,9 +4,11 @@ import { useState } from "react";
 import { UserInfoExtended } from "@/data/interfacesUser";
 import { modifyUser } from '@/connection/adminAPI';
 import RouterButton from '@/components/routerButton';
+import Image from "next/image";
+import { UserType } from "@/data/enums";
 
 const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
-  const [formData, setFormData] = useState<UserInfoExtended | null>(userInfo);
+  const [formData, setFormData] = useState<UserInfoExtended>(userInfo);
   const [repeatPassword, setRepeatPassword] = useState<string | null>(userInfo.password);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +23,29 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
     });
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as String;
+        setFormData({...formData, photo:base64String.split(",")[1]}) 
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUserTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!formData) return;
+    const { name, value } = e.target;
+    let val = UserType.USER;
+    if(value === UserType.ADMIN) {
+      val = UserType.ADMIN;
+    }
+    console.log(val)
+    setFormData({...formData, userType: val});
+  };
+
   const handleChangeReapeatPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     if(!repeatPassword) return;
     const { value } = e.target;
@@ -30,7 +55,6 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // send data to the server
     if (formData && repeatPassword === formData.password)
       modifyUser(formData);
   };  
@@ -123,18 +147,35 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
               />
             </div>
 
-            <div className="mb-4">
+            <div className="flex flex-row mb-4">
               <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                Photo URL:
+                <Image src={formData.photo} alt="Uploaded Preview" width={100} height={100} />
               </label>
               <input
-                type="text"
+                type="file"
                 id="photo"
                 name="photo"
-                value={formData.photo || ""}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
+                onChange={handlePhotoChange}
+                className="w-full p-2 border border-gray-300 rounded-md" />
+            </div>
+
+            <div className="mb-4">
+              <label>
+                User Role:
+              </label>
+              <select 
+                id="userType"
+                name="userType"
+                value={formData.userType || ""}
+                onChange={handleUserTypeChange}
+                className="w-full p-2 border border-gray-300 rounded-md">
+                {Object.entries(UserType).map(([key, value]) => (
+                  <option key={key} value={value}>
+                    {value.charAt(0) + value.slice(1).toLowerCase()}
+                  </option>
+                ))}
+              
+              </select>
             </div>
 
             <button

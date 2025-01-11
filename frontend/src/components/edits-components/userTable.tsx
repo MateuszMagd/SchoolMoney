@@ -3,12 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getToken } from "@/data/tokenHandler";
-import { UserInfo } from "@/data/interfacesUser";
+import { UserInfo, UserInfoExtended } from "@/data/interfacesUser";
 import { getAllUserData} from "@/connection/adminAPI";
 import UserInfoRow from "./userInfoRow";
 
 const UsersPage = () => {
-    const [user, setUser] = useState<UserInfo[]>([]);
+    const [user, setUser] = useState<UserInfoExtended[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -21,8 +21,7 @@ const UsersPage = () => {
             try {
                 const data = await getAllUserData();
                 setIsLoading(false);
-                setUser(data);
-                console.log(user)
+                setUser(data);    
             } catch(error) {
                 console.log(error)
                 setIsLoading(false);
@@ -31,8 +30,8 @@ const UsersPage = () => {
         }
 
         fetchUsers();
-    }, [])
-
+    }, []);
+    console.log(user)
     if(isLoading) {
         return <div>Loading. . .</div>;
     }

@@ -21,11 +21,31 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
     });
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      if (typeof fileReader.result === "string") {
+        // Ensure photo is a string
+        setFormData((prev) => {
+          if (!prev) return null; // Ensure previous state exists
+          return {
+            ...prev,
+            photo: fileReader.result, // Set photo as a string
+          };
+        });
+      } else {
+        console.error("FileReader result is not a string.");
+      }
+    };
+    fileReader.readAsDataURL(file); // Ensure result is a string (Base64 URL)
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData);
-    // send data to the server
     if (formData)
       editChild(formData);
   };  
@@ -91,6 +111,20 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
             </div>
 
             <div className="mb-4">
+              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+                <img src={formData.photo} alt="Uploaded Preview" className="w-32 h-32 object-cover rounded-md" />
+              </label>
+              <input
+                type="date"
+                id="birthDate"
+                name="birthDate"
+                value={formData.birthDate || ""}
+                onChange={handlePhotoChange}
+                className="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+
+            <div className="mb-4">
               <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
                 Photo URL:
               </label>
@@ -110,8 +144,7 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
             >
               Save Changes
             </button>
-            </form>
-            
+          </form>
             : 
             <div>Loading...</div>
             }

@@ -122,7 +122,8 @@ export const deleteUser = async(email: string) => {
             alert("You are not logged.");
             return;
         }
-        const response = await axios.post(`http://localhost:8090/api/admin/user/delete/${email}`,  {
+        const correct_email = email.replace("%40", "@");
+        const response = await axios.post(`http://localhost:8090/api/admin/user/delete/${correct_email}`, {}, {
             headers: {
                 'Authorization': token,
             },
@@ -162,12 +163,12 @@ export const modifyUser = async(userInfo: UserInfoExtended) => {
             },
             withCredentials: true,
         });
+
         return response.data;
     }
     catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-            console.error("Error response:", error.response);
-            alert(error.response.data.message || "Błąd logowania");
+            alert(error.response.data.message || "Błąd podczas próby modyfikacji");
         } else {
             console.error("Unknown error:", error);
             alert("Wystąpił nieznany błąd.");

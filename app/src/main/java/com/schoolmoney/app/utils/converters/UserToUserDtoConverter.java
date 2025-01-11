@@ -15,6 +15,8 @@ public class UserToUserDtoConverter {
         dto.setLastName(user.getLastName());
         dto.setPhoto(user.getPhoto());
         dto.setPesel(user.getPesel());
+        dto.setPassword(user.getPassword());
+        dto.setUserType(user.getUserType());
 
         return dto;
     }

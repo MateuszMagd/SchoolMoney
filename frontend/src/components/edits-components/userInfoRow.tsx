@@ -1,20 +1,22 @@
-import { UserInfo } from "@/data/interfacesUser";
+import { UserInfo, UserInfoExtended } from "@/data/interfacesUser";
 import Image from 'next/image';
 
 interface UserInfoRowProps {
-    user: UserInfo;
+    user: UserInfoExtended;
     onDelete: () => void;
     onModify: () => void;
 }
 
 const UserInfoRow: React.FC<UserInfoRowProps> = ({ user, onDelete, onModify }) => {
+    console.log("USERINFO ROW", user);
+    console.log("USERINFO ROW", user.userType);
     return (
         <tr className="text-center">
             <td className="p-4">{user.firstName}</td>
             <td className="p-4">{user.lastName}</td>
             <td className="p-4">{user.email}</td>
             <td className="p-4">{user.pesel}</td>
-            <td className="p-4">{user.userRole}</td>
+            <td className="p-4">{user.userType}</td>
             <td className="flex flex-row justify-center"><Image src={user.photo} alt="No photo" width={100} height={100} className=""/></td>
             <td>
                 <button 
