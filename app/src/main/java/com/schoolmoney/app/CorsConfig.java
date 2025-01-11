@@ -1,4 +1,4 @@
-package com.school.app;
+package com.schoolmoney.app;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -9,9 +9,10 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Mapuje wszystkie endpointy
-                .allowedOrigins("*") // Pozwala na dostęp z dowolnego źródła (można również określić konkretny adres URL)
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Określa dozwolone metody HTTP
-                .allowedHeaders("*"); // Określa dozwolone nagłówki HTTP
+        registry.addMapping("/**") // Map all endpoints
+                .allowedOrigins("http://localhost:3000") // Allow requests only from your frontend origin
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Specify allowed HTTP methods
+                .allowedHeaders("*") // Allow all headers
+                .allowCredentials(true); // Allow cookies/credentials
     }
 }

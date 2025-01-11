@@ -5,9 +5,9 @@ import com.schoolmoney.app.repository.UserRepository;
 import com.schoolmoney.app.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.List;
+
 
 @Service
 public class UserService implements IUserService {
@@ -19,14 +19,28 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public int addUser(User user) {
-        throw new UnsupportedOperationException("Feature incomplete.");
-        //return 0;
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public User modifyUser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
     }
 
     @Override
     public List<User> getAllUsers() {
-        throw new UnsupportedOperationException("Feature incomplete.");
-        //return null;
+        return userRepository.findAll();
     }
 }

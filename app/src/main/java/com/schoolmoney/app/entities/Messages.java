@@ -8,19 +8,17 @@ import java.util.UUID;
 @Entity
 public class Messages {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Column(unique = true)
     private String sessionId;
     private String text;
-
     @ManyToOne
     private User author;
     @ManyToOne
     private User receiverParent;
     @ManyToOne
     private ClassMessages receiverClass;
-
     private LocalDate date;
 
     public Messages(String text, User author, User receiverParent, ClassMessages receiverClass, LocalDate date) {

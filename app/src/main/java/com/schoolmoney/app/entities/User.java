@@ -4,11 +4,17 @@ import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.entities.Bills;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,6 +22,7 @@ public class User {
     @Column(unique = true)
     private String sessionId;
     @Nonnull
+    @Enumerated(EnumType.STRING)
     private UserType userType;
     @Nonnull
     private String email;
@@ -24,11 +31,17 @@ public class User {
     @Nonnull
     private String salt;
     private String pesel;
+    private String firstName;
+    private String lastName;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(length = 16777215)
     private byte[] photo ;
     @ManyToOne
     private Bills bills;
 
-    public User(@Nonnull String email,@Nonnull String password, @Nonnull String salt,@Nonnull String pesel, byte[] photo, Bills bills) {
+    public User(@Nonnull String email, @Nonnull String password, @Nonnull String salt, String pesel, String firstName, String lastName, byte[] photo, Bills bills) {
         this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
         this.bills = bills;
@@ -37,11 +50,17 @@ public class User {
         this.password = password;
         this.salt = salt;
         this.pesel = pesel;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.photo = photo;
     }
     public User() {
         this.sessionId = UUID.randomUUID().toString();
         this.userType = UserType.PARENT;
+    }
+
+    public String getSessionId() {
+        return sessionId;
     }
 
     @Nonnull
@@ -62,9 +81,55 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(userType.name()));
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     @Nonnull
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public void setPassword(@Nonnull String password) {
