@@ -6,7 +6,7 @@ const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
     const { sessionId, firstName, lastName, photo, pesel, birthDate } = childInfo;
     console.log(photo);
     return (
-        <div className='bg-blue-500 rounded-md p-5'>
+        <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg"style={{ height: '535px', width: '585px' }}>
                 <div>{firstName}</div>
                 <div>{lastName}</div>
                 <Image src={photo} alt="photo" width={100} height={100} />

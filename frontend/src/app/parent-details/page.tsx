@@ -50,7 +50,7 @@ const Page = () => {
     }
     return (
         <div>
-            <div className="flex flex-col justify-center items-center space-y-6 p-10">
+            <div className="flex flex-col justify-center items-center space-y-20 p-10">
                 { userData !== null ?
                     <ParentCard info = {userData}/> :
                     <div> Loading... </div>
@@ -58,9 +58,11 @@ const Page = () => {
                 {
                     childData.length === 0 ? 
                     <div> Loading... </div> :
-                    childData.map((child) => (
+                    <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
+                    {childData.map((child) => (
                         <ChildCard key={child.sessionId.toString()} childInfo={child} />
-                    ))
+                    ))}
+                </div>
                 }
                 <RouterButton page="/" buttonString = "Wroc do głownej"/>
             </div>

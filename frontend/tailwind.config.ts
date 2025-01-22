@@ -25,10 +25,10 @@ export default {
         light_marine: "#37c9a8",
       },
       width: {
-        '1920px': '1920px', // Dodaje klasę w-400px
+        '1920px': '1920px', 
       },
       height: {
-        '1080px': '1080px', // Dodaje klasę h-600px
+        '1080px': '1080px',
       },
     },
   },
