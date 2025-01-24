@@ -48,28 +48,35 @@ const Page = () => {
             </div>
         )
     }
-    return (
-        <div>
-            <div className="flex flex-col justify-center items-center space-y-20 p-10">
-                { userData !== null ?
-                    <ParentCard info = {userData}/> :
-                    <div> Loading... </div>
-                }
-                {
-                    childData.length === 0 ? 
-                    <div> Loading... </div> :
-                    <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
-                    {childData.map((child) => (
-                        <ChildCard key={child.sessionId.toString()} childInfo={child} />
-                    ))}
-                </div>
-                }
-                <RouterButton page="/" buttonString = "Wroc do głownej"/>
+   return (
+    <div
+        className="min-h-screen bg-center flex flex-col items-center space-y-20 p-10"
+        style={{
+            backgroundImage: "url('/assets/parent_background.png')",
+            backgroundSize: "cover",}}
+    >
+        {userData !== null ? (
+            <ParentCard info={userData} />
+        ) : (
+            <div>Loading...</div>
+        )}
+        {childData.length === 0 ? (
+            <div>Loading...</div>
+        ) : (
+            <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
+                {childData.map((child) => (
+                    <ChildCard
+                        key={child.sessionId.toString()}
+                        childInfo={child}
+                    />
+                ))}
             </div>
+        )}
+        <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[150px]" height="h-[60px]"/>
+        <button onClick={() => test(logged)}>Show me if logged!</button>
+    </div>
+);
 
-            <button onClick={() => test(logged)}>Show me if logged!</button>
-        </div>
-    );
 };
 
 export default Page;

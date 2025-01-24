@@ -5,11 +5,15 @@ import { useRouter } from 'next/navigation';
 const RouterButton = ({
   page,
   buttonString,
-  color = 'bg-blue-500', // Domyślny kolor
+  color = 'bg-blue-500', 
+  width = 'w-auto', 
+  height = 'h-auto', 
 }: {
   page: string;
   buttonString: string;
   color?: string;
+  width?: string;
+  height?: string;
 }) => {
   const router = useRouter();
 
@@ -19,7 +23,7 @@ const RouterButton = ({
 
   return (
     <button
-      className={`${color} text-white rounded-lg p-4 hover:opacity-90 transition`}
+      className={`${color} ${width} ${height} text-white rounded-lg hover:opacity-90 transition`}
       onClick={() => handleRedirect(page)}
     >
       {buttonString}
