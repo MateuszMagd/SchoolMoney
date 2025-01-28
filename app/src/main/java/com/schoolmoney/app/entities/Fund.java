@@ -9,6 +9,10 @@ import java.util.UUID;
 
 @Entity
 public class Fund {
+    public Long getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -18,6 +22,7 @@ public class Fund {
     private String description;
     private float moneyPerKid;
     private float moneyEarned;
+    private float moneyGoal;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -34,13 +39,14 @@ public class Fund {
     @ManyToOne
     private User patron;
 
-    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Class classId, Bills bills, User patron) {
+    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, float moneyGoal, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Class classId, Bills bills, User patron) {
         this.sessionId = UUID.randomUUID().toString();
 
         this.fundName = fundName;
         this.description = description;
         this.moneyPerKid = moneyPerKid;
         this.moneyEarned = moneyEarned;
+        this.moneyGoal = moneyGoal;
         this.photo = photo;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -144,5 +150,25 @@ public class Fund {
 
     public void setPatron(User patron) {
         this.patron = patron;
+    }
+
+    public String getStatusString()
+    {
+        if(status == StatusType.OPEN)
+            return "w trakcie";
+        return "zamknięta";
+
+    }
+
+    public float getMoneyGoal() {
+        return moneyGoal;
+    }
+
+    public void setMoneyGoal(float moneyGoal) {
+        this.moneyGoal = moneyGoal;
+    }
+
+    public boolean isOpen() {
+        return status == StatusType.OPEN;
     }
 }

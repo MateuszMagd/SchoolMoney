@@ -14,4 +14,6 @@ public interface IUserService {
     User getUserByEmail(String email);
     List<User> getAllUsers();
 
+    User getUserBySenderId(Long senderId);
+
 }

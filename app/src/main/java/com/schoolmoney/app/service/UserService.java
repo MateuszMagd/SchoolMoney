@@ -43,4 +43,9 @@ public class UserService implements IUserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User getUserBySenderId(Long senderId) {
+        return userRepository.findUserBySenderId(senderId);
+    }
 }

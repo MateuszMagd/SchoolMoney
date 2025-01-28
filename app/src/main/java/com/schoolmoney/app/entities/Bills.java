@@ -35,4 +35,8 @@ public class Bills {
     public void setBillsNumber(String billsNumber) {
         this.billsNumber = billsNumber;
     }
+
+    public long getId() {
+        return id;
+    }
 }

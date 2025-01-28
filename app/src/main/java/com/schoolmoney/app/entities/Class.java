@@ -23,6 +23,10 @@ public class Class {
         this.patron = patron;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Class() {
         this.sessionId = UUID.randomUUID().toString();
     }
