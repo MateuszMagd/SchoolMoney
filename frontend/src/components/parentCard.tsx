@@ -1,8 +1,9 @@
 import { UserInfo } from "@/data/interfacesUser";
 import Image from 'next/image';
+import RouterButton from "./routerButton";
 
 const ParentCard = ({ info }: { info: UserInfo }) => { 
-    const { email, firstName, lastName, photo, pesel, userRole } = info;
+    const { email, firstName, lastName, photo, pesel, userType } = info;
     return (
         <div className='flex flex-col bg-blue-500 rounded-md p-5'>
             <div>USER INFO</div>
@@ -11,7 +12,9 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
             <div>{firstName}</div>
             <div>{lastName}</div>
             <div>{pesel}</div>
-            <div>{userRole}</div>
+            <div>{userType}</div>
+
+            <RouterButton page="/" buttonString="Stworz wypis przelewów" />
         </div>
     )
 }

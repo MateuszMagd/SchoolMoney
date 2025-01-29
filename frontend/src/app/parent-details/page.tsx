@@ -57,9 +57,11 @@ const Page = () => {
                 }
                 {
                     childData.length === 0 ? 
-                    <div> Loading... </div> :
+                    <div> No child loaded! </div> :
                     childData.map((child) => (
-                        <ChildCard key={child.sessionId.toString()} childInfo={child} />
+                        child.sessionId ?
+                        <ChildCard key={child.sessionId.toString()} childInfo={child} /> :
+                        <></>
                     ))
                 }
                 <RouterButton page="/" buttonString = "Wroc do głownej"/>
