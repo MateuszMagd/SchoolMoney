@@ -54,31 +54,35 @@ const RegisterForm = () => {
     };
 
     return (
-        <form className="flex flex-col mx-auto bg-white p-10" onSubmit={handleSubmit}>
-            <div className="text-center"> REJESTRACJA </div>
+        <form className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg"style={{ height: '700px', width: '500px' }} onSubmit={handleSubmit}>
+
+            <div className="text-center text-marine font-anton mt-20" style={{ fontSize: '54px' }}>
+            REJESTRACJA
+            </div>
+
             
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
             {/* Name */}
-            <div className="mb-4">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Imię:
-                </label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    placeholder="Wprowadź imię"
-                />
+            <div className="mb-4 flex justify-center mt-14">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                
+            </label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                placeholder="Imię"
+            />
             </div>
+
             
             {/* Lastname */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-6">
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                    Nazwisko:
                 </label>
                 <input
                     type="text"
@@ -86,15 +90,14 @@ const RegisterForm = () => {
                     name="name"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    placeholder="Wprowadź imię"
+                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    placeholder="Nazwisko"
                 />
             </div>
 
             {/* Email */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-6">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email:
                 </label>
                 <input
                     type="email"
@@ -102,15 +105,14 @@ const RegisterForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    placeholder="Wprowadź adres email"
+                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    placeholder="Email"
                 />
             </div>
 
             {/* Password */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-6">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Hasło:
                 </label>
                     <input
                             type="password"
@@ -118,19 +120,19 @@ const RegisterForm = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                            placeholder="Wprowadź hasło"
+                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                            placeholder="Hasło"
                         />
             </div>
 
             {/* Submit button */}
-            <div className="mb-4">
-                <button
-                    type="submit"
-                    className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            <div className="mb-4 flex justify-center mt-10">
+            <button
+                type="submit"
+                className="w-[200px] h-[50px] bg-marine text-white text-medium font-medium rounded-[15px] shadow-md hover:shadow-lg transition-all duration-300"
                 >
-                    Zarejestruj się
-                </button>
+                Zarejestruj się
+            </button>
             </div>
         </form>
     );
