@@ -16,7 +16,7 @@ public class UserToUserInfoDtoConverter {
         dto.setLastName(user.getLastName());
         dto.setPhoto(user.getPhoto());
         dto.setPesel(user.getPesel());
-        dto.setUserRole(user.getUserType());
+        dto.setUserType(user.getUserType());
 
         return dto;
     }

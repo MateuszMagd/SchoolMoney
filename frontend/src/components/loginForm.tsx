@@ -3,7 +3,7 @@
 import { loginUser } from "@/connection/userAPI";
 import { isLogged } from "@/data/tokenHandler";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const LoginForm = () => {
@@ -14,6 +14,7 @@ const LoginForm = () => {
     });
     const [error, setError] = useState<string>('');
 
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -22,7 +23,9 @@ const LoginForm = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        // TODO: Check if some security is needed here - some base was made lol
+        
         e.preventDefault(); // No default values
 
         // Simple (for now) data validation
@@ -36,11 +39,20 @@ const LoginForm = () => {
             setError('Wprowadz prawidłowy adres email');
             return;
         }
+        
+        // Waiting for user to login or not
+        try {
+            const result: boolean = await loginUser(formData.email, formData.password);
 
-        setError('');
-        loginUser(formData.email, formData.password);
-        if(isLogged()) {
-            router.push(`/`);
+            if(result === true) {
+                alert('You have been successfully logged in!');
+                router.push(`/`);
+            } else {
+                setError('You have not been logged in!');
+            }
+        }
+        catch(error) {
+            setError('Błąd logowania');
         }
     };
 

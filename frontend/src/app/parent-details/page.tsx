@@ -48,25 +48,7 @@ const Page = () => {
             </div>
         )
     }
-<<<<<<< HEAD
-    return (
-        <div>
-            <div className="flex flex-col justify-center items-center space-y-6 p-10">
-                { userData !== null ?
-                    <ParentCard info = {userData}/> :
-                    <div> Loading... </div>
-                }
-                {
-                    childData.length === 0 ? 
-                    <div> No child loaded! </div> :
-                    childData.map((child) => (
-                        child.sessionId ?
-                        <ChildCard key={child.sessionId.toString()} childInfo={child} /> :
-                        <></>
-                    ))
-                }
-                <RouterButton page="/" buttonString = "Wroc do głownej"/>
-=======
+
    return (
     <div
         className="min-h-screen bg-center flex flex-col items-center space-y-20 p-10"
@@ -84,12 +66,13 @@ const Page = () => {
         ) : (
             <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
                 {childData.map((child) => (
+                    child.sessionId ?
                     <ChildCard
                         key={child.sessionId.toString()}
                         childInfo={child}
-                    />
+                    /> :
+                    <></>
                 ))}
->>>>>>> Features
             </div>
         )}
         <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[150px]" height="h-[60px]"/>

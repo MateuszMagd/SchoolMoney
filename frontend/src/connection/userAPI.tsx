@@ -24,13 +24,10 @@ export const loginUser = async(email: string, password: string) => {
 
         if (token) {
             saveToken(token);
-            alert("Zalogowano pomyślnie: " + token);
             return true;
         } else {
-            alert("Token nie został zwrócony przez serwer.");
             return false;
         }
-        alert(token)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             console.error("Error response:", error.response);
