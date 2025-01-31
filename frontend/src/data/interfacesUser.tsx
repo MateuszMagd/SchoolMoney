@@ -16,7 +16,7 @@ export interface ChildInfo {
     firstName?: string,
     lastName?: string,
     photo: string,
-    birthDate?: string,
+    birthday?: string,
     pesel?: string,
 };
 
