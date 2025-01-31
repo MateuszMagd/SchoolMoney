@@ -42,15 +42,15 @@ const ChildrenPage = () => {
     }
 
     const handleDelete = (sessionId: string) => {
-        window.location.href = `/admin/edit/delete/user/${sessionId}`;
+        window.location.href = `/admin/main/edit/delete/child/${sessionId}`;
     }
 
     const handleModify = (sessionId: string) => {
-        window.location.href = `/admin/edit/modify/user/${sessionId}`;
+        window.location.href = `/admin/main/edit/modify/child/${sessionId}`;
     }
 
     const handleShowParent = (sessionId: string) => {
-        window.location.href = `/admin/edit/show/parent/${sessionId}`;
+        window.location.href = `/admin/main/edit/show/parent/${sessionId}`;
     }
 
     return (
@@ -71,9 +71,9 @@ const ChildrenPage = () => {
                             <ChildInfoRow 
                                 key={index} 
                                 child={child} 
-                                onDelete={() => child.sessionId && handleDelete(child.sessionId)}
-                                onModify={() => child.sessionId && handleModify(child.sessionId)}
-                                showParent={() => child.sessionId && handleShowParent(child.sessionId)}
+                                onDelete={() => handleDelete(child.sessionId)}
+                                onModify={() => handleModify(child.sessionId)}
+                                showParent={() => handleShowParent(child.sessionId)}
                             />
                         ))}
                     </tbody>
@@ -82,7 +82,7 @@ const ChildrenPage = () => {
                             <td colSpan={8}>
                                 <Link
                                     className="flex justify-center w-full p-2 bg-green-500 text-white"
-                                    href="/admin/create/user"
+                                    href="/admin/main/edit/add/child"
                                 >
                                     Add New Child
                                 </Link>

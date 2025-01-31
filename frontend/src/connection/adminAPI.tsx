@@ -143,10 +143,6 @@ export const deleteUser = async(email: string) => {
     }  
 }
 
-export const deleteChild = async(email: string) => {
-    return true;
-}
-
 export const modifyUser = async(userInfo: UserInfoExtended, email: String) => {
     try {
         const token = getToken();
@@ -176,8 +172,4 @@ export const modifyUser = async(userInfo: UserInfoExtended, email: String) => {
         }
         return false;
     }  
-}
-
-export const modifyChild = async(email: string) => {
-    return true;
 }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const AddPage = () => {
-    const router = useRouter();
+        const router = useRouter();
         const [formData, setFormData] = useState({
             email: '',
             firstName: '',

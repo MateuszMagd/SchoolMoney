@@ -37,5 +37,10 @@ public class ChildService implements IChildService {
         return childRepository.findAll();
     }
 
+    @Override
+    public void deleteChild(Child child) {
+        childRepository.delete(child);
+    }
+
 
 }

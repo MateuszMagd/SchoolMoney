@@ -19,12 +19,19 @@ export interface UserInfo {
 };
 
 export interface ChildInfo {
-    sessionId?: string,
-    firstName?: string,
-    lastName?: string,
+    sessionId: string,
+    firstName: string,
+    lastName: string,
     photo: string,
-    birthday?: string,
-    pesel?: string,
+    birthday: string,
+    pesel: string,
+};
+
+export interface NewChildInfo {
+    firstName: string,
+    lastName: string,
+    birthday: string,
+    pesel: string,
 };
 
 // --------------- Register Interfaces---------------

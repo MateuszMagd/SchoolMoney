@@ -11,10 +11,10 @@ interface ChildInfoRowProps {
 const UserInfoRow: React.FC<ChildInfoRowProps> = ({ child, onDelete, onModify, showParent }) => {
     return (
         <tr className="text-center">
-            <td className="pl-10">{child.firstName}</td>
-            <td >{child.lastName}</td>
-            <td >{child.pesel}</td>
-            <td >{child.birthday}</td>
+            <td>{child.firstName}</td>
+            <td>{child.lastName}</td>
+            <td>{child.pesel}</td>
+            <td>{child.birthday}</td>
             <td className="flex flex-row justify-center"><Image src={child.photo} alt="No photo" width={100} height={100} className=""/></td>
             <td>
                 <button 
