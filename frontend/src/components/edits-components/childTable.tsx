@@ -71,9 +71,9 @@ const ChildrenPage = () => {
                             <ChildInfoRow 
                                 key={index} 
                                 child={child} 
-                                onDelete={() => handleDelete(child.sessionId)}
-                                onModify={() => handleModify(child.sessionId)}
-                                showParent={() => handleShowParent(child.sessionId)}
+                                onDelete={() => child.sessionId && handleDelete(child.sessionId)}
+                                onModify={() => child.sessionId && handleModify(child.sessionId)}
+                                showParent={() => child.sessionId && handleShowParent(child.sessionId)}
                             />
                         ))}
                     </tbody>
