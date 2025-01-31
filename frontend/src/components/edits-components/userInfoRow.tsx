@@ -8,8 +8,6 @@ interface UserInfoRowProps {
 }
 
 const UserInfoRow: React.FC<UserInfoRowProps> = ({ user, onDelete, onModify }) => {
-    console.log("USERINFO ROW", user);
-    console.log("USERINFO ROW", user.userType);
     return (
         <tr className="text-center">
             <td className="p-4">{user.firstName}</td>

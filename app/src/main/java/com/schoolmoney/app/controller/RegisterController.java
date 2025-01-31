@@ -1,12 +1,15 @@
 package com.schoolmoney.app.controller;
 
-import com.schoolmoney.app.dto.UserDto;
+import com.schoolmoney.app.dto.NewUserRegister;
 import com.schoolmoney.app.entities.Bills;
 import com.schoolmoney.app.entities.User;
+import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.service.BillsService;
 import com.schoolmoney.app.service.interfaces.IBillsService;
 import com.schoolmoney.app.service.interfaces.IUserService;
+import com.schoolmoney.app.utils.PasswordHash;
 import com.schoolmoney.app.utils.UniqueNumberGenerator;
+import com.schoolmoney.app.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,21 +33,32 @@ public class RegisterController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> registerUser(@RequestBody NewUserRegister newUser) {
         try {
-            User newUser = UserDtoToUser(userDto);
-            if(newUser == null) {
+            if(newUser.getFirstName() == null || newUser.getLastName() == null || newUser.getPassword() == null || newUser.getEmail() == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("User couldn't be saved.");
             }
 
-            Bills newUserBills = new Bills(UniqueNumberGenerator.getUniqueNumber());
+            User user = new User();
+            user.setFirstName(newUser.getFirstName());
+            user.setLastName(newUser.getLastName());
+            user.setEmail(newUser.getEmail());
 
+            String salt = PasswordHash.generateSalt();
+            user.setSalt(salt);
+            user.setPassword(PasswordHash.hashPasswordWithSalt(newUser.getPassword(), salt));
+
+            Bills newUserBills = new Bills(UniqueNumberGenerator.getUniqueNumber());
             if(billsService.saveBills(newUserBills) == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Bills creation problem.");
             }
-            newUser.setBills(newUserBills);
+            user.setBills(newUserBills);
 
-            userService.addUser(newUser);
+            user.setPesel("00000000000");
+            user.setUserType(UserType.PARENT);
+            user.setPhoto(Utils.loadPhoto("default.png"));
+
+            userService.addUser(user);
 
             return ResponseEntity.ok("User registered.");
         } catch (Exception e) {

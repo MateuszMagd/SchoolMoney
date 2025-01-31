@@ -6,9 +6,12 @@ import { modifyUser } from '@/connection/adminAPI';
 import RouterButton from '@/components/routerButton';
 import Image from "next/image";
 import { UserType } from "@/data/enums";
+import { useRouter } from "next/navigation";
 
 const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
+  const router = useRouter();
   const [formData, setFormData] = useState<UserInfoExtended>(userInfo);
+  const [oryginalEmail, setOryginalEmail] = useState<string | null>(userInfo.email);
   const [repeatPassword, setRepeatPassword] = useState<string | null>(userInfo.password);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +41,7 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
   const handleUserTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!formData) return;
     const { name, value } = e.target;
-    let val = UserType.USER;
+    let val = UserType.PARENT;
     if(value === UserType.ADMIN) {
       val = UserType.ADMIN;
     }
@@ -55,8 +58,12 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (formData && repeatPassword === formData.password)
-      modifyUser(formData);
+    if (formData && repeatPassword === formData.password && oryginalEmail)
+    {
+      await modifyUser(formData, oryginalEmail);
+      router.push("/admin/main/users");
+    }
+      
   };  
 
   return (
@@ -110,9 +117,9 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 Email:
               </label>
               <input
-                type="date"
-                id="birthDate"
-                name="birthDate"
+                type="email"
+                id="email"
+                name="email"
                 value={formData.email || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
@@ -128,7 +135,7 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 id="birthDate"
                 name="birthDate"
                 value={repeatPassword || ""}
-                onChange={handleChangeReapeatPassword}
+                onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
             </div>
@@ -142,7 +149,7 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 id="birthDate"
                 name="birthDate"
                 value={formData.password || ""}
-                onChange={handleChange}
+                onChange={handleChangeReapeatPassword}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
             </div>
@@ -189,7 +196,7 @@ const UserFormAdmin = ({userInfo}: {userInfo: UserInfoExtended}) => {
             : 
             <div>Loading...</div>
             }
-            <RouterButton page="/" buttonString = "Wroc do głownej"/>
+            <RouterButton page="/admin/main/users" buttonString = "Wroc do głownej"/>
       </div>
   )
 };

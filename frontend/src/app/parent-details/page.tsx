@@ -48,6 +48,7 @@ const Page = () => {
             </div>
         )
     }
+
    return (
     <div
         className="min-h-screen bg-center flex flex-col items-center space-y-20 p-10"
@@ -65,10 +66,12 @@ const Page = () => {
         ) : (
             <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
                 {childData.map((child) => (
+                    child.sessionId ?
                     <ChildCard
                         key={child.sessionId.toString()}
                         childInfo={child}
-                    />
+                    /> :
+                    <></>
                 ))}
             </div>
         )}

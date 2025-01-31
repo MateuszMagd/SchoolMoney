@@ -6,8 +6,24 @@ import { ChildInfo } from "@/data/interfacesUser";
 import { editChild, getChildBySessionId } from "@/connection/childAPI";
 import RouterButton from '@/components/routerButton';
 
-const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
-  const [formData, setFormData] = useState<ChildInfo | null>(childInfo);
+const ChildEditPage =() => {
+  const [formData, setFormData] = useState<ChildInfo | null>(null);
+  const { id } = useParams();
+  const router = useRouter();
+
+  useEffect(() => {
+        const getUserData = async () => {
+            if (id && typeof id === "string") {
+              const data = await getChildBySessionId(id);
+              setFormData(data);
+            }
+            else {
+            alert("Invalid id");
+          }
+        }
+    
+      getUserData();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!formData) return;
@@ -22,25 +38,15 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
   };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-  
-    const fileReader = new FileReader();
-    fileReader.onload = () => {
-      if (typeof fileReader.result === "string") {
-        // Ensure photo is a string
-        setFormData((prev) => {
-          if (!prev) return null; // Ensure previous state exists
-          return {
-            ...prev,
-            photo: fileReader.result, // Set photo as a string
-          };
-        });
-      } else {
-        console.error("FileReader result is not a string.");
-      }
-    };
-    fileReader.readAsDataURL(file); // Ensure result is a string (Base64 URL)
+    if(e.target.files && e.target.files[0] && formData) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as String;
+        setFormData({...formData, photo:base64String.split(",")[1]}) 
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,7 +54,7 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
 
     if (formData)
       editChild(formData);
-  };  
+  };
 
   return (
       <div>
@@ -104,7 +110,7 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
                 type="date"
                 id="birthDate"
                 name="birthDate"
-                value={formData.birthDate || ""}
+                value={formData.birthday || ""}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded-md"
               />
@@ -114,28 +120,17 @@ const ChildEditPage =({childInfo}: {childInfo: ChildInfo}) => {
               <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
                 <img src={formData.photo} alt="Uploaded Preview" className="w-32 h-32 object-cover rounded-md" />
               </label>
-              <input
-                type="date"
-                id="birthDate"
-                name="birthDate"
-                value={formData.birthDate || ""}
-                onChange={handlePhotoChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                Photo URL:
-              </label>
-              <input
-                type="text"
-                id="photo"
-                name="photo"
-                value={formData.photo || ""}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
+              <div className="mb-4">
+                <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
+                  Photo URL:
+                </label>
+                <input
+                  type="file"
+                  id="photo"
+                  name="photo"
+                  onChange={handlePhotoChange}
+                  className="w-full p-2 border border-gray-300 rounded-md" />
+              </div>
             </div>
 
             <button

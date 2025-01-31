@@ -1,10 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { deleteUser } from "@/connection/adminAPI";
 
 const Page = () => {
+    const router = useRouter();
     const { id } = useParams();
 
     useEffect (() => {
@@ -14,10 +15,12 @@ const Page = () => {
             }
 
             if (typeof id === 'string') {
-                deleteUser(id);
+                await deleteUser(id);
+                alert("User deleted.");
+                router.push("/admin/main/users");
+            } else {
+                alert("Something went wrong during deleteing user.");
             }
-
-            //window.location.href = `/admin/main/users`;
         }
 
 

@@ -42,15 +42,15 @@ const ChildrenPage = () => {
     }
 
     const handleDelete = (sessionId: string) => {
-        window.location.href = `/admin/edit/delete/user/${sessionId}`;
+        window.location.href = `/admin/main/edit/delete/child/${sessionId}`;
     }
 
     const handleModify = (sessionId: string) => {
-        window.location.href = `/admin/edit/modify/user/${sessionId}`;
+        window.location.href = `/admin/main/edit/modify/child/${sessionId}`;
     }
 
     const handleShowParent = (sessionId: string) => {
-        window.location.href = `/admin/edit/show/parent/${sessionId}`;
+        window.location.href = `/admin/main/edit/show/parent/${sessionId}`;
     }
 
     return (
@@ -82,7 +82,7 @@ const ChildrenPage = () => {
                             <td colSpan={8}>
                                 <Link
                                     className="flex justify-center w-full p-2 bg-green-500 text-white"
-                                    href="/admin/create/user"
+                                    href="/admin/main/edit/add/child"
                                 >
                                     Add New Child
                                 </Link>

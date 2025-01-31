@@ -31,7 +31,6 @@ const UsersPage = () => {
 
         fetchUsers();
     }, []);
-    console.log(user)
     if(isLoading) {
         return <div>Loading. . .</div>;
     }
@@ -77,7 +76,7 @@ const UsersPage = () => {
                             <td colSpan={8}>
                                 <Link
                                     className="flex justify-center w-full p-2 bg-green-500 text-white"
-                                    href="/admin/create/user"
+                                    href="/admin/main/edit/add/user"
                                 >
                                     Add New User
                                 </Link>

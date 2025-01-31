@@ -17,5 +17,5 @@ public class UserInfoDto {
     @Column(length = 16777215)
     private byte[] photo;
     private String pesel;
-    private UserType userRole;
+    private UserType userType;
 }

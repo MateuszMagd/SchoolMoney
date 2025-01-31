@@ -9,9 +9,9 @@ import { useState } from "react";
 const RegisterForm = () => {
     const router = useRouter();
     const [formData, setFormData] = useState({
-        name: '',
-        lastName: '',
         email: '',
+        firstName: '',
+        lastName: '',
         password: '',
     });
     const [error, setError] = useState<string>('');
@@ -24,11 +24,11 @@ const RegisterForm = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault(); // No default values
 
         // Simple (for now) data validation
-        if(!formData.name || formData.lastName || !formData.email || !formData.password) {
+        if(!formData.firstName || !formData.lastName || !formData.email || !formData.password) {
             setError('Wszystkie pola sa wymagane!');
             return;
         }
@@ -42,25 +42,32 @@ const RegisterForm = () => {
         const newUser: NewUserRegister = {
             email: formData.email,
             password: formData.password,
-            firstName: formData.name,
+            firstName: formData.firstName,
             lastName: formData.lastName,
         };
 
         setError('');
-        addNewUser(newUser)
-        alert('Zarejestrowano użytkownika: ' + formData.name);
-        
-        router.push(`/`);
+        try {
+            const result: boolean = await addNewUser(newUser)
+            if(result === true) {
+                router.push(`/`);
+            } else {
+                setError("Błąd rejestracji");
+            }
+            
+        } 
+        catch (error) {
+            setError("Some bigger error occured - contact with admin");
+        }
     };
 
     return (
         <form className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg"style={{ height: '700px', width: '500px' }} onSubmit={handleSubmit}>
 
             <div className="text-center text-marine font-anton mt-20" style={{ fontSize: '54px' }}>
-            REJESTRACJA
+                REJESTRACJA
             </div>
 
-            
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
             {/* Name */}
@@ -70,9 +77,9 @@ const RegisterForm = () => {
             </label>
             <input
                 type="text"
-                id="name"
-                name="name"
-                value={formData.name}
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
                 onChange={handleChange}
                 className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                 placeholder="Imię"
@@ -86,8 +93,8 @@ const RegisterForm = () => {
                 </label>
                 <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="lastName"
+                    name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
                     className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
