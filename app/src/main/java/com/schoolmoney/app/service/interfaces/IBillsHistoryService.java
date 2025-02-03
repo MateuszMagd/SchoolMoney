@@ -9,4 +9,6 @@ import java.util.List;
 public interface IBillsHistoryService {
 
     List<BillsHistory> getBillsHistoryByFund(Fund fund);
+
+    List<BillsHistory> getBillsHistoryBySessionId(Fund fund);
 }

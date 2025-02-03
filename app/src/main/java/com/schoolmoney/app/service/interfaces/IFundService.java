@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface IFundService {
     List<Fund> getFundsByUser(User user);
+
+    Fund getFundByID(Long id);
+
+    Fund getFundBySessionId(String sessionId);
 }

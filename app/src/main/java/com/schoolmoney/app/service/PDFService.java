@@ -36,13 +36,13 @@ public class PDFService implements IPDFService {
     }
 
     @Override
-    public Document generatePdf(Long id) {
+    public Document generatePdf(Fund fund) {
         Document document = new Document(PageSize.A4);
         try {
 
-            PdfWriter.getInstance(document, new FileOutputStream("Raport_" + id + ".pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream("Raport_" + fund.getId() + ".pdf"));
 
-            Fund fund = fundRepository.findFundById(id);
+//            Fund fund = fundRepository.findFundById(id);
 
             document.open();
             BaseFont timesNewRoman = BaseFont.createFont("font/AbhayaLibre-Bold.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -100,9 +100,9 @@ public class PDFService implements IPDFService {
 
             document.add(table);
 
-            for(BillsHistory billsHistory : billsHistoryRepository.findBillsHistoryByFundId(fund.getId()))
+            for(BillsHistory billsHistory : billsHistoryRepository.findBillsHistoryBySessionId(fund.getSessionId()))
             {
-                User user = userRepository.findUserBySenderId(billsHistory.getSender().getId());
+                User user = userRepository.findUserBySenderId(billsHistory.getSender().getSessionId());
                 table = new PdfPTable(4);
                 table.setWidthPercentage(100);
                 table.addCell(new Phrase(billsHistory.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), font));

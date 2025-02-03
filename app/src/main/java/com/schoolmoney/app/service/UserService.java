@@ -45,7 +45,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User getUserBySenderId(Long senderId) {
+    public User getUserBySenderId(String senderId) {
         return userRepository.findUserBySenderId(senderId);
     }
 }

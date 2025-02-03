@@ -39,30 +39,15 @@ public class RaportController {
         this.pdfService = pdfService;
     }
 
-    @GetMapping
-    public ResponseEntity<?> getUserByEmail(@RequestHeader("Authorization") String token) {
-        try {
-            Claims claims = JwtTokenUtil.verifyToken(token);
-            User user = userService.getUserByEmail(claims.getSubject());
-            if(user == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Didn't find user with this email");
-            }
-            UserInfoDto userDto = UserToUserInfoDtoConverter.UserToUserDto(user);
 
-            return ResponseEntity.ok(userDto);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
-        }
-    }
-
-
-    @GetMapping("/download/pdf/{pdfId}")
-    public ResponseEntity<Document> downloadPdf(@PathVariable long pdfId) throws IOException {
-        Document document = pdfService.generatePdf(pdfId);
+    @GetMapping("/download/pdf/{sessionId}")
+    public ResponseEntity<Document> downloadPdf(@PathVariable String sessionId) throws IOException {
+        Fund fund = fundService.getFundBySessionId(sessionId);
+        Document document = pdfService.generatePdf(fund);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "Raport_" + pdfId + ".pdf");  // Filename for download
+        headers.setContentDispositionFormData("attachment", "Raport " + fund.getFundName() + ".pdf");  // Filename for download
 
         return new ResponseEntity<>(document, headers, HttpStatus.OK);
     }

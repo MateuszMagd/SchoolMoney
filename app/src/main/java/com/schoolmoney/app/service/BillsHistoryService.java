@@ -21,6 +21,11 @@ public class BillsHistoryService implements IBillsHistoryService {
         this.billsHistoryRepository = billsHistoryRepository;
     }
     @Override
+    public List<BillsHistory> getBillsHistoryBySessionId(Fund fund) {
+        return billsHistoryRepository.findBillsHistoryBySessionId(fund.getSessionId());
+    }
+
+    @Override
     public List<BillsHistory> getBillsHistoryByFund(Fund fund) {
         return billsHistoryRepository.findBillsHistoryByFundId(fund.getId());
     }

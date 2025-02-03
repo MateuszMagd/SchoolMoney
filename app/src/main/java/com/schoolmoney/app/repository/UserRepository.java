@@ -14,6 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u.bills FROM User u WHERE u.email = :email")
     Bills findBillsByUserEmail(String email);
 
-    @Query("SELECT u FROM User u WHERE u.id = :senderId")
-    User findUserBySenderId(@Param("senderId") Long senderId);
+    @Query("SELECT u FROM User u WHERE u.bills.sessionId = :SessionId")
+    User findUserBySenderId(@Param("SessionId") String SessionId);
+
+    @Query("SELECT u FROM User u")
+    List<User> findAll();
 }

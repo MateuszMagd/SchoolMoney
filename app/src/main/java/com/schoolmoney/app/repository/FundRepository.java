@@ -11,6 +11,9 @@ import java.util.List;
 public interface FundRepository extends JpaRepository<Fund, Long> {
     Fund findFundById(Long id);
 
-    // TODO query to find user's funds
-    List<Fund> findDistinctFundsForUser(@Param("userId") Long userId);
+    Fund findFundBySessionId(String sessionId);
+
+
+//    @Query("SELECT distinct f FROM Fund f join Class c on f.classId=c join Child ch on c=ch.classId join User u on ch.parents=:userID")
+//    List<Fund> findDistinctFundsForUser(@Param("userId") Long userId);
 }

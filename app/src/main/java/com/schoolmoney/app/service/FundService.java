@@ -24,4 +24,16 @@ public class FundService implements IFundService {
     {
         return null;
     }
+
+    @Override
+    public Fund getFundByID(Long id)
+    {
+        return fundRepository.findFundById(id);
+    }
+
+    @Override
+    public Fund getFundBySessionId(String sessionId)
+    {
+        return fundRepository.findFundBySessionId(sessionId);
+    }
 }
