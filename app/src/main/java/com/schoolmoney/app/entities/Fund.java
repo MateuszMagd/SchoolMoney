@@ -7,40 +7,57 @@ import org.springframework.cglib.core.Local;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import jakarta.persistence.*;
+import com.schoolmoney.app.enums.StatusType;
+import java.time.LocalDate;
+import java.util.UUID;
+
 @Entity
 public class Fund {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(unique = true)
     private String sessionId;
+
     private String fundName;
     private String description;
     private float moneyPerKid;
     private float moneyEarned;
+    private float moneyGoal;
 
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(length = 16777215)
     private byte[] photo;
+
     private LocalDate startDate;
     private LocalDate endDate;
     private StatusType status;
 
     @ManyToOne
     private Class classId;
+
     @ManyToOne
     private Bills bills;
+
     @ManyToOne
     private User patron;
 
-    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Class classId, Bills bills, User patron) {
+    // Default constructor
+    public Fund() {
         this.sessionId = UUID.randomUUID().toString();
+    }
 
+    // Constructor with parameters
+    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, float moneyGoal, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Class classId, Bills bills, User patron) {
         this.fundName = fundName;
         this.description = description;
         this.moneyPerKid = moneyPerKid;
         this.moneyEarned = moneyEarned;
+        this.moneyGoal = moneyGoal;
         this.photo = photo;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -48,10 +65,15 @@ public class Fund {
         this.classId = classId;
         this.bills = bills;
         this.patron = patron;
+        this.sessionId = UUID.randomUUID().toString();
     }
 
-    public Fund() {
-        this.sessionId = UUID.randomUUID().toString();
+
+
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
     }
 
     public String getSessionId() {
@@ -144,5 +166,25 @@ public class Fund {
 
     public void setPatron(User patron) {
         this.patron = patron;
+    }
+
+    public String getStatusString() {
+        return (status == StatusType.OPEN) ? "w trakcie" : "zamknięta";
+    }
+
+    public float getMoneyGoal() {
+        return moneyGoal;
+    }
+
+    public void setMoneyGoal(float moneyGoal) {
+        this.moneyGoal = moneyGoal;
+    }
+
+    public boolean isOpen() {
+        return status == StatusType.OPEN;
+    }
+    public void setSessionId(String sessionId)
+    {
+        this.sessionId = sessionId;
     }
 }
