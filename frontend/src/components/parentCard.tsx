@@ -6,7 +6,7 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
     const { email, firstName, lastName, photo, pesel, userType } = info;
 
     return (
-        <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg" style={{ height: '700px', width: '580px' }}>
+        <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-2xl" style={{ height: '700px', width: '580px' }}>
            
             <div className="flex flex-col justify-center items-center h-[200px] mt-3">
                 <Image src={photo} alt="photo" width={155} height={155} />
