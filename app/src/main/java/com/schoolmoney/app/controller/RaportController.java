@@ -3,6 +3,7 @@ package com.schoolmoney.app.controller;
 
 import com.itextpdf.text.Document;
 import com.schoolmoney.app.authenticate.JwtTokenUtil;
+import com.schoolmoney.app.dto.NewFoundRegister;
 import com.schoolmoney.app.dto.UserInfoDto;
 import com.schoolmoney.app.entities.Fund;
 import com.schoolmoney.app.entities.User;
@@ -70,6 +71,22 @@ public class RaportController {
 
             return ResponseEntity.ok(funds);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<?> createNewFound(@RequestHeader("Authorization") String token, @RequestBody NewFoundRegister newFund) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            Fund fund = new Fund();
+            fund.setFundName(newFund.getName());
+            fund.setDescription(newFund.getDescription());
+            fund.setMoneyGoal(newFund.getGoal());
+
+            return ResponseEntity.ok("Ok");
+        }
+        catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }

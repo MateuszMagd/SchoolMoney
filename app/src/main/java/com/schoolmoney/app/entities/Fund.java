@@ -38,7 +38,7 @@ public class Fund {
     private StatusType status;
 
     @ManyToOne
-    private Class classId;
+    private Classes classId;
 
     @ManyToOne
     private Bills bills;
@@ -52,7 +52,7 @@ public class Fund {
     }
 
     // Constructor with parameters
-    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, float moneyGoal, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Class classId, Bills bills, User patron) {
+    public Fund(String fundName, String description, float moneyPerKid, float moneyEarned, float moneyGoal, byte[] photo, LocalDate startDate, LocalDate endDate, StatusType status, Classes classId, Bills bills, User patron) {
         this.fundName = fundName;
         this.description = description;
         this.moneyPerKid = moneyPerKid;
@@ -144,11 +144,11 @@ public class Fund {
         this.status = status;
     }
 
-    public Class getClassId() {
+    public Classes getClassId() {
         return classId;
     }
 
-    public void setClassId(Class classId) {
+    public void setClassId(Classes classId) {
         this.classId = classId;
     }
 

@@ -29,7 +29,7 @@ public class Child {
     private byte[] photo;
 
     @ManyToOne
-    private Class classId;
+    private Classes classId;
 
     @ManyToMany
     @JoinTable(
@@ -39,7 +39,7 @@ public class Child {
     )
     private List<User> parents;
 
-    public Child(@Nonnull String name, @Nonnull String lastName, @Nonnull LocalDate birthday, @Nonnull String pesel, byte[] photo, Class classId, List<User> parents) {
+    public Child(@Nonnull String name, @Nonnull String lastName, @Nonnull LocalDate birthday, @Nonnull String pesel, byte[] photo, Classes classId, List<User> parents) {
         this.sessionId = UUID.randomUUID().toString();
         this.name = name;
         this.lastName = lastName;
@@ -102,11 +102,11 @@ public class Child {
         this.photo = photo;
     }
 
-    public Class getClassId() {
+    public Classes getClassId() {
         return classId;
     }
 
-    public void setClassId(Class classId) {
+    public void setClassId(Classes classId) {
         this.classId = classId;
     }
 

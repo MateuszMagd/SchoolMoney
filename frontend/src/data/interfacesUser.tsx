@@ -1,6 +1,6 @@
 import { UserType } from "./enums";
 
-// ---------------User Info Interfaces---------------
+// --------------- User Info Interfaces ---------------
 
 export interface NewUserRegister {
     email: string,
@@ -34,9 +34,30 @@ export interface NewChildInfo {
     pesel: string,
 };
 
-// --------------- Register Interfaces---------------
+// --------------- Register Interfaces ---------------
 export interface UserInfoExtended extends UserInfo{
     password: string,
 };
 
-// ---------------Chat Interfaces---------------
+// --------------- Chat Interfaces --------------------
+
+// -------------------- Classes -----------------------
+export interface ClassInfo {
+    sessionId: string,
+    className: string,
+};
+
+export interface ExtendedClassInfo extends ClassInfo {
+    children: ChildInfo[],
+};
+
+// -------------------- Fund -----------------------
+
+export interface FundInfo {
+    name: string,
+    startDate: string,
+    endDate: string,
+    goal: number,
+    description: string,
+    classSessionId: string,
+};

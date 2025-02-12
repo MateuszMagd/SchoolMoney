@@ -13,9 +13,9 @@ public class ClassMessages {
     private String sessionId;
 
     @ManyToOne
-    private Class classId;
+    private Classes classId;
 
-    public ClassMessages(Class classId) {
+    public ClassMessages(Classes classId) {
         this.sessionId = UUID.randomUUID().toString();
         this.classId = classId;
     }
@@ -28,11 +28,11 @@ public class ClassMessages {
         return sessionId;
     }
 
-    public Class getClassId() {
+    public Classes getClassId() {
         return classId;
     }
 
-    public void setClassId(Class classid) {
+    public void setClassId(Classes classid) {
         this.classId = classid;
     }
 }
