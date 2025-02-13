@@ -50,7 +50,7 @@ const ChildEditPage =() => {
         backgroundImage: "url('/assets/parent_background.png')",
         backgroundSize: "cover",}}>
       {formData ? (
-        <form onSubmit={handleSubmit} className="p-5 bg-white rounded-[30px] w-[580px] h-[700px] shadow-xl">
+        <form onSubmit={handleSubmit} className="p-5 bg-white rounded-[30px] w-[580px] h-[730px] shadow-xl">
           <h3 className="text-[55px] font-anton text-dark_blue mt-5 mb-4 text-center">DANE DZIECKA</h3>
           <div className=" ml-9 mb-4 mt-8">
           <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
