@@ -15,25 +15,25 @@ const UserInfoRow: React.FC<ChildInfoRowProps> = ({ child, onDelete, onModify, s
             <td>{child.lastName}</td>
             <td>{child.pesel}</td>
             <td>{child.birthday}</td>
-            <td className="flex flex-row justify-center"><Image src={child.photo} alt="No photo" width={100} height={100} className=""/></td>
+            <td className="flex flex-row justify-center"><Image src={child.photo} alt="No photo" width={70} height={70} className=""/></td>
             <td>
                 <button 
                     onClick={onModify} 
-                    className="bg-blue-500 text-white p-1 mx-1"
+                    className="bg-dark_blue text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
                 >
-                    Modify
+                    MODYFIKUJ
                 </button>
                 <button 
                     onClick={onDelete} 
-                    className="bg-red-500 text-white p-1 mx-1"
+                    className="bg-light_blue text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
                 >
-                    Delete
+                    USUŃ
                 </button>
                 <button 
                     onClick={showParent} 
-                    className="bg-red-500 text-white p-1 mx-1"
+                    className="bg-light_marine text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
                 >
-                    Show Parents
+                    POKAŻ RODZICA
                 </button>
             </td>
         </tr>
