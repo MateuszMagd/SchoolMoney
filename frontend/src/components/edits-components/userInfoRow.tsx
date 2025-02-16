@@ -19,15 +19,15 @@ const UserInfoRow: React.FC<UserInfoRowProps> = ({ user, onDelete, onModify }) =
             <td>
                 <button 
                     onClick={onModify} 
-                    className="bg-light_blue text-white font-bold w-[100px] h-[50px] rounded-lg text-[13px] mr-3"
+                    className="bg-light_blue text-white w-[100px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    MODYFIKUJ
+                    Modyfikuj
                 </button>
                 <button 
                     onClick={onDelete} 
-                    className="bg-light_marine text-white font-bold w-[100px] h-[50px] rounded-lg text-[13px]"
+                    className="bg-light_marine text-white  w-[100px] h-[50px] rounded-lg text-[15px]"
                 >
-                    USUŃ
+                    Usuń
                 </button>
             </td>
         </tr>

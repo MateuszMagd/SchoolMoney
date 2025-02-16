@@ -41,14 +41,14 @@ const FundForm = () => {
                     <input type="class" placeholder="Wybierz klasę..." className=" w-[450px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
                 </div>
 
-                <input type="submit" value="STWÓRZ ZBIÓRKE" className="bg-marine font-bold text-white rounded-md w-[200px] h-[43px] mb-2" />
+                <input type="submit" value="Stwórz zbiórkę" className="bg-marine text-white rounded-md w-[200px] h-[43px] mb-2" />
                 </div>
               
 
             </form>
 
             <div className="flex flex-col items-center">
-            {/* <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[250px]" height="h-[60px]"/> */}
+            {/* <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/> */}
             </div>
 
         </>     

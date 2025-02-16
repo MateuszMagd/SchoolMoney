@@ -19,21 +19,21 @@ const UserInfoRow: React.FC<ChildInfoRowProps> = ({ child, onDelete, onModify, s
             <td>
                 <button 
                     onClick={onModify} 
-                    className="bg-dark_blue text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
+                    className="bg-dark_blue text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    MODYFIKUJ
+                    Modyfikuj
                 </button>
                 <button 
                     onClick={onDelete} 
-                    className="bg-light_blue text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
+                    className="bg-light_blue text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    USUŃ
+                    Usuń
                 </button>
                 <button 
                     onClick={showParent} 
-                    className="bg-light_marine text-white font-bold w-[120px] h-[50px] rounded-lg text-[13px] mr-3"
+                    className="bg-light_marine text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    POKAŻ RODZICA
+                    Pokaż rodzica
                 </button>
             </td>
         </tr>

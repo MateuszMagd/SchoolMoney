@@ -56,68 +56,75 @@ const ChildAddPage = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-            {error && <div className="text-red-500 mb-4">{error}</div>}
+        <div 
+            className="min-h-screen flex items-center justify-center bg-cover bg-center"
+            style={{ backgroundImage: "url('/assets/admin_background.png')" }}>
 
-            <div className="mb-4">
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                    First Name:
-                </label>
-                <input
-                    type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                />
-            </div>
+            <form onSubmit={handleSubmit} className="flex flex-col  bg-white rounded-[30px] shadow-2xl w-[1000px] p-6">
+                {error && <div className="text-red-500 mb-4">{error}</div>}
 
-            <div className="mb-4">
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                    Last Name:
-                </label>
-                <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="pesel" className="block text-sm font-medium text-gray-700">
-                    PESEL:
-                </label>
-                <input
-                    type="text"
-                    id="pesel"
-                    name="pesel"
-                    value={formData.pesel || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                />
-            </div>
-
-            <div className="mb-4">
-                <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
-                    Birth Date:
-                </label>
-                <input
-                    type="date"
-                    id="birthday"
-                    name="birthday"
-                    value={formData.birthday || ""}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                />
-            </div>
-
-            <button type="submit" className="p-2 bg-blue-500 text-white rounded-md">Submit</button>
-        </form>
+                <h3 className="text-[50px] font-anton text-dark_blue mt-5 mb-4 text-center">REJESTRACJA DZIECKA</h3>
+                <div className="ml-9 mb-4 mt-3">
+                    <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Imię:
+                    </label>
+                    <input
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName || ""}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                <div className="ml-9 mb-4">
+                    <label htmlFor="lastName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Nazwisko:
+                    </label>
+                    <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName || ""}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                <div className="ml-9 mb-4 ">
+                    <label htmlFor="pesel" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        PESEL:
+                    </label>
+                    <input
+                        type="text"
+                        id="pesel"
+                        name="pesel"
+                        value={formData.pesel || ""}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                <div className="ml-9 mb-4">
+                    <label htmlFor="birthDate" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Data urodzenia:
+                    </label>
+                    <input
+                        type="date"
+                        id="birthday"
+                        name="birthday"
+                        value={formData.birthday || ""}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                <button type="submit" className="w-[90%] ml-9 h-[50px] bg-dark_blue text-center text-white rounded-md mt-5 ">Zapisz</button>
+            </form>
+        </div>
     );
+    
 }
 
 export default ChildAddPage;

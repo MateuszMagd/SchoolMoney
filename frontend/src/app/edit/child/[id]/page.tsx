@@ -45,7 +45,7 @@ const ChildEditPage =() => {
       editChild(formData);
   };  
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen space-y-20" 
+    <div className="flex flex-col justify-center items-center min-h-screen space-y-14" 
       style={{
         backgroundImage: "url('/assets/parent_background.png')",
         backgroundSize: "cover",}}>
@@ -135,7 +135,7 @@ const ChildEditPage =() => {
         <div>Loading...</div>
       )}
 
-      <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[150px]" height="h-[60px]"/>
+      <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[250px]" height="h-[60px]"/>
     </div>
   );
   

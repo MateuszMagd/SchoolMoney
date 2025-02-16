@@ -29,7 +29,7 @@ const FundPage = () => {
                     <FundForm />
                 </div>
                 <div className="ml-32">
-                    <img src="/assets/hand_with_money.png" alt="Obrazek" className="" />
+                    <img src="/assets/hand_with_money.png"  className="" />
                 </div>
             </div>
         </div>

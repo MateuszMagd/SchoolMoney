@@ -81,10 +81,10 @@ const ChildrenPage = () => {
                         <tr className="mt-10">
                             <td colSpan={8}>
                                 <Link
-                                    className="mt-7 flex justify-center w-full p-2 bg-dark_blue text-white rounded-lg font-bold text-center text-[17px]"
+                                    className="mt-7 flex justify-center w-full p-2 bg-dark_blue text-white rounded-lg text-center text-[17px]"
                                     href="/admin/main/edit/add/child"
                                 >
-                                    DODAJ NOWE DZIECKO +
+                                    Dodaj nowe dziecko +
                                 </Link>
                             </td>
                         </tr>

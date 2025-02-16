@@ -32,7 +32,7 @@ const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
                 <div className="flex justify-center font-oswald text-normal_blue mb-3" style={{ fontSize: '22px' }}>Edyta Nowak</div>
                
                 <div className="flex justify-center items-center mt-5 mb-5">
-                    <RouterButton page={`edit/child/${sessionId}`} buttonString="Edytuj" color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
+                    <RouterButton page={`edit/child/${sessionId}`} buttonString="Edytuj" color="bg-dark_blue" width="w-[200px]" height="h-[50px]"/>
                 </div>
         </div>
     )

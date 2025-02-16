@@ -30,8 +30,8 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
 
             <div className="flex flex-row items-center justify-center space-x-12">
                 {/* TODO: Add functionality to this */}
-                <RouterButton page="/parent-details" buttonString="Edytuj"  color="bg-dark_blue" width="w-[150px]" height="h-[50px] "/>
-                <RouterButton page="/parent-details" buttonString="Raporty"  color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
+                <RouterButton page="/parent-details" buttonString="Edytuj"  color="bg-dark_blue" width="w-[200px]" height="h-[50px] "/>
+                <RouterButton page="/parent-details" buttonString="Raporty"  color="bg-dark_blue" width="w-[200px]" height="h-[50px]"/>
             </div>
             
             
