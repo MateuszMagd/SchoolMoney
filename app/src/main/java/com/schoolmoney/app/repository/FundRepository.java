@@ -1,5 +1,6 @@
 package com.schoolmoney.app.repository;
 
+import com.schoolmoney.app.entities.Classes;
 import com.schoolmoney.app.entities.Fund;
 import com.schoolmoney.app.entities.Bills;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +13,8 @@ public interface FundRepository extends JpaRepository<Fund, Long> {
     Fund findFundById(Long id);
 
     Fund findFundBySessionId(String sessionId);
+
+    List<Fund> findByClassId(Classes classes);
 
 
 //    @Query("SELECT distinct f FROM Fund f join Class c on f.classId=c join Child ch on c=ch.classId join User u on ch.parents=:userID")

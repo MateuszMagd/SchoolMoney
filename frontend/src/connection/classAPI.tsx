@@ -1,4 +1,4 @@
-import { ChildInfo, ClassInfo } from "@/data/interfacesUser";
+import { ChildClassInfo, ChildInfo, ClassInfo } from "@/data/interfacesUser";
 import { getToken } from "@/data/tokenHandler";
 import axios from "axios";
 
@@ -122,6 +122,37 @@ export const getAllKidsFromClass = async(sessionId: string): Promise<ChildInfo[]
         }
         return [];
     }
+}
+
+export const getClassByChild = async(childId: string): Promise<ChildClassInfo> => { 
+    try {
+        const token = getToken();
+        if(!token) {
+            alert("You are not logged.");
+            return {} as ChildClassInfo;
+        }
+        const response = await axios.get('http://localhost:8090/api/class/get/child/class', {
+            headers: {
+                'Authorization': token,
+                'SessionId': childId,
+            },
+            withCredentials: true,
+        });
+
+        const childrenData: ChildClassInfo = response.data;
+
+        return childrenData;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return {} as ChildClassInfo;
+    }
+
 }
 
  

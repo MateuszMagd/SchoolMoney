@@ -51,6 +51,12 @@ export interface ExtendedClassInfo extends ClassInfo {
     children: ChildInfo[],
 };
 
+export interface ChildClassInfo extends ClassInfo {
+    patronFirstName: string,
+    patronLastName: string,
+}
+
+
 // -------------------- Fund -----------------------
 
 export interface FundInfo {

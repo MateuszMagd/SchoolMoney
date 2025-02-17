@@ -67,11 +67,9 @@ public class Fund {
         this.patron = patron;
         this.sessionId = UUID.randomUUID().toString();
     }
-
-
-
-
     // Getters and Setters
+
+
     public Long getId() {
         return id;
     }

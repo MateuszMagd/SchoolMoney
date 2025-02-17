@@ -65,7 +65,6 @@ public class RunAtStart {
                                     "55566677728","Mateusz","Mag", Utils.loadPhoto("default.png"), null);
 
             Bills bills = new Bills();
-            BillsHistory billsHistory = new BillsHistory(bills, bills, 5f, OperationType.TEST, "za godność", LocalDate.parse("2024-01-25"));
             parent1.setBills(bills);
 
             Bills bills2 = new Bills();
@@ -77,7 +76,6 @@ public class RunAtStart {
             billsRepository.save(bills);
             billsRepository.save(bills2);
             billsRepository.save(bills3);
-            billsHistoryRepository.save(billsHistory);
 
             userRepository.save(parent1);
             userRepository.save(parent2);
@@ -94,21 +92,40 @@ public class RunAtStart {
 
             classRepository.save(classes);
 
+            Bills bills4 = new Bills();
+            Bills bills5 = new Bills();
+            billsRepository.save(bills4);
+            billsRepository.save(bills5);
+
+            Bills bills6 = new Bills();
+            billsRepository.save(bills6);
+
             System.out.println("[Starting] Adding test kids. . .");
             Child child1 = new Child("Mateusz", "Kristin", LocalDate.of(2017, 2, 10),
-                                    "11211311400", Utils.loadPhoto("default.png"), classes, List.of(parent1, parent2));
+                                    "11211311400", Utils.loadPhoto("default.png"), classes, List.of(parent1, parent2), bills4);
 
             Child child2 = new Child("Anna", "Kristin", LocalDate.of(2017, 2, 10),
-                    "11211311400",Utils.loadPhoto("default.png") , classes, List.of(parent1, parent2));
+                    "11211311400",Utils.loadPhoto("default.png") , classes, List.of(parent1, parent2), bills5);
+
+            Child child3 = new Child("Miłosz", "Kristin", LocalDate.of(2017, 2, 10),
+                    "00022233344",Utils.loadPhoto("default.png") , null, List.of(parent1, parent2), bills6);
+
+
 
             childRepository.save(child1);
             childRepository.save(child2);
+            childRepository.save(child3);
 
 
             // <---------------- fundusz --------------------->
-            Fund fund = new Fund("Zbiórka na dupe", "asd", 5, 0, 15,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.CLOSED,classes , bills, parent1);
+            Bills billsFund = new Bills();
+            billsRepository.save(billsFund);
+
+            Fund fund = new Fund("Zbiórka na wycieczke", "Wycieczka do częstochowy", 10, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.OPEN, classes , billsFund, parent1);
             fundRepository.save(fund);
-            fund.setSessionId(fundRepository.findFundById(fund.getId()).getSessionId());
+
+            BillsHistory billsHistory = new BillsHistory(bills, billsFund, bills4, 10, OperationType.TRANSFER, "Zapłacono za wycieczke za Mateusz Kristian", LocalDate.parse("2024-01-25"));
+            billsHistoryRepository.save(billsHistory);
 
             // <---------------- ADMIN -------------------->
             System.out.println("[Starting] All done! Get started!");

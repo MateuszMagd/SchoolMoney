@@ -1,5 +1,6 @@
 package com.schoolmoney.app.service.interfaces;
 
+import com.schoolmoney.app.entities.Classes;
 import com.schoolmoney.app.entities.Fund;
 import com.schoolmoney.app.entities.User;
 
@@ -11,4 +12,6 @@ public interface IFundService {
     Fund getFundByID(Long id);
 
     Fund getFundBySessionId(String sessionId);
+
+    List<Fund> getFundByClass(Classes classes);
 }
