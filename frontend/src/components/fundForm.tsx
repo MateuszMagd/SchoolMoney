@@ -3,7 +3,7 @@ import RouterButton from "./routerButton";
 const FundForm = () => {
     return (
         <>
-            <form className="flex flex-col  w-[740px] h-[700px] ml-10">
+            <form className="flex flex-col  w-[740px] ml-10">
             
             <div className="flex flex-col items-start">
                 <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">TYTUŁ ZBIÓRKI:</p>

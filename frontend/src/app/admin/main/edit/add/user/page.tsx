@@ -60,87 +60,81 @@ const AddPage = () => {
     };
     
     return (
-        <form className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg"style={{ height: '700px', width: '500px' }} onSubmit={handleSubmit}>
-
-            <div className="text-center text-marine font-anton mt-20" style={{ fontSize: '54px' }}>
-                REJESTRACJA
-            </div>
-
-            {error && <div className="text-red-500 mb-4">{error}</div>}
-
-            {/* Name */}
-            <div className="mb-4 flex justify-center mt-14">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                
-            </label>
-            <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
-                placeholder="Imię"
-            />
-            </div>
-
+        <div 
+            className="min-h-screen flex items-center justify-center bg-cover bg-center" 
+            style={{ backgroundImage: "url('/assets/admin_background.png')" }} 
+        >
+            <form onSubmit={handleSubmit} className="flex flex-col  bg-white rounded-[30px] shadow-2xl w-[1000px] p-6">
             
-            {/* Lastname */}
-            <div className="mb-4 flex justify-center mt-6">
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                </label>
-                <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
-                    placeholder="Nazwisko"
-                />
-            </div>
-
-            {/* Email */}
-            <div className="mb-4 flex justify-center mt-6">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                </label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
-                    placeholder="Email"
-                />
-            </div>
-
-            {/* Password */}
-            <div className="mb-4 flex justify-center mt-6">
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                </label>
+                <h3 className="text-[50px] font-anton text-dark_blue mt-5 mb-4 text-center">REJESTRACJA UŻYTKOWNIKA</h3>
+    
+                {error && <div className="text-red-500 mb-4">{error}</div>}
+    
+                {/* Name */}
+                <div className="ml-9  mt-3">
+                <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Imię:
+                    </label>
                     <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
-                            placeholder="Hasło"
-                        />
-            </div>
-
-            {/* Submit button */}
-            <div className="mb-4 flex justify-center mt-10">
-            <button
-                type="submit"
-                className="w-[200px] h-[50px] bg-marine text-white text-medium font-medium rounded-[15px] shadow-md hover:shadow-lg transition-all duration-300"
-                >
-                Zarejestruj się
-            </button>
-            </div>
-        </form>
+                        type="text"
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                       
+                    />
+                </div>
+    
+                {/* Lastname */}
+                <div className="ml-9 mt-3">
+                <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Nazwisko:
+                    </label>
+                    <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                {/* Email */}
+                <div className="ml-9 mt-3">
+                <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Email:
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+    
+                {/* Password */}
+                <div className="ml-9 mb-4 mt-3">
+                <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                        Hasło:
+                    </label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
+                    />
+                </div>
+                <button type="submit" className="w-[90%] ml-9 h-[50px] bg-dark_blue text-center text-white rounded-md mt-5 ">Zarejestruj</button>
+            </form>
+        </div>
     );
+    
 }
 
 export default AddPage;

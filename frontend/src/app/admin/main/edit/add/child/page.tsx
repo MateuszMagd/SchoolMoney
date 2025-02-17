@@ -120,7 +120,7 @@ const ChildAddPage = () => {
                     />
                 </div>
     
-                <button type="submit" className="w-[90%] ml-9 h-[50px] bg-dark_blue text-center text-white rounded-md mt-5 ">Zapisz</button>
+                <button type="submit" className="w-[90%] ml-9 h-[50px] bg-dark_blue text-center text-white rounded-md mt-5 ">Zarejestruj</button>
             </form>
         </div>
     );
