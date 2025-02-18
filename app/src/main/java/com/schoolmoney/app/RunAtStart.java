@@ -6,9 +6,11 @@ import com.schoolmoney.app.enums.OperationType;
 import com.schoolmoney.app.enums.StatusType;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.repository.*;
+import com.schoolmoney.app.service.ChatService;
 import com.schoolmoney.app.service.ChildService;
 import com.schoolmoney.app.service.PDFService;
 import com.schoolmoney.app.service.UserService;
+import com.schoolmoney.app.service.interfaces.IChatService;
 import com.schoolmoney.app.utils.PasswordHash;
 import com.schoolmoney.app.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,10 @@ public class RunAtStart {
     private final BillsHistoryRepository billsHistoryRepository;
     private final FundRepository fundRepository;
     private final BillsRepository billsRepository;
+    private final MessageRepository messageRepository;
+    private final ClassRepository classRepository;
     @Autowired
-    public RunAtStart(BillsRepository billsRepository, FundRepository fundRepository, UserRepository userRepository, ChildRepository childRepository, BillsHistoryRepository billsHistoryRepository) {
+    public RunAtStart(BillsRepository billsRepository, FundRepository fundRepository, UserRepository userRepository, ChildRepository childRepository, BillsHistoryRepository billsHistoryRepository, MessageRepository messageRepository, ClassRepository classRepository) {
         super();
 
         //
@@ -40,6 +44,8 @@ public class RunAtStart {
         this.userRepository = userRepository;
         this.childRepository = childRepository;
         this.billsHistoryRepository = billsHistoryRepository;
+        this.messageRepository = messageRepository;
+        this.classRepository = classRepository;
     }
 
     @Autowired
@@ -100,6 +106,31 @@ public class RunAtStart {
 //            System.out.println("wynik: " + UUID.fromString(billsHistoryRepository.findBillsHistoryByFundId(fund.getId()).getFirst().getSessionId()) + "    " + UUID.fromString(fund.getSessionId()));
             PDFService pdfService = new PDFService(fundRepository, userRepository, billsHistoryRepository);
             pdfService.generatePdf(fund);
+
+            // <---------------- MESSAGES -------------------->
+            Messages m1 = new Messages();
+            m1.setAuthor(parent1);
+            m1.setReceiverParent(parent2);
+            m1.setDate(LocalDate.parse("2025-01-25"));
+            m1.setText("mess1");
+
+            Messages m2 = new Messages();
+            m2.setAuthor(parent2);
+            m2.setReceiverParent(parent1);
+            m2.setDate(LocalDate.parse("2025-01-26"));
+            m2.setText("mess2");
+
+            messageRepository.save(m1);
+            messageRepository.save(m2);
+
+            IChatService chat = new ChatService(messageRepository, classRepository, userRepository);
+            parent2.setSessionId(userRepository.getUserByEmail(parent2.getEmail()).getSessionId());
+            List<Messages> messages = chat.getMessagesBySessionId(parent2.getSessionId(),parent1);
+
+            for(Messages m : messages)
+            {
+                System.out.println(m.getDate() + ": " + m.getText());
+            }
         };
     }
 }

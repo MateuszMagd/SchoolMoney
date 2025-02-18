@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
     User getUserByEmail(String email);
-
     @Query("SELECT u.bills FROM User u WHERE u.email = :email")
     Bills findBillsByUserEmail(String email);
 
@@ -19,4 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u")
     List<User> findAll();
+
+    User findUserBySessionId(String sesid);
 }
