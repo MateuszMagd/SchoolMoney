@@ -32,6 +32,26 @@ public class BillsHistoryService implements IBillsHistoryService {
     }
 
     @Override
+    public void saveBillsHistory(BillsHistory billsHistory) {
+        billsHistoryRepository.save(billsHistory);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoryBySender(Bills bills) {
+        return billsHistoryRepository.findBySender(bills);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoriesBySubject(Bills bills) {
+        return billsHistoryRepository.findAllBySubject(bills);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoryByByReceiver(Bills bills) {
+        return billsHistoryRepository.findByReciver(bills);
+    }
+
+    @Override
     public List<BillsHistory> getBillsHistoryByFund(Fund fund) {
         return billsHistoryRepository.findBillsHistoryByFundId(fund.getId());
     }

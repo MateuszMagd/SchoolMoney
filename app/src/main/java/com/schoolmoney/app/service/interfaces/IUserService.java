@@ -1,5 +1,6 @@
 package com.schoolmoney.app.service.interfaces;
 
+import com.schoolmoney.app.entities.Bills;
 import com.schoolmoney.app.entities.User;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface IUserService {
     List<User> getAllUsers();
 
     User getUserBySenderId(String senderId);
+
+    User getUserByBill(Bills bills);
 
 }

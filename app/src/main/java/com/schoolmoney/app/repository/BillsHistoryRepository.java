@@ -19,4 +19,9 @@ public interface BillsHistoryRepository extends JpaRepository<BillsHistory, Long
     List<BillsHistory> findBillsHistoryByFundId(@Param("fundId") Long fundId);
 
     BillsHistory findBySubject(Bills bills);
+
+    List<BillsHistory> findByReciver(Bills bills);
+    List<BillsHistory> findBySender(Bills bills);
+    List<BillsHistory> findAllBySubject(Bills bills);
+
 }

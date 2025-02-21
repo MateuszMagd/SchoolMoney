@@ -116,6 +116,8 @@ public class RaportController {
             for(Child child : children) {
                 FundInfoDto fundInfoDto = new FundInfoDto();
                 Classes classes = child.getClassId();
+                if(classes == null)
+                    continue;
 
                 List<Fund> fundsList = fundService.getFundByClass(classes);
 

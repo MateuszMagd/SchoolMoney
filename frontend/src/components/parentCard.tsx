@@ -31,7 +31,7 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
                 {/* TODO: Add functionality to this */}
                 <RouterButton page="parent-details" buttonString="Edytuj" width="w-[150px]" height="h-[50px]"/>
                 <RouterButton page="parent-details" buttonString="Raporty" width="w-[150px]" height="h-[50px]"/>
-                <RouterButton page="parent-details/my-funds" buttonString="Zbiorki" color="bg-red" width="w-[150px]" height="h-[50px]"/>
+                <RouterButton page="parent-details/my-funds" buttonString="Zbiorki" width="w-[150px]" height="h-[50px]"/>
             </div>
             
             

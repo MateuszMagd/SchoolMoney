@@ -1,3 +1,4 @@
+import exp from "constants";
 import { UserType } from "./enums";
 
 // --------------- User Info Interfaces ---------------
@@ -56,6 +57,14 @@ export interface ChildClassInfo extends ClassInfo {
     patronLastName: string,
 }
 
+export interface ClassQueueInfo {
+    sessionId: string,
+    childFullName: string,
+    childSessionId: string,
+    classesName: string,
+    classesSessionId: string,
+}
+
 
 // -------------------- Fund -----------------------
 
@@ -66,4 +75,23 @@ export interface FundInfo {
     goal: number,
     description: string,
     classSessionId: string,
+};
+
+// -------------------- Transaction -----------------------
+
+export interface Transaction {
+    name: string,
+    sessionId: string,
+    amountNeeded: number,
+    description: string,
+    payForWho: string,
+}
+
+
+export interface UserTransaction {
+    receiverFullName: string,
+    amountSended: number,
+    operationType: string,
+    text: string,
+    date: string,
 };

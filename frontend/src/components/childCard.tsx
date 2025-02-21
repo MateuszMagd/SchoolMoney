@@ -14,7 +14,6 @@ const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
          const getClassData = async () => {
              const data = await getClassByChild(sessionId);
              setClassData(data);
-             console.log(data, typeof data);
          }
          getClassData();
 

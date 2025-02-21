@@ -15,9 +15,12 @@ public class Bills {
     @Column(unique = true)
     private String billsNumber;
 
+    private float balance;
+
     public Bills() {
         this.sessionId = UUID.randomUUID().toString();
         this.billsNumber = generateBillsNumber();
+        this.balance = 0;
     }
 
     private String generateBillsNumber() {
@@ -30,6 +33,14 @@ public class Bills {
         return number.toString();
     }
 
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
+    }
 
     public String getSessionId() {
         return sessionId;

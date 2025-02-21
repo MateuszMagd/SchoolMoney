@@ -66,6 +66,7 @@ public class RunAtStart {
 
             Bills bills = new Bills();
             parent1.setBills(bills);
+            bills.setBalance(100);
 
             Bills bills2 = new Bills();
             parent2.setBills(bills2);

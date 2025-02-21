@@ -1,5 +1,6 @@
 package com.schoolmoney.app.service;
 
+import com.schoolmoney.app.entities.Bills;
 import com.schoolmoney.app.entities.Classes;
 import com.schoolmoney.app.entities.Fund;
 import com.schoolmoney.app.entities.User;
@@ -41,5 +42,10 @@ public class FundService implements IFundService {
     @Override
     public List<Fund> getFundByClass(Classes classes) {
         return fundRepository.findByClassId(classes);
+    }
+
+    @Override
+    public Fund getFundByBills(Bills bills) {
+        return fundRepository.findByBills(bills);
     }
 }

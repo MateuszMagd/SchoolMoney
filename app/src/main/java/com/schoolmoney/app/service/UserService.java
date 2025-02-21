@@ -1,5 +1,6 @@
 package com.schoolmoney.app.service;
 
+import com.schoolmoney.app.entities.Bills;
 import com.schoolmoney.app.entities.User;
 import com.schoolmoney.app.repository.UserRepository;
 import com.schoolmoney.app.service.interfaces.IUserService;
@@ -47,5 +48,10 @@ public class UserService implements IUserService {
     @Override
     public User getUserBySenderId(String senderId) {
         return userRepository.findUserBySenderId(senderId);
+    }
+
+    @Override
+    public User getUserByBill(Bills bills) {
+        return userRepository.findByBills(bills);
     }
 }

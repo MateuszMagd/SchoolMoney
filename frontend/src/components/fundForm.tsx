@@ -20,12 +20,21 @@ const FundForm = () => {
     useEffect(() => {
         const fetchPossibleClasses = async () => {
             const classData = await getAllClassesFromUserAndUserKids();
-            setPossibleClasses(classData);
-            formData.classSessionId = classData[0].sessionId;
+            console.log("ClassData:", classData);
+
+            if (classData && classData.length > 0 && classData[0]) {
+                setPossibleClasses(classData);
+                setFormData((prev) => ({
+                    ...prev,
+                    classSessionId: classData[0].sessionId,
+                }));
+            }
         };
 
         fetchPossibleClasses();
     }, []);
+
+    console.log("Possible:", possibleClasses);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +87,10 @@ const FundForm = () => {
         console.log(formData);
     }
 
+    if(!possibleClasses) {
+        return <p>Loading...</p>
+    };
+
     return (
         <>  
             {possibleClasses.length === 0 ? 
@@ -98,11 +111,11 @@ const FundForm = () => {
                 value={formData.classSessionId}
                 className="border border-gray-300 rounded-md p-2 m-2"
                 onChange={handleClassChange}>
-                {possibleClasses.map((classInfo) => (
-                    <option key={classInfo.sessionId} value={classInfo.sessionId}>
-                        {classInfo.className}
-                    </option>
-                ))}
+                    {possibleClasses.map((classInfo) => (
+                        <option key={classInfo.sessionId} value={classInfo.sessionId}>
+                            {classInfo.className}
+                        </option>
+                    ))}
                 </select>
 
                 <input type="submit" value="Create Fund" className="bg-blue-500 text-white rounded-md p-2 m-2" />

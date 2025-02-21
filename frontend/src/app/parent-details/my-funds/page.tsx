@@ -16,6 +16,8 @@ const MyFundsPage = () => {
         getData();
     }, []);
 
+    console.log(funds)
+
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">My Funds</h1>

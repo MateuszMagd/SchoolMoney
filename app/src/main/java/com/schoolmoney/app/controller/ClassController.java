@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/class")
@@ -140,7 +141,7 @@ public class ClassController {
                 for(Child child: children) {
                     Classes childClass = child.getClassId();
 
-                    if(!classes.contains(childClass)) {
+                    if(!classes.contains(childClass) && childClass != null) {
                         classes.add(childClass);
                     }
                 }
@@ -196,7 +197,7 @@ public class ClassController {
     }
 
     @PostMapping("/post/ask/child")
-    public ResponseEntity<?> postNewQueueAsk(@RequestHeader("Authorization") String token, @RequestHeader("ClassSessionId") String classId, @RequestBody String childSessionId) {
+    public ResponseEntity<?> postNewQueueAsk(@RequestHeader("Authorization") String token, @RequestHeader("ClassSessionId") String classId, @RequestBody Map<String, String> requestBody) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
 
@@ -205,12 +206,15 @@ public class ClassController {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found");
             }
 
+            String childSessionId = requestBody.get("childSessionId");
+
             Child child = childService.getChildBySessionId(childSessionId);
             if(child == null) {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body("Child not found");
             }
-
-            ClassQueue classQueue = new ClassQueue(child, classes);
+            ClassQueue classQueue = new ClassQueue();
+            classQueue.setChild(child);
+            classQueue.setClasses(classes);
 
             classQueueService.saveClassQueue(classQueue);
 
@@ -252,37 +256,41 @@ public class ClassController {
 
             return ResponseEntity.ok(userClassQueues);
         } catch (Exception e) {
+            System.out.println(e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }
 
     @PostMapping("/post/decide/child")
-    public ResponseEntity<?> postDecideOnChildCandidature(@RequestHeader("Authorization") String token, @RequestHeader("Verdict") boolean verdict, @RequestBody String classQueueSessionId) {
+    public ResponseEntity<?> postDecideOnChildCandidature(
+            @RequestHeader("Authorization") String token,
+            @RequestBody Map<String, Object> requestBody) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
 
+            String classQueueSessionId = (String) requestBody.get("classQueueSessionId");
+            boolean verdict = (boolean) requestBody.get("verdict");
+
             ClassQueue classQueue = classQueueService.getClassQueueBySessionId(classQueueSessionId);
-            if(classQueue == null) {
+            if (classQueue == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class queue not found");
             }
 
             Classes classes = classQueue.getClasses();
-            if(classes == null ) {
+            if (classes == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found");
             }
 
             Child child = classQueue.getChild();
-            if(child == null ) {
+            if (child == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Child not found");
             }
 
-            if(verdict) {
+            if (verdict) {
                 child.setClassId(classes);
                 childService.saveChild(child);
-                classQueueService.deleteQueueClass(classQueue);
-            } else{
-                classQueueService.deleteQueueClass(classQueue);
             }
+            classQueueService.deleteQueueClass(classQueue);
 
             return ResponseEntity.ok("Ok");
         } catch (Exception e) {

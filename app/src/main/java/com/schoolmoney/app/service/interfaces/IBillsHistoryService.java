@@ -14,4 +14,10 @@ public interface IBillsHistoryService {
     List<BillsHistory> getBillsHistoryBySessionId(Fund fund);
 
     BillsHistory getBillsHistoryBySubject(Bills bills);
+
+    void saveBillsHistory(BillsHistory billsHistory);
+
+    List<BillsHistory> getBillsHistoryBySender(Bills bills);
+    List<BillsHistory> getBillsHistoriesBySubject(Bills bills);
+    List<BillsHistory> getBillsHistoryByByReceiver(Bills bills);
 }

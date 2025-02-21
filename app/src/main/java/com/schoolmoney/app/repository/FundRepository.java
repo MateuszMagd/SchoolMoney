@@ -16,6 +16,8 @@ public interface FundRepository extends JpaRepository<Fund, Long> {
 
     List<Fund> findByClassId(Classes classes);
 
+    Fund findByBills(Bills bills);
+
 
 //    @Query("SELECT distinct f FROM Fund f join Class c on f.classId=c join Child ch on c=ch.classId join User u on ch.parents=:userID")
 //    List<Fund> findDistinctFundsForUser(@Param("userId") Long userId);

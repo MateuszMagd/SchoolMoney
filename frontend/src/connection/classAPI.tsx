@@ -1,4 +1,4 @@
-import { ChildClassInfo, ChildInfo, ClassInfo } from "@/data/interfacesUser";
+import { ChildClassInfo, ChildInfo, ClassInfo, ClassQueueInfo } from "@/data/interfacesUser";
 import { getToken } from "@/data/tokenHandler";
 import axios from "axios";
 
@@ -155,4 +155,123 @@ export const getClassByChild = async(childId: string): Promise<ChildClassInfo> =
 
 }
 
- 
+export const getAllClasses = async(): Promise<ClassInfo[]> => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return [];
+        }
+        const response = await axios.get('http://localhost:8090/api/class/get/all/classes', {
+            headers: {
+                'Authorization': token,
+            },
+            withCredentials: true,
+        });
+
+        const classesData: ClassInfo[] = response.data ?? [];
+        if (classesData.length === 0) {
+            alert("No classes found.");
+        }
+
+        return classesData;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return [];
+    }
+}
+
+export const askForAssigmentToClass = async(classId: string, childId: string) => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return false;
+        }
+        const response = await axios.post('http://localhost:8090/api/class/post/ask/child',  { childSessionId: childId },  {
+            headers: {
+                'Authorization': token,
+                'ClassSessionId': classId,
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+        });
+
+        return true;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return false;
+    }
+}
+
+export const getAllCandidatesToClass = async(classId: string): Promise<ClassQueueInfo[]> => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return [];
+        }
+        const response = await axios.get('http://localhost:8090/api/class/get/all/classes/queue/for/user', {
+            headers: {
+                'Authorization': token,
+                'ClassSessionId': classId,
+            },
+            withCredentials: true,
+        });
+
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return [];
+    }
+}
+
+export const decideOnCandidate = async (classQueueId: string, decision: boolean) => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return [];
+        }
+
+        const response = await axios.post('http://localhost:8090/api/class/post/decide/child',
+            { classQueueSessionId: classQueueId, verdict: decision },
+            {
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json',
+                },
+                withCredentials: true,
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return [];
+    }
+};
