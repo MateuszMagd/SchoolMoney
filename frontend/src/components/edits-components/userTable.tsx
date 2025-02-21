@@ -31,7 +31,6 @@ const UsersPage = () => {
 
         fetchUsers();
     }, []);
-    console.log(user)
     if(isLoading) {
         return <div>Loading. . .</div>;
     }
@@ -50,16 +49,17 @@ const UsersPage = () => {
 
     return (
         <div>
-            <div className="container mx-auto">
-                <table className="table-auto w-full space-x-5">
-                    <thead>
+           <div className="mt-20 container mx-auto bg-white rounded-[30px] shadow-2xl w-[1400px] p-6">
+                <table className="table-auto w-full space-x-5 font-[Open_Sans] text-[18px] text-dark_blue">
+                
+                <thead className="text-[20px] font-bold">
                         <tr>
-                            <th>Imie</th>
-                            <th>Nazwisko</th>
-                            <th>Email</th>
-                            <th>Number</th>
-                            <th>Typ użytkownika</th>
-                            <th>Zdjecie</th>
+                            <th>IMIĘ</th>
+                            <th>NAZWISKO</th>
+                            <th>EMAIL</th>
+                            <th>NUMER</th>
+                            <th>TYP UŻYTKOWNIKA</th>
+                            <th>ZDJĘCIE</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,10 +76,10 @@ const UsersPage = () => {
                         <tr className="mt-10">
                             <td colSpan={8}>
                                 <Link
-                                    className="flex justify-center w-full p-2 bg-green-500 text-white"
-                                    href="/admin/create/user"
+                                    className="mt-7 flex justify-center w-full p-2 bg-dark_blue text-white rounded-lg text-center text-[17px]"
+                                    href="/admin/main/edit/add/user"
                                 >
-                                    Add New User
+                                    Dodaj nowego użytkownika + 
                                 </Link>
                             </td>
                         </tr>

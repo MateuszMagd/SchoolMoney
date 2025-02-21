@@ -3,7 +3,7 @@
 import { loginUser } from "@/connection/userAPI";
 import { isLogged } from "@/data/tokenHandler";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const LoginForm = () => {
@@ -14,6 +14,7 @@ const LoginForm = () => {
     });
     const [error, setError] = useState<string>('');
 
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -22,7 +23,9 @@ const LoginForm = () => {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        // TODO: Check if some security is needed here - some base was made lol
+        
         e.preventDefault(); // No default values
 
         // Simple (for now) data validation
@@ -36,24 +39,36 @@ const LoginForm = () => {
             setError('Wprowadz prawidłowy adres email');
             return;
         }
+        
+        // Waiting for user to login or not
+        try {
+            const result: boolean = await loginUser(formData.email, formData.password);
 
-        setError('');
-        loginUser(formData.email, formData.password);
-        if(isLogged()) {
-            router.push(`/`);
+            if(result === true) {
+                alert('You have been successfully logged in!');
+                router.push(`/`);
+            } else {
+                setError('You have not been logged in!');
+            }
+        }
+        catch(error) {
+            setError('Błąd logowania');
         }
     };
 
     return (
-        <form className="flex flex-col mx-auto bg-white p-10" onSubmit={handleSubmit}>
-            <div className="text-center"> LOGOWANIE </div>
+        <form className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg"style={{ height: '700px', width: '500px' }} onSubmit={handleSubmit}>
+            
+            <div className="text-center text-marine font-anton mt-20" style={{ fontSize: '54px' }}>
+            LOGOWANIE
+            </div>
             
             {error && <div className="text-red-500 mb-4">{error}</div>}
 
             {/* Email */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-28">
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email:
+                   
                 </label>
                 <input
                     type="email"
@@ -61,15 +76,15 @@ const LoginForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                    placeholder="Wprowadź adres email"
+                    className="w-[400px] mt-1 border-b text-dark_blue border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    placeholder="Email"
                 />
             </div>
 
             {/* Password */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-6">
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Hasło:
+                
                 </label>
                     <input
                             type="password"
@@ -77,16 +92,16 @@ const LoginForm = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full p-2 mt-1 border border-gray-300 rounded-md"
-                            placeholder="Wprowadź hasło"
+                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto text-dark_blue"
+                            placeholder="Hasło"
                         />
             </div>
 
             {/* Submit button */}
-            <div className="mb-4">
+            <div className="mb-4 flex justify-center mt-24">
                 <button
                     type="submit"
-                    className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+                    className="w-[200px] h-[50px] bg-marine text-white text-medium font-medium rounded-[15px] shadow-md hover:shadow-lg transition-all duration-300"
                 >
                     Zaloguj się
                 </button>

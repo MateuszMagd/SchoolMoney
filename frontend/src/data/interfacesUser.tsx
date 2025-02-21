@@ -1,6 +1,14 @@
+import exp from "constants";
 import { UserType } from "./enums";
 
-// ---------------User Info Interfaces---------------
+// --------------- User Info Interfaces ---------------
+
+export interface NewUserRegister {
+    email: string,
+    firstName: string,
+    lastName: string,
+    password: string,
+}
 
 export interface UserInfo {
     email: string,
@@ -12,17 +20,78 @@ export interface UserInfo {
 };
 
 export interface ChildInfo {
-    sessionId?: string,
-    firstName?: string,
-    lastName?: string,
+    sessionId: string,
+    firstName: string,
+    lastName: string,
     photo: string,
-    birthDate?: string,
-    pesel?: string,
+    birthday: string,
+    pesel: string,
 };
 
-// --------------- Register Interfaces---------------
+export interface NewChildInfo {
+    firstName: string,
+    lastName: string,
+    birthday: string,
+    pesel: string,
+};
+
+// --------------- Register Interfaces ---------------
 export interface UserInfoExtended extends UserInfo{
     password: string,
 };
 
-// ---------------Chat Interfaces---------------
+// --------------- Chat Interfaces --------------------
+
+// -------------------- Classes -----------------------
+export interface ClassInfo {
+    sessionId: string,
+    className: string,
+};
+
+export interface ExtendedClassInfo extends ClassInfo {
+    children: ChildInfo[],
+};
+
+export interface ChildClassInfo extends ClassInfo {
+    patronFirstName: string,
+    patronLastName: string,
+}
+
+export interface ClassQueueInfo {
+    sessionId: string,
+    childFullName: string,
+    childSessionId: string,
+    classesName: string,
+    classesSessionId: string,
+}
+
+
+// -------------------- Fund -----------------------
+
+export interface FundInfo {
+    name: string,
+    startDate: string,
+    endDate: string,
+    goal: number,
+    description: string,
+    classSessionId: string,
+};
+
+// -------------------- Transaction -----------------------
+
+export interface Transaction {
+    name: string,
+    sessionId: string,
+    amountNeeded: number,
+    description: string,
+    payForWho: string,
+}
+
+
+export interface UserTransaction {
+    receiverFullName: string,
+    amountSended: number,
+    operationType: string,
+    text: string,
+    date: string,
+};

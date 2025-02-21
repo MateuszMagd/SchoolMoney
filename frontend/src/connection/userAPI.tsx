@@ -6,9 +6,14 @@ export const addNewUser = async(user: NewUserRegister) => {
     try {
         const response = await axios.post<String>('http://localhost:8090/api/register/user', user);
 
-        return response;
+        if(response.status == 200) {
+            return true;
+        } else {
+            return false;
+        }
     } catch (error) {
-        alert("Something went wrong. . .");
+        alert("Some bigger error occured - contact with admin!");
+        return false;
     }
 }
 
@@ -24,13 +29,10 @@ export const loginUser = async(email: string, password: string) => {
 
         if (token) {
             saveToken(token);
-            alert("Zalogowano pomyślnie: " + token);
             return true;
         } else {
-            alert("Token nie został zwrócony przez serwer.");
             return false;
         }
-        alert(token)
     } catch (error) {
         if (axios.isAxiosError(error) && error.response) {
             console.error("Error response:", error.response);

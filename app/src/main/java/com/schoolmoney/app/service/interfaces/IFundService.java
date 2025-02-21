@@ -1,7 +1,6 @@
 package com.schoolmoney.app.service.interfaces;
 
-import com.schoolmoney.app.entities.Fund;
-import com.schoolmoney.app.entities.User;
+import com.schoolmoney.app.entities.*;
 
 import java.util.List;
 
@@ -11,4 +10,7 @@ public interface IFundService {
     Fund getFundByID(Long id);
 
     Fund getFundBySessionId(String sessionId);
+
+    List<Fund> getFundByClass(Classes classes);
+    Fund getFundByBills(Bills bills);
 }

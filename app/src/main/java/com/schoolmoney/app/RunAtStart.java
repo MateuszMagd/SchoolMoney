@@ -1,13 +1,14 @@
 package com.schoolmoney.app;
 
 import com.schoolmoney.app.entities.*;
-import com.schoolmoney.app.entities.Class;
+import com.schoolmoney.app.entities.Classes;
 import com.schoolmoney.app.enums.OperationType;
 import com.schoolmoney.app.enums.StatusType;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.repository.*;
 import com.schoolmoney.app.service.ChatService;
 import com.schoolmoney.app.service.ChildService;
+import com.schoolmoney.app.service.ClassService;
 import com.schoolmoney.app.service.PDFService;
 import com.schoolmoney.app.service.UserService;
 import com.schoolmoney.app.service.interfaces.IChatService;
@@ -32,8 +33,11 @@ public class RunAtStart {
     private final BillsRepository billsRepository;
     private final MessageRepository messageRepository;
     private final ClassRepository classRepository;
+  
     @Autowired
     public RunAtStart(BillsRepository billsRepository, FundRepository fundRepository, UserRepository userRepository, ChildRepository childRepository, BillsHistoryRepository billsHistoryRepository, MessageRepository messageRepository, ClassRepository classRepository) {
+
+    
         super();
 
         //
@@ -69,9 +73,17 @@ public class RunAtStart {
 
             Bills bills = new Bills();
             parent1.setBills(bills);
-            BillsHistory billsHistory = new BillsHistory(bills, bills, 5f, OperationType.TEST, "za godność", LocalDate.parse("2024-01-25"));
+            bills.setBalance(100);
+
+            Bills bills2 = new Bills();
+            parent2.setBills(bills2);
+
+            Bills bills3 = new Bills();
+            parent3.setBills(bills3);
+
             billsRepository.save(bills);
-            billsHistoryRepository.save(billsHistory);
+            billsRepository.save(bills2);
+            billsRepository.save(bills3);
 
             userRepository.save(parent1);
             userRepository.save(parent2);
@@ -83,21 +95,46 @@ public class RunAtStart {
 
             userRepository.save(admin);
             // <---------------- KIDS --------------------->
+            System.out.println("[Starting] Adding new classes...");
+            Classes classes = new Classes("Wolves", parent1);
+
+            classRepository.save(classes);
+
+            Bills bills4 = new Bills();
+            Bills bills5 = new Bills();
+            billsRepository.save(bills4);
+            billsRepository.save(bills5);
+
+            Bills bills6 = new Bills();
+            billsRepository.save(bills6);
+
             System.out.println("[Starting] Adding test kids. . .");
             Child child1 = new Child("Mateusz", "Kristin", LocalDate.of(2017, 2, 10),
-                                    "11211311400", Utils.loadPhoto("default.png"), null, List.of(parent1, parent2));
+                                    "11211311400", Utils.loadPhoto("default.png"), classes, List.of(parent1, parent2), bills4);
 
             Child child2 = new Child("Anna", "Kristin", LocalDate.of(2017, 2, 10),
-                    "11211311400",Utils.loadPhoto("default.png") , null, List.of(parent1, parent2));
+                    "11211311400",Utils.loadPhoto("default.png") , classes, List.of(parent1, parent2), bills5);
+
+            Child child3 = new Child("Miłosz", "Kristin", LocalDate.of(2017, 2, 10),
+                    "00022233344",Utils.loadPhoto("default.png") , null, List.of(parent1, parent2), bills6);
+
+
 
             childRepository.save(child1);
             childRepository.save(child2);
-//            Class clas = new Class();
+            childRepository.save(child3);
+
 
             // <---------------- fundusz --------------------->
-            Fund fund = new Fund("Zbiórka na dupe", "asd", 5, 0, 15,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.CLOSED,null , bills, parent1);
+            Bills billsFund = new Bills();
+            billsRepository.save(billsFund);
+
+            Fund fund = new Fund("Zbiórka na wycieczke", "Wycieczka do częstochowy", 10, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.OPEN, classes , billsFund, parent1);
             fundRepository.save(fund);
-            fund.setSessionId(fundRepository.findFundById(fund.getId()).getSessionId());
+
+            BillsHistory billsHistory = new BillsHistory(bills, billsFund, bills4, 10, OperationType.TRANSFER, "Zapłacono za wycieczke za Mateusz Kristian", LocalDate.parse("2024-01-25"));
+            billsHistoryRepository.save(billsHistory);
+
             // <---------------- ADMIN -------------------->
             System.out.println("[Starting] All done! Get started!");
 

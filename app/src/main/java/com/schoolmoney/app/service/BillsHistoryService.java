@@ -1,6 +1,7 @@
 package com.schoolmoney.app.service;
 
 
+import com.schoolmoney.app.entities.Bills;
 import com.schoolmoney.app.entities.BillsHistory;
 import com.schoolmoney.app.entities.Fund;
 import com.schoolmoney.app.repository.BillsHistoryRepository;
@@ -23,6 +24,31 @@ public class BillsHistoryService implements IBillsHistoryService {
     @Override
     public List<BillsHistory> getBillsHistoryBySessionId(Fund fund) {
         return billsHistoryRepository.findBillsHistoryBySessionId(fund.getSessionId());
+    }
+
+    @Override
+    public BillsHistory getBillsHistoryBySubject(Bills bills) {
+        return billsHistoryRepository.findBySubject(bills);
+    }
+
+    @Override
+    public void saveBillsHistory(BillsHistory billsHistory) {
+        billsHistoryRepository.save(billsHistory);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoryBySender(Bills bills) {
+        return billsHistoryRepository.findBySender(bills);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoriesBySubject(Bills bills) {
+        return billsHistoryRepository.findAllBySubject(bills);
+    }
+
+    @Override
+    public List<BillsHistory> getBillsHistoryByByReceiver(Bills bills) {
+        return billsHistoryRepository.findByReciver(bills);
     }
 
     @Override

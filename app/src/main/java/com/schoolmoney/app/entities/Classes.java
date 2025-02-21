@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Class {
+public class Classes {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -16,10 +16,10 @@ public class Class {
     @ManyToOne
     private User patron;
 
-    public Class(String className, boolean isActive, User patron) {
+    public Classes(String className, User patron) {
         this.sessionId = UUID.randomUUID().toString();
         this.className = className;
-        this.isActive = isActive;
+        this.isActive = true;
         this.patron = patron;
     }
 
@@ -27,7 +27,7 @@ public class Class {
         return id;
     }
 
-    public Class() {
+    public Classes() {
         this.sessionId = UUID.randomUUID().toString();
     }
 

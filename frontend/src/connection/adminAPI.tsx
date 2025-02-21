@@ -143,18 +143,13 @@ export const deleteUser = async(email: string) => {
     }  
 }
 
-export const deleteChild = async(email: string) => {
-    return true;
-}
-
-export const modifyUser = async(userInfo: UserInfoExtended) => {
+export const modifyUser = async(userInfo: UserInfoExtended, email: String) => {
     try {
         const token = getToken();
         if (!token) {
             alert("You are not logged.");
             return;
         }
-        const email: String = userInfo.email;
         userInfo.photo = userInfo.photo.replace("data:image/jpeg;base64,", "");
 
         const response = await axios.post(`http://localhost:8090/api/admin/user/modify/${email}`, userInfo, {
@@ -163,6 +158,8 @@ export const modifyUser = async(userInfo: UserInfoExtended) => {
             },
             withCredentials: true,
         });
+
+        console.log(response.data);
 
         return response.data;
     }
@@ -175,8 +172,4 @@ export const modifyUser = async(userInfo: UserInfoExtended) => {
         }
         return false;
     }  
-}
-
-export const modifyChild = async(email: string) => {
-    return true;
 }

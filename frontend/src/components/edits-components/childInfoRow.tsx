@@ -11,29 +11,29 @@ interface ChildInfoRowProps {
 const UserInfoRow: React.FC<ChildInfoRowProps> = ({ child, onDelete, onModify, showParent }) => {
     return (
         <tr className="text-center">
-            <td className="p-4">{child.firstName}</td>
-            <td className="p-4">{child.lastName}</td>
-            <td className="p-4">{child.pesel}</td>
-            <td className="p-4">{child.birthDate}</td>
-            <td className="flex flex-row justify-center"><Image src={child.photo} alt="No photo" width={100} height={100} className=""/></td>
+            <td>{child.firstName}</td>
+            <td>{child.lastName}</td>
+            <td>{child.pesel}</td>
+            <td>{child.birthday}</td>
+            <td className="flex flex-row justify-center"><Image src={child.photo} alt="No photo" width={70} height={70} className=""/></td>
             <td>
                 <button 
                     onClick={onModify} 
-                    className="bg-blue-500 text-white p-1 mx-1"
+                    className="bg-dark_blue text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    Modify
+                    Modyfikuj
                 </button>
                 <button 
                     onClick={onDelete} 
-                    className="bg-red-500 text-white p-1 mx-1"
+                    className="bg-light_blue text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    Delete
+                    Usuń
                 </button>
                 <button 
                     onClick={showParent} 
-                    className="bg-red-500 text-white p-1 mx-1"
+                    className="bg-light_marine text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3"
                 >
-                    Show Parents
+                    Pokaż rodzica
                 </button>
             </td>
         </tr>

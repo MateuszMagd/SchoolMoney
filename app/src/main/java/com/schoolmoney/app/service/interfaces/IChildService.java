@@ -13,4 +13,6 @@ public interface IChildService {
     void saveChild(Child child);
 
     List<Child> getAllChildren();
+
+    void deleteChild(Child child);
 }
