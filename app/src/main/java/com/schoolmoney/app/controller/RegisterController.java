@@ -48,7 +48,7 @@ public class RegisterController {
             user.setSalt(salt);
             user.setPassword(PasswordHash.hashPasswordWithSalt(newUser.getPassword(), salt));
 
-            Bills newUserBills = new Bills(UniqueNumberGenerator.getUniqueNumber());
+            Bills newUserBills = new Bills();
             if(billsService.saveBills(newUserBills) == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Bills creation problem.");
             }

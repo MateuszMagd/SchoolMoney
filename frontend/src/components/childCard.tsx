@@ -1,10 +1,30 @@
-import { ChildInfo } from "@/data/interfacesUser";
+"use client"
+
+import { ChildClassInfo, ChildInfo } from "@/data/interfacesUser";
 import RouterButton from "./routerButton";
 import Image from 'next/image';
+import { useEffect, useState } from "react";
+import { getClassByChild } from "@/connection/classAPI";
 
 const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
     const { sessionId, firstName, lastName, photo, pesel, birthday } = childInfo;
-    console.log(childInfo)
+    const [classData, setClassData] = useState<ChildClassInfo | null>(null);
+
+    useEffect(() => {
+         const getClassData = async () => {
+             const data = await getClassByChild(sessionId);
+             setClassData(data);
+         }
+         getClassData();
+
+    }, [])
+
+    const isChildClassInfo = (data: any): data is ChildClassInfo => {
+        return typeof data === "object" && data !== null && 
+               "patronFirstName" in data && "patronLastName" in data;
+    };
+
+
     return (
         <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-2xl"style={{ height: '710px', width: '580px' }}>
 
@@ -23,13 +43,24 @@ const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
                 <div className="flex justify-center font-anton text-normal_blue mt-6" style={{ fontSize: '23px' }}>Data urodzenia</div>
                 <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '20px' }}>{birthday}</div>
 
-                {/* TODO: Add functionality after class module done! */}
-                <div className="flex justify-center font-anton text-normal_blue mt-6" style={{ fontSize: '23px' }}>Grupa</div>
-                <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '22px' }}>1D</div>
+
+                <div className="flex justify-center font-anton text-normal_blue mt-5" style={{ fontSize: '22px' }}>Class</div>
+                {isChildClassInfo(classData) ? 
+                    <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '20px' }}>{classData.className}</div> :
+                    <div className="flex justify-center font-oswald text-normal_blue">
+                        <RouterButton page={`class/find/${sessionId}`} buttonString="Znajdz klase!" color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
+                    </div>
+                    
+                }
+                
 
                 {/* TODO: Add functionality after class module done! */}
-                <div className="flex justify-center font-anton text-normal_blue mt-6" style={{ fontSize: '23px' }}>Opiekun</div>
-                <div className="flex justify-center font-oswald text-normal_blue mb-3" style={{ fontSize: '22px' }}>Edyta Nowak</div>
+                <div className="flex justify-center font-anton text-normal_blue mt-5" style={{ fontSize: '22px' }}>Patron</div>
+                {isChildClassInfo(classData) ?
+                    <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '20px' }}>{classData.patronFirstName + " " + classData.patronLastName}</div> :
+                    <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '20px' }}>Brak patrona klasy!</div>
+                }
+
                
                 <div className="flex justify-center items-center mt-5 mb-5">
                     <RouterButton page={`edit/child/${sessionId}`} buttonString="Edytuj" color="bg-dark_blue" width="w-[200px]" height="h-[50px]"/>

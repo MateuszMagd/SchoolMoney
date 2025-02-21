@@ -28,4 +28,9 @@ public class BillsService implements IBillsService {
     public Bills getBillsByUserEmail(String email) {
         return userRepository.findBillsByUserEmail(email);
     }
+
+    @Override
+    public Bills getBillsBySessionId(String sessionId) {
+        return billsRepository.findBySessionId(sessionId);
+    }
 }
