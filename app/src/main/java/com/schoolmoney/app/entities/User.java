@@ -168,4 +168,8 @@ public class User implements UserDetails {
     public void setBills(Bills bills) {
         this.bills = bills;
     }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 }
