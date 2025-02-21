@@ -47,7 +47,6 @@ public class AdminController {
             }
 
             List<User> users = userService.getAllUsers();
-
             if(users == null) {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
             }

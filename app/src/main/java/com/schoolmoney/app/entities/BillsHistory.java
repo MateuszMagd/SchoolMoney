@@ -20,6 +20,8 @@ public class BillsHistory {
     @ManyToOne
     @Nonnull
     private Bills reciver;
+    @ManyToOne
+    private Bills subject;
     @Nonnull
     private float amount;
     @Nonnull
@@ -29,10 +31,11 @@ public class BillsHistory {
     @Nonnull
     private LocalDate date;
 
-    public BillsHistory(@Nonnull Bills sender, @Nonnull Bills reciver, float amount, @Nonnull OperationType operationType, @Nonnull String text, @Nonnull LocalDate date) {
+    public BillsHistory(@Nonnull Bills sender, @Nonnull Bills reciver, @Nonnull Bills subject, float amount, @Nonnull OperationType operationType, @Nonnull String text, @Nonnull LocalDate date) {
         this.sessionId = UUID.randomUUID().toString();
         this.sender = sender;
         this.reciver = reciver;
+        this.subject = subject;
         this.amount = amount;
         this.operationType = operationType;
         this.text = text;
@@ -45,6 +48,14 @@ public class BillsHistory {
 
     public String getSessionId() {
         return sessionId;
+    }
+
+    public Bills getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Bills subject) {
+        this.subject = subject;
     }
 
     @Nonnull
