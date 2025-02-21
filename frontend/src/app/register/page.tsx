@@ -12,7 +12,7 @@ export default function Register() {
         <div className="px-72 mt-20 ">
             <RegisterForm />
             <div className="flex justify-center items-center mt-10">
-                <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[150px]" height="h-[60px]"/>
+                <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[250px]" height="h-[60px]"/>
             </div>
             <div className="flex justify-center items-center mt-10"></div>
         </div>

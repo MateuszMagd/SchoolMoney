@@ -92,39 +92,70 @@ const FundForm = () => {
     };
 
     return (
-        <>  
+
+        <>
+            <form className="flex flex-col  w-[740px] ml-10">
+
             {possibleClasses.length === 0 ? 
             <p>Brak dostępnych klas</p> :
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
-                <input type="text" id="name" name="name"  placeholder="Fund Name" onChange={handleChange} className="border border-gray-300 rounded-md p-2 m-2" />
+                <div className="flex flex-col items-start">
+                    <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">TYTUŁ ZBIÓRKI:</p>
+                    <input type="text" id="name" name="name" placeholder="Podaj tytuł zbiórki..." onChange={handleChange} className=" w-[62%] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                </div>
+            
+                <div className="flex flex-row items-start gap-x-10">
+                    <div className="flex flex-col items-start">
+                        <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">DATA ROZPOCZĘCIA:</p>
+                        <input type="date" id="startDate" name="startDate" onChange={handleChange} placeholder="Wybierz datę..." className="w-[200px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                    </div>
 
-                <input type="date" id="startDate" name="startDate" onChange={handleChange} className="border border-gray-300 rounded-md p-2 m-2" />
-                <input type="date" id="endDate" name="endDate" onChange={handleChange} className="border border-gray-300 rounded-md p-2 m-2" />
+                    <div className="flex flex-col items-start">
+                        <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">DATA ZAKOŃCZENIA:</p>
+                        <input type="date" id="endDate" name="endDate" onChange={handleChange} placeholder="Fund Description" className="w-[200px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                    </div>
+                </div>
+            
+                <div className="flex flex-col items-start">
+                    <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">KWOTA:</p>
+                    <input type="number" id="goal" name="goal" placeholder="Fund Goal" onChange={handleChange} placeholder="Podaj kwotę..." className="w-[200px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                </div>
 
-                <input type="number" id="goal" name="goal" placeholder="Fund Goal" onChange={handleChange} className="border border-gray-300 rounded-md p-2 m-2" />
+                <div className="flex flex-col items-start">
+                    <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">OPIS ZBIÓRKI:</p>
+                    <textarea id="description" name="description" onChange={handleChangeText} placeholder="Podaj opis zbiórki..." className="w-[720px] h-[200px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                </div>
+            
+                <div className="flex flex-row items-end gap-x-16">
+                  <div className="flex flex-col items-start">
+                    <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">WYBIERZ KLASĘ:</p>
+                    <select
+                    id="classSessionId"
+                    name="classSessionId"
+                    value={formData.classSessionId}
+                    className=" w-[450px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue"
+                    onChange={handleClassChange}>
+                        {possibleClasses.map((classInfo) => (
+                            <option key={classInfo.sessionId} value={classInfo.sessionId}>
+                                {classInfo.className}
+                            </option>
+                        ))}
+                    </select>
+                  </div>
 
-                <textarea id="description" name="description" placeholder="Fund Description" onChange={handleChangeText} className="border border-gray-300 rounded-md p-2 m-2" />
-                
-                <select
-                id="classSessionId"
-                name="classSessionId"
-                value={formData.classSessionId}
-                className="border border-gray-300 rounded-md p-2 m-2"
-                onChange={handleClassChange}>
-                    {possibleClasses.map((classInfo) => (
-                        <option key={classInfo.sessionId} value={classInfo.sessionId}>
-                            {classInfo.className}
-                        </option>
-                    ))}
-                </select>
 
-                <input type="submit" value="Create Fund" className="bg-blue-500 text-white rounded-md p-2 m-2" />
+                  <input type="submit" value="Stwórz zbiórkę" className="bg-marine text-white rounded-md w-[200px] h-[43px] mb-2" />
+                </div>
+              
 
             </form>
             }
             <button onClick={handleShowData}>Show current data!</button>
 
-            <RouterButton page="/" buttonString = "Wroc do głownej"/>
+            <div className="flex flex-col items-center">
+            {/* <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/> */}
+            </div>
+
         </>     
     )
 }

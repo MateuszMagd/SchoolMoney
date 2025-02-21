@@ -14,12 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={`bg-blue-200 antialiased`}>
-            <nav className="flex flex-row space-x-5 justify-center bg-blue-500 text-xl p-4 rounded-md">
-                <RouterButton page="admin/main/users" buttonString = "Users"/>
-                <RouterButton page="admin/main/children" buttonString = "Children"/>
-                <RouterButton page="admin/main/classes" buttonString = "Classes"/>
-                <RouterButton page="admin/main/funds" buttonString = "funds"/>
+        <body className={`antialiased`}>
+            <nav className="flex flex-row space-x-20 justify-center bg-dark_blue text-xl p-4 rounded-md font-bold text-[17px]">
+                <RouterButton page="admin/main/users" buttonString="UŻYTKOWNICY" color="bg-dark_blue" width="w-[150px]" height="h-[25px]"/>
+                <RouterButton page="admin/main/children" buttonString="DZIECI" color="bg-dark_blue" width="w-[150px]" height="h-[25px]"/>
+                <RouterButton page="admin/main/classes" buttonString="KLASY" color="bg-dark_blue" width="w-[150px]" height="h-[25px]"/>
+                <RouterButton page="admin/main/funds" buttonString="ZBIÓRKI" color="bg-dark_blue" width="w-[150px]" height="h-[25px]"/>
             </nav>
             {children}
         </body>

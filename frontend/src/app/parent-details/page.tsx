@@ -75,7 +75,7 @@ const Page = () => {
                 ))}
             </div>
         )}
-        <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[150px]" height="h-[60px]"/>
+        <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[250px]" height="h-[60px]"/>
         <button onClick={() => test(logged)}>Show me if logged!</button>
     </div>
 );

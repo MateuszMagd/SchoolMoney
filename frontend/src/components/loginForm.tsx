@@ -76,7 +76,7 @@ const LoginForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    className="w-[400px] mt-1 border-b text-dark_blue border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                     placeholder="Email"
                 />
             </div>
@@ -92,7 +92,7 @@ const LoginForm = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto text-dark_blue"
                             placeholder="Hasło"
                         />
             </div>

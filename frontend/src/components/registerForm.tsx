@@ -81,7 +81,7 @@ const RegisterForm = () => {
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
-                className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue text-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                 placeholder="Imię"
             />
             </div>
@@ -97,7 +97,7 @@ const RegisterForm = () => {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    className="w-[400px] mt-1 border-b border-dark_blue text-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                     placeholder="Nazwisko"
                 />
             </div>
@@ -112,7 +112,7 @@ const RegisterForm = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                    className="w-[400px] mt-1 border-b border-dark_blue text-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                     placeholder="Email"
                 />
             </div>
@@ -127,7 +127,7 @@ const RegisterForm = () => {
                             name="password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-[400px] mt-1 border-b border-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
+                            className="w-[400px] mt-1 border-b border-dark_blue text-dark_blue focus:outline-none focus:border-dark_blue placeholder-dark_blue placeholder:text-lg pb-2 mx-auto"
                             placeholder="Hasło"
                         />
             </div>
