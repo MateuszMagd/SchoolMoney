@@ -96,10 +96,10 @@ const FundForm = () => {
 
             {possibleClasses.length === 0 ? 
             <p>Brak dostępnych klas</p> :
-            <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+            <form className="flex flex-col items-start" onSubmit={handleSubmit}>
                 <div className="flex flex-col items-start">
                     <p className=" ml-3 text-dark_blue font-[Open_Sans] font-bold">TYTUŁ ZBIÓRKI:</p>
-                    <input type="text" id="name" name="name" placeholder="Podaj tytuł zbiórki..." onChange={handleChange} className=" w-[62%] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
+                    <input type="text" id="name" name="name" placeholder="Podaj tytuł zbiórki..." onChange={handleChange} className=" w-[450px] border border-dark_blue rounded-md p-2 m-2 placeholder-dark_blue focus:border-marine focus:outline-none text-dark_blue" />
                 </div>
             
                 <div className="flex flex-row items-start gap-x-10">
@@ -140,13 +140,12 @@ const FundForm = () => {
                         ))}
                     </select>
                   </div>
-                  <input type="submit" value="Stwórz zbiórkę" className="bg-marine text-white rounded-md w-[200px] h-[43px] mb-2" />
+                  <input type="submit" value="Stwórz zbiórkę" className="bg-marine text-white rounded-md w-[200px] h-[43px] mb-1" />
                 </div>
             </form>
             }
 
-            <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/>
-
+        
         </>     
     )
 }
