@@ -35,7 +35,7 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
 
                 <RouterButton page="parent-details" buttonString="Edytuj" color="bg-dark_blue" width="w-[150px]" height="h-[50px] "/>
                 <RouterButton page="parent-details" buttonString="Raporty"color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
-                <RouterButton page="parent-details/my-funds" buttonString="Zbiorki" color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
+                <RouterButton page="parent-details/my-funds" buttonString="Zbiórki" color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
             </div>
             
             

@@ -19,53 +19,50 @@ const MyFundsPage = () => {
     console.log(funds)
 
     return (
-        <div className="p-4">
-            <h1 className="text-2xl font-bold mb-6 text-gray-800">My Funds</h1>
+        <div className="p-4 min-h-screen"  style={{
+            backgroundImage: "url('/assets/parent_background.png')",
+            backgroundSize: "cover",
+        }}>
+           
             {funds.length > 0 ? (
-                <div className="overflow-x-auto">
-                    <table className="table-auto w-full border-collapse border border-gray-300">
+                <div className="mt-20 container mx-auto bg-white rounded-[30px] shadow-2xl w-[1500px] p-6">
+                      <h3 className="text-[50px] font-anton text-dark_blue mt-5 mb-10 text-center">MOJE ZBIÓRKI</h3>
+                    <table className="table-auto w-full space-x-5 font-[Open_Sans] text-[18px] text-dark_blue text-center ">
                         <thead>
-                            <tr className="bg-gray-100 text-left">
-                                <th className="border border-gray-300 p-4 font-semibold">Fund Name</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Status</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Money</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Child Name</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Birthday</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Photo</th>
-                                <th className="border border-gray-300 p-4 font-semibold">Action</th>
+                            <tr className="text-[20px] font-bold text-center">
+                                <th className="">NAZWA ZBIÓRKI</th>
+                                <th className="">STATUS</th>
+                                <th className="">KWOTA</th>
+                                <th className="">DZIECKO</th>
+                                <th className="">DATA URODZENIA</th>
+                                <th className="">ZDJĘCIE</th>
+                                <th className=""></th>
                             </tr>
                         </thead>
                         <tbody>
                             {funds.map((fund, index) => (
                                 <tr
-                                    key={index}
-                                    className={`${
-                                        index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                                    } hover:bg-gray-100`}
+                                    key={index} 
+                                    
                                 >
-                                    <td className="border border-gray-300 p-4">{fund.name}</td>
-                                    <td
-                                        className={`border border-gray-300 p-4 ${
-                                            fund.status === "PAID"
-                                                ? "text-green-600 font-bold"
-                                                : "text-red-600 font-bold"
-                                        }`}
-                                    >
-                                        {fund.status}
+                                    <td className="mb-10 ">{fund.name}</td>
+                                    <td className={fund.status === "PAID" ? "text-dark_blue font-bold" : "text-alert_red font-bold"}>
+                                        {fund.status === "PAID" ? "OPŁACONA" : "NIEOPŁACONA"}
                                     </td>
-                                    <td className="border border-gray-300 p-4">{fund.money} zł</td>
-                                    <td className="border border-gray-300 p-4">
+
+                                    <td className="">{fund.money} zł</td>
+                                    <td className="">
                                         {fund.childDto.firstName} {fund.childDto.lastName}
                                     </td>
-                                    <td className="border border-gray-300 p-4">{fund.childDto.birthday}</td>
-                                    <td className="border border-gray-300 p-4">
+                                    <td className="">{fund.childDto.birthday}</td>
+                                    <td className="">
                                         <img
                                             src={`data:image/png;base64,${fund.childDto.photo}`}
                                             alt={`${fund.childDto.firstName}'s photo`}
-                                            className="w-16 h-16 rounded-lg"
+                                            className="ml-7 w-16 h-16 rounded-lg"
                                         />
                                     </td>
-                                    <td className="border border-gray-300 p-4 text-center">
+                                    <td className="text-center text-[15px]">
                                         <RouterButton
                                             page={`/fund-page/${fund.sessionId}`}
                                             buttonString="Zobacz zbiórkę"
@@ -78,19 +75,21 @@ const MyFundsPage = () => {
                             ))}
                         </tbody>
                     </table>
-                    <div className="mt-4">
-                        <RouterButton
-                            page="/"
-                            buttonString="Wróć do głównej"
-                            color="bg-dark_blue"
-                            width="w-[150px]"
-                            height="h-[60px]"
-                        />
-                    </div>
+                
                 </div>
             ) : (
                 <p className="text-gray-600">Loading...</p>
             )}
+
+                <div className="mt-8 text-center">
+                        <RouterButton
+                            page="/"
+                            buttonString="Wróć do głównej"
+                            color="bg-dark_blue"
+                            width="w-[250px]"
+                            height="h-[60px]"
+                        />
+                    </div>
         </div>
     );
 };
