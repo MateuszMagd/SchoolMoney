@@ -92,9 +92,7 @@ const FundForm = () => {
     };
 
     return (
-
         <>
-            <form className="flex flex-col  w-[740px] ml-10">
 
             {possibleClasses.length === 0 ? 
             <p>Brak dostępnych klas</p> :
@@ -142,19 +140,12 @@ const FundForm = () => {
                         ))}
                     </select>
                   </div>
-
-
                   <input type="submit" value="Stwórz zbiórkę" className="bg-marine text-white rounded-md w-[200px] h-[43px] mb-2" />
                 </div>
-              
-
             </form>
             }
-            <button onClick={handleShowData}>Show current data!</button>
 
-            <div className="flex flex-col items-center">
-            {/* <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/> */}
-            </div>
+            <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/>
 
         </>     
     )

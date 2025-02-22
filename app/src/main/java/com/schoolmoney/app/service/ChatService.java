@@ -1,6 +1,6 @@
 package com.schoolmoney.app.service;
 
-import com.schoolmoney.app.entities.Class;
+import com.schoolmoney.app.entities.Classes;
 import com.schoolmoney.app.entities.Messages;
 import com.schoolmoney.app.entities.User;
 import com.schoolmoney.app.repository.ClassRepository;
@@ -38,7 +38,7 @@ public class ChatService implements IChatService {
 
         List<Messages> messages;
 
-        Class clas = classRepository.findClassByClassName(sesid);
+        Classes clas = classRepository.findBySessionId(sesid);
         if(clas!=null)
         {
             messages = messageRepository.findAllByReceiverClassSessionId(clas.getSessionId());
