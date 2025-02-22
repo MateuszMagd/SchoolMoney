@@ -7,7 +7,7 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
 
     return (
 
-        <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg" style={{ height: '905px', width: '550px' }}>
+        <div className="flex flex-col mx-auto bg-white rounded-[30px] shadow-lg" style={{ height: '710px', width: '580px' }}>
 
            
             <div className="flex flex-col justify-center items-center h-[200px] mt-3">
@@ -30,12 +30,12 @@ const ParentCard = ({ info }: { info: UserInfo }) => {
             {/* TODO: Change it to database value */}
             <div className="flex justify-center font-oswald text-normal_blue mb-10" style={{ fontSize: '20px' }}>01 2345 6789 1011 1213 1415 1617</div>
 
-            <div className="flex flex-row items-center justify-center space-x-12">
+            <div className="flex flex-row items-center justify-center space-x-4">
                 {/* TODO: Add functionality to this */}
 
-                <RouterButton page="parent-details" buttonString="Edytuj" color="bg-dark_blue" width="w-[200px]" height="h-[50px] "/>
-                <RouterButton page="parent-details" buttonString="Raporty"color="bg-dark_blue" width="w-[200px]" height="h-[50px]"/>
-                <RouterButton page="parent-details/my-funds" buttonString="Zbiorki" color="bg-dark_blue" width="w-[200px]" height="h-[50px]"/>
+                <RouterButton page="parent-details" buttonString="Edytuj" color="bg-dark_blue" width="w-[150px]" height="h-[50px] "/>
+                <RouterButton page="parent-details" buttonString="Raporty"color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
+                <RouterButton page="parent-details/my-funds" buttonString="Zbiorki" color="bg-dark_blue" width="w-[150px]" height="h-[50px]"/>
             </div>
             
             

@@ -64,7 +64,7 @@ const Page = () => {
         {childData.length === 0 ? (
             <div>Loading...</div>
         ) : (
-            <div className="flex flex-row flex-wrap justify-center gap-4 space-x-20">
+            <div className="flex flex-row flex-wrap justify-center gap-4 space-x-15">
                 {childData.map((child) => (
                     child.sessionId ?
                     <ChildCard
