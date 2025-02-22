@@ -9,6 +9,7 @@ import com.schoolmoney.app.entities.User;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.service.interfaces.IChildService;
 import com.schoolmoney.app.service.interfaces.IUserService;
+import com.schoolmoney.app.utils.PasswordHash;
 import com.schoolmoney.app.utils.converters.ChildToChildDtoConverter;
 import com.schoolmoney.app.utils.converters.UserToUserDtoConverter;
 import com.schoolmoney.app.utils.converters.UserToUserInfoDtoConverter;
@@ -46,6 +47,45 @@ public class UserController {
 
             return ResponseEntity.ok(userDto);
         } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+    }
+
+    @PostMapping("/user/modify")
+    public ResponseEntity<?> modifyUser(@RequestHeader("Authorization") String token, @RequestBody UserDto userDto) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+
+            User user = userService.getUserByEmail(claims.getSubject());
+            if(user == null) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No users found");
+            }
+            user.setUserType(UserType.PARENT);
+
+            if(userDto.getEmail() != null)
+                user.setEmail(userDto.getEmail());
+            if(userDto.getPesel() != null)
+                user.setPesel(userDto.getPesel());
+            if(userDto.getFirstName() != null)
+                user.setFirstName(userDto.getFirstName());
+            if(userDto.getLastName() != null)
+                user.setLastName(userDto.getLastName());
+            if(userDto.getPhoto() != null)
+                user.setPhoto(userDto.getPhoto());
+
+            if(userDto.getPassword() != null)
+            {
+                if(!user.getPassword().equals(userDto.getPassword()))
+                {
+                    String salt = PasswordHash.generateSalt();
+                    user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
+                    user.setSalt(salt);
+                }
+            }
+            userService.modifyUser(user);
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }

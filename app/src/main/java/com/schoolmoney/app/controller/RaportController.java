@@ -9,9 +9,11 @@ import com.schoolmoney.app.dto.NewFoundRegister;
 import com.schoolmoney.app.dto.UserInfoDto;
 import com.schoolmoney.app.entities.*;
 import com.schoolmoney.app.enums.ChildFundStatusType;
+import com.schoolmoney.app.enums.StatusType;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.repository.FundRepository;
 import com.schoolmoney.app.service.interfaces.*;
+import com.schoolmoney.app.utils.Utils;
 import com.schoolmoney.app.utils.converters.ChildToChildDtoConverter;
 import com.schoolmoney.app.utils.converters.UserToUserInfoDtoConverter;
 import io.jsonwebtoken.Claims;
@@ -23,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +40,18 @@ public class RaportController {
     private final IPDFService pdfService;
     private final IBillsHistoryService billsHistoryService;
 
+    private final IBillsService billsService;
+    private final IClassService classService;
     @Autowired
-    public RaportController(IFundService fundService, IUserService userService, IPDFService pdfService, IChildService childService, IBillsHistoryService billsHistoryService)
+    public RaportController(IFundService fundService, IUserService userService, IPDFService pdfService, IChildService childService, IBillsHistoryService billsHistoryService, IBillsService billsService, IClassService classService)
     {
         this.fundService = fundService;
         this.userService = userService;
         this.pdfService = pdfService;
         this.childService = childService;
         this.billsHistoryService = billsHistoryService;
+        this.billsService = billsService;
+        this.classService = classService;
     }
 
     // ---------------------------------- REPORT API -------------------------------------- \\
@@ -88,10 +95,35 @@ public class RaportController {
     public ResponseEntity<?> createNewFound(@RequestHeader("Authorization") String token, @RequestBody NewFoundRegister newFund) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
+
+            User user = userService.getUserByEmail(claims.getSubject());
+            if(user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            Classes classes = classService.getClassBySessionId(newFund.getClassSessionId());
+            if(classes == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Class not found");
+            }
+
+            Bills bills = new Bills();
+            billsService.saveBills(bills);
+
             Fund fund = new Fund();
             fund.setFundName(newFund.getName());
             fund.setDescription(newFund.getDescription());
             fund.setMoneyGoal(newFund.getGoal());
+            fund.setBills(bills);
+            fund.setMoneyEarned(0);
+            fund.setMoneyPerKid(0);
+            fund.setDescription(newFund.getDescription());
+            fund.setStatus(StatusType.OPEN);
+            fund.setPatron(user);
+            fund.setClassId(classes);
+            fund.setPhoto(Utils.loadPhoto("default.png"));
+            fund.setStartDate(LocalDate.now());
+            fund.setEndDate(LocalDate.now());
+
+            fundService.createFund(fund);
 
             return ResponseEntity.ok("Ok");
         }

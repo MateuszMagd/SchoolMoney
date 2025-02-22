@@ -48,4 +48,9 @@ public class FundService implements IFundService {
     public Fund getFundByBills(Bills bills) {
         return fundRepository.findByBills(bills);
     }
+
+    @Override
+    public void createFund(Fund fund) {
+        fundRepository.save(fund);
+    }
 }

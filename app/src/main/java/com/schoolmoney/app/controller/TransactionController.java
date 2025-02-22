@@ -144,12 +144,16 @@ public class TransactionController {
                 }
             }
 
+            bills.setBalance(bills.getBalance() - amount);
+            receiver.setBalance(receiver.getBalance() + amount);
+
+            billsService.saveBills(receiver);
+            billsService.saveBills(bills);
             billsHistoryService.saveBillsHistory(newTrsancation);
             return ResponseEntity.status(HttpStatus.OK).body("Ok");
         } catch (NumberFormatException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
-
     }
 
     @RequestMapping("get/all/user/transactions")

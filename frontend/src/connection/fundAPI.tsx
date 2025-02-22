@@ -10,7 +10,7 @@ export const createNewFund = async (fundData: FundInfo): Promise<boolean> => {
             return false;
         }
         
-        const response = await axios.post('http://localhost:8090/api/fund/add/new', fundData, {
+        const response = await axios.post('http://localhost:8090/api/funds/new', fundData, {
             headers: {
                 'Authorization': token,
             },

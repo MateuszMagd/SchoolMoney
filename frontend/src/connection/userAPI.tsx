@@ -1,4 +1,4 @@
-import {NewUserRegister, UserInfo } from "@/data/interfacesUser";
+import {NewUserRegister, UserInfo, UserInfoExtended } from "@/data/interfacesUser";
 import axios from "axios";
 import { getToken, saveToken } from "@/data/tokenHandler";
 
@@ -70,3 +70,31 @@ export const getUserData = async() => {
     }
 }
 
+export const modifyUser = async(userInfo: UserInfoExtended) => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return;
+        }
+        userInfo.photo = userInfo.photo.replace("data:image/jpeg;base64,", "");
+
+        const response = await axios.post(`http://localhost:8090/api/user/user/modify`, userInfo, {
+            headers: {
+                'Authorization': token,
+            },
+            withCredentials: true,
+        });
+
+        return response.data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            alert(error.response.data.message || "Błąd podczas próby modyfikacji");
+        } else {
+            console.error("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return false;
+    }  
+}

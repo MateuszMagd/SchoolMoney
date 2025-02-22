@@ -34,9 +34,6 @@ const FundForm = () => {
         fetchPossibleClasses();
     }, []);
 
-    console.log("Possible:", possibleClasses);
-
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!formData) return;
         const { name, value } = e.target;
@@ -146,6 +143,8 @@ const FundForm = () => {
             }
 
             <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/>
+
+            <button onClick={handleShowData}>TAK</button>
 
         </>     
     )

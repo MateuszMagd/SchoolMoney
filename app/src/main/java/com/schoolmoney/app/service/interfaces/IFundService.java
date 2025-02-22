@@ -13,4 +13,6 @@ public interface IFundService {
 
     List<Fund> getFundByClass(Classes classes);
     Fund getFundByBills(Bills bills);
+
+    void createFund(Fund fund);
 }
