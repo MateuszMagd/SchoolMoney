@@ -74,7 +74,7 @@ const TransactionPage = () => {
             backgroundImage: "url('/assets/admin_background.png')",
             backgroundSize: "cover",}}>
 
-        <div className="p-5 bg-white rounded-[30px] w-[580px] h-[730px] shadow-xl justify-center items-center">
+        <div className="p-5 bg-white rounded-[30px] w-[580px] h-[730px] shadow-2xl justify-center items-center">
         <h3 className="text-[55px] font-anton text-dark_blue mt-5 mb-12 text-center">TRANSAKCJE</h3>
             
         <div className="flex justify-center items-center"> 
