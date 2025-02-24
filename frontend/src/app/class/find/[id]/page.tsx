@@ -37,25 +37,39 @@ const FindClassForChildPage = () => {
     };
     {/* TODO: Make it not able to apply twice if applied already */}
     return (
-        <div className="flex flex-col justify-center items-center space-y-6 p-10">
-            <h1 className="text-3xl">Find Class For Your Child</h1>
+        <div className="flex flex-col min-h-screen space-y-14" 
+        style={{
+            backgroundImage: "url('/assets/parent_background.png')",
+            backgroundSize: "cover",}}>
 
-            <table className="flex flex-col space-y-2">
-                <thead className="flex flex-col space-x-6">
-                    <tr>
-                        <th>Name</th>
-                        <th>Aplikuj</th>
+        <div className="container mx-auto bg-white rounded-[30px] shadow-2xl w-[580px] h-[530px] p-6 mt-20">
+        <h3 className="text-[50px] font-anton text-dark_blue mt-5 mb-4 text-center">ZNAJDŹ KLASĘ</h3>
+
+        <table className="table-auto w-full text-center font-[Open_Sans] text-[18px] text-dark_blue mt-20 mx-auto">
+            <thead className="text-[20px] font-bold">
+                <tr>
+                    <th className="pb-4">NAZWA KLASY</th>
+                    <th className="pb-4">AKCJA</th>
+                </tr>
+            </thead>
+            <tbody>
+                {posibbleClasses.map((classInfo) => (
+                    <tr key={classInfo.sessionId} className="text-center">
+                        <td className="py-2">{classInfo.className}</td>
+                        <td className="py-2">
+                            <button 
+                                onClick={() => applyForClass(classInfo.sessionId)} 
+                                className="bg-light_blue text-white  w-[100px] h-[40px] rounded-lg text-[15px] mr-3 ml-4"
+                            >
+                                Aplikuj
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {posibbleClasses.map((classInfo) => (
-                        <tr key={classInfo.sessionId}>
-                            <td>{classInfo.className}</td>
-                            <td><button onClick={() => applyForClass(classInfo.sessionId)}>Apply</button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+                ))}
+            </tbody>
+        </table>
+
+        </div>
         </div>
     );
 }

@@ -142,9 +142,6 @@ const FundForm = () => {
             </form>
             }
 
-            <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/>
-
-            <button onClick={handleShowData}>TAK</button>
 
         </>     
     )
