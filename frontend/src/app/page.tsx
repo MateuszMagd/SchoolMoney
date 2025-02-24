@@ -23,30 +23,63 @@ export default function Home() {
   }
 
 
+  // return (
+  //   <div className="bg-blue-300 ">
+  //     <main className="flex flex-col p-20 mt-20 space-y-6">
+        
+  //       {isLogged() ?
+  //         <>
+  //           <button onClick={logout}>Logout!</button> 
+  //           <RouterButton page="parent-details" buttonString = "Konto rodzica"/>
+  //           <RouterButton page="fund-page" buttonString = "Zbiórka"/>
+  //           <RouterButton page="transactions" buttonString = "Przelewy"/>
+  //           <RouterButton page="class" buttonString = "Klasa"/>
+  //           <RouterButton page="chat" buttonString = "Chat"/>
+  //           <button onClick={test}>Show me if logged!</button>
+            
+  //         </>
+  //         : 
+  //         <>
+  //           <RouterButton page="register" buttonString = "Rejestracja"/>
+  //           <RouterButton page="login" buttonString = "Logowanie"/>
+            
+  //         </>}
+  //     </main>
+  //     <footer className="">
+        
+  //     </footer>
+  //   </div>
+  // );
   return (
-    <div className="bg-blue-300 ">
+    <div 
+        className="min-h-screen flex justify-center items-center bg-cover bg-center"
+        style={{ backgroundImage: "url('/assets/main_page_background.png')" }} 
+    >
       <main className="flex flex-col p-20 mt-20 space-y-6">
         
-        {isLogged() ?
+        {isLogged() ? (
           <>
             <button onClick={logout}>Logout!</button> 
-            <RouterButton page="parent-details" buttonString = "Konto rodzica"/>
-            <RouterButton page="fund-page" buttonString = "Zbiórka"/>
-            <RouterButton page="transactions" buttonString = "Przelewy"/>
-            <RouterButton page="class" buttonString = "Klasa"/>
-            <RouterButton page="chat" buttonString = "Chat"/>
+            <RouterButton page="parent-details" buttonString="Konto rodzica" />
+            <RouterButton page="fund-page" buttonString="Zbiórka" />
+            <RouterButton page="transactions" buttonString="Przelewy" />
+            <RouterButton page="class" buttonString="Klasa" />
+            <RouterButton page="chat" buttonString="Chat" />
             <button onClick={test}>Show me if logged!</button>
-            
           </>
-          : 
-          <>
-            <RouterButton page="register" buttonString = "Rejestracja"/>
-            <RouterButton page="login" buttonString = "Logowanie"/>
-          </>}
+        ) : (
+          <div className="fixed top-0 left-0 w-full bg-white shadow-md p-4 flex items-center justify-between">
+          <h1 className="text-dark_blue text-[35px] font-anton ml-6">ZBIÓRKI KLASOWE</h1>
+          <div className="flex space-x-8 mr-6 font-anton text-[22px]">
+              <RouterButton page="register" buttonString="REJESTRACJA" color="bg-transparent text-dark_blue hover:text-dark_blue !text-dark_blue" width="w-[100px]" height="h-[40px]"/>
+              <RouterButton page="login" buttonString="LOGOWANIE" color="bg-transparent text-dark_blue hover:text-dark_blue !text-dark_blue" width="w-[100px]" height="h-[40px]"/>
+          </div>
+      </div>
+      
+        )}
       </main>
-      <footer className="">
-        
-      </footer>
+      <footer></footer>
     </div>
-  );
+);
+
 }
