@@ -23,6 +23,7 @@ export default {
         light_blue: "#00a4d0",
         marine: "#00b8bd",
         light_marine: "#37c9a8",
+        alert_red: "#c1121f",
       },
       width: {
         '1920px': '1920px', 
