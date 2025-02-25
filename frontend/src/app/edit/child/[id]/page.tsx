@@ -62,8 +62,9 @@ const ChildEditPage =() => {
       style={{
         backgroundImage: "url('/assets/parent_background.png')",
         backgroundSize: "cover",}}>
+
       {formData ? (
-        <form onSubmit={handleSubmit} className="p-5 bg-white rounded-[30px] w-[580px] h-[730px] shadow-xl">
+        <form onSubmit={handleSubmit} className="p-5 bg-white rounded-[30px] w-[580px] shadow-2xl mt-10">
           <h3 className="text-[55px] font-anton text-dark_blue mt-5 mb-4 text-center">DANE DZIECKA</h3>
           <div className=" ml-9 mb-4 mt-8">
           <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
@@ -122,18 +123,23 @@ const ChildEditPage =() => {
           </div>
   
           <div className="ml-9 mb-12 mt-5">
-            <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                <Image src={formData.photo} alt="Uploaded Preview" width={100} height={100} />
+            <label htmlFor="photo" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans] mb-5">
+              Zdjęcie profilowe:
             </label>
               <input
                 type="file"
                 id="photo"
                 name="photo"
                 onChange={handlePhotoChange}
-                className="w-full p-2 border border-gray-300 rounded-md" />
+                className="hidden"/>
+                <label
+                htmlFor="photo"
+                className="w-[100px] h-[50px] p-3 bg-dark_blue text-white text-center rounded-md cursor-pointer mt-8 font-[Open_Sans]">
+                Wybierz plik
+              </label>
           </div>
   
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-20">
           <button
             type="submit"
             className="w-[200px] h-[50px] bg-dark_blue text-white rounded-md mb-12"
@@ -145,6 +151,7 @@ const ChildEditPage =() => {
       ) : (
         <div>Loading...</div>
       )}
+
 
       <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[250px]" height="h-[60px]"/>
     </div>

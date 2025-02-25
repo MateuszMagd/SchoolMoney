@@ -80,9 +80,7 @@ export default function Home() {
             <RouterButton page="class" buttonString="Klasa" color="bg-marine" width="w-[200px]" height="h-[100px]"/>
           </div>
 
-          <div className="flex flex-row mr-[25px] font-anton text-[22px] justify-center">
-            <RouterButton page="chat" buttonString="Chat" color="bg-light_marine" width="w-[200px]" height="h-[100px]"/>
-          </div>
+         
           
           </div>
           

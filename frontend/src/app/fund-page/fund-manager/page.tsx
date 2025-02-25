@@ -32,44 +32,51 @@ const FundManagerPage = () => {
     }
 
     return (
+        <div
+        className="min-h-screen bg-center flex flex-col items-center space-y-20 p-10"
+        style={{
+            backgroundImage: "url('/assets/fund_background.png')",
+            backgroundSize: "cover",}}>
         <div>
-            <table className="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr className="bg-gray-200">
-                        <th className="border border-gray-300 px-4 py-2">Name</th>
-                        <th className="border border-gray-300 px-4 py-2">Start Date</th>
-                        <th className="border border-gray-300 px-4 py-2">End Date</th>
-                        <th className="border border-gray-300 px-4 py-2">Goal</th>
-                        <th className="border border-gray-300 px-4 py-2">Description</th>
-                        <th className="border border-gray-300 px-4 py-2">Actions</th>
+             <div className="mt-10 container mx-auto bg-white rounded-[30px] shadow-2xl w-[1200px] p-6">
+             <h3 className="text-[52px] font-anton text-marine mt-5 mb-12 text-center">MENEDŻER ZBIÓREK</h3>
+                <table className="table-auto w-full space-x-5 font-[Open_Sans] text-[18px] text-dark_blue">
+                <thead className="text-[20px] font-bold">
+                    <tr >
+                        <th className="px-4 py-2">NAZWA</th>
+                        <th className="px-4 py-2">DATA ROZPOCZĘCIA</th>
+                        <th className="px-4 py-2">DATA ZAKOŃCZENIA</th>
+                        <th className="px-4 py-2">CEL</th>
+                        <th className="px-4 py-2">OPIS</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
                     {allMyFunds.map((fund) => (
                         <tr key={fund.sessionId} className="text-center">
-                            <td className="border border-gray-300 px-4 py-2">{fund.name}</td>
-                            <td className="border border-gray-300 px-4 py-2">{fund.startDate || "N/A"}</td>
-                            <td className="border border-gray-300 px-4 py-2">{fund.endDate || "N/A"}</td>
-                            <td className="border border-gray-300 px-4 py-2">{fund.goal}</td>
-                            <td className="border border-gray-300 px-4 py-2">{fund.description}</td>
-                            <td className="border border-gray-300 px-4 py-2">
+                            <td className="px-4 py-2">{fund.name}</td>
+                            <td className="px-4 py-2">{fund.startDate || "N/A"}</td>
+                            <td className="px-4 py-2">{fund.endDate || "N/A"}</td>
+                            <td className="px-4 py-2">{fund.goal}</td>
+                            <td className="px-4 py-2">{fund.description}</td>
+                            <td className="px-4 py-2">
                                 <button 
-                                    className="bg-red-500 text-white px-3 py-1 rounded-md mr-2 hover:bg-red-600"
-                                    onClick={() => handleResign(fund.sessionId)}
-                                >
-                                    Resign
+                                     onClick={() => handleResign(fund.sessionId)}
+                                    className="bg-marine text-white  w-[120px] h-[50px] rounded-lg text-[15px] mr-3">
+                                    Deaktywuj
                                 </button>
                                 <button 
-                                    className="bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600"
                                     onClick={() => handleDeactivate(fund.sessionId)}
-                                >
-                                    Deactivate
+                                    className="bg-light_marine text-white w-[120px] h-[50px] rounded-lg text-[15px] mr-3">
+                                    Zakończ
                                 </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+        </div>
+        </div>
         </div>
     );
 };
