@@ -57,12 +57,17 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
   };  
 
   return (
+    <div className="flex flex-col justify-center items-center min-h-screen space-y-14" 
+      style={{
+        backgroundImage: "url('/assets/parent_background.png')",
+        backgroundSize: "cover",}}>
       <div>
         {formData ? 
-          <form onSubmit={handleSubmit} className="p-5 bg-blue-100 rounded-md">
-            <div className="mb-4">
-              <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
-                First Name:
+          <form onSubmit={handleSubmit} className="p-5 bg-white rounded-[30px] w-[580px] shadow-xl">
+           <h3 className="text-[55px] font-anton text-dark_blue mt-5 mb-4 text-center">DANE RODZICA</h3>
+           <div className=" ml-9 mt-8">
+              <label htmlFor="firstName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                Imię:
               </label>
               <input
                 type="text"
@@ -70,13 +75,13 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="firstName"
                 value={formData.firstName || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
-                Last Name:
+            <div className=" ml-9 mt-5">
+              <label htmlFor="lastName" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                Nazwisko:
               </label>
               <input
                 type="text"
@@ -84,12 +89,12 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="lastName"
                 value={formData.lastName || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                 className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="pesel" className="block text-sm font-medium text-gray-700">
+            <div className=" ml-9 mt-5">
+              <label htmlFor="pesel" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
                 PESEL:
               </label>
               <input
@@ -98,12 +103,12 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="pesel"
                 value={formData.pesel || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                 className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
+            <div className=" ml-9 mt-5">
+              <label htmlFor="birthDate" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
                 Email:
               </label>
               <input
@@ -112,13 +117,13 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="email"
                 value={formData.email || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
-                Password:
+            <div className=" ml-9 mt-5">
+              <label htmlFor="birthDate" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                Hasło:
               </label>
               <input
                 type="password"
@@ -126,13 +131,13 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="birthDate"
                 value={repeatPassword || ""}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">
-                Repeat Password:
+            <div className=" ml-9 mt-5">
+              <label htmlFor="birthDate" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
+                Powtórz Hasło:
               </label>
               <input
                 type="password"
@@ -140,34 +145,45 @@ const UserForm = ({userInfo}: {userInfo: UserInfoExtended}) => {
                 name="birthDate"
                 value={formData.password || ""}
                 onChange={handleChangeReapeatPassword}
-                className="w-full p-2 border border-gray-300 rounded-md"
+                className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
               />
             </div>
 
-            <div className="flex flex-row mb-4">
-              <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
-                <Image src={formData.photo} alt="Uploaded Preview" width={100} height={100} />
+            <div className="ml-9 mt-5">
+              <label htmlFor="photo" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans] mb-5">
+                Zdjęcie profilowe:
               </label>
               <input
                 type="file"
                 id="photo"
                 name="photo"
                 onChange={handlePhotoChange}
-                className="w-full p-2 border border-gray-300 rounded-md" />
+                className="hidden"/>
+              <label
+                htmlFor="photo"
+                className="w-[100px] h-[50px] p-3 bg-dark_blue text-white text-center rounded-md cursor-pointer mt-8 font-[Open_Sans]">
+                Wybierz plik
+              </label>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-            >
-              Save Changes
-            </button>
+            <div className="flex justify-center mt-20">
+              <button
+                type="submit"
+                className="w-[200px] h-[50px] bg-dark_blue text-white rounded-md mb-12"
+              >
+                Zapisz zmiany
+              </button>
+            </div>
             </form>
             
             : 
             <div>Loading...</div>
             }
-            <RouterButton page="/" buttonString = "Wroc do głownej"/>
+            <div className="flex justify-center mt-16 mb-6">
+              <RouterButton page="/" buttonString="Wróć do głównej" color="bg-dark_blue" width="w-[250px]" height="h-[60px]"/>
+            </div>
+            
+      </div>
       </div>
   )
 };

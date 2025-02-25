@@ -146,8 +146,6 @@ const FundForm = () => {
 
                 <RouterButton page="fund-page/fund-manager"  buttonString="Pokaż wszystkie moje zbiórki" color="bg-marine" width="w-[300px]" height="h-[50px]" />
             </div>
-            
-
         </>     
     )
 }
