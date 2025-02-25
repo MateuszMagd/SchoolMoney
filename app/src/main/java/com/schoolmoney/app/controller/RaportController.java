@@ -3,12 +3,10 @@ package com.schoolmoney.app.controller;
 
 import com.itextpdf.text.Document;
 import com.schoolmoney.app.authenticate.JwtTokenUtil;
-import com.schoolmoney.app.dto.ChildDto;
-import com.schoolmoney.app.dto.FundInfoDto;
-import com.schoolmoney.app.dto.NewFoundRegister;
-import com.schoolmoney.app.dto.UserInfoDto;
+import com.schoolmoney.app.dto.*;
 import com.schoolmoney.app.entities.*;
 import com.schoolmoney.app.enums.ChildFundStatusType;
+import com.schoolmoney.app.enums.OperationType;
 import com.schoolmoney.app.enums.StatusType;
 import com.schoolmoney.app.enums.UserType;
 import com.schoolmoney.app.repository.FundRepository;
@@ -174,6 +172,7 @@ public class RaportController {
                     }
 
                 }
+
                 fundInfoDtoList.add(fundInfoDto);
             }
             return ResponseEntity.ok(fundInfoDtoList);
@@ -181,5 +180,152 @@ public class RaportController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
         }
     }
+
+    @GetMapping("/get/{sessionId}")
+    public ResponseEntity<?> getFundBySessionId(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+
+            Fund fund = fundService.getFundBySessionId(sessionId);
+            if(fund == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fund not found");
+            }
+
+            FundInfoDto fundInfoDto = new FundInfoDto();
+            fundInfoDto.setStatusType(fund.getStatus());
+            fundInfoDto.setName(fund.getFundName());
+            fundInfoDto.setMoney(fund.getMoneyPerKid());
+            fundInfoDto.setFundSessionId(fund.getSessionId());
+            fundInfoDto.setClassSessionId(fund.getClassId().getClassName());
+
+
+            return ResponseEntity.ok(fundInfoDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/get/child/{sessionId}")
+    public ResponseEntity<?> getChildFundBySessionId(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+
+            Fund fund = fundService.getFundBySessionId(sessionId);
+            if(fund == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fund not found");
+            }
+
+            FundInfoDto fundInfoDto = new FundInfoDto();
+            fundInfoDto.setStatusType(fund.getStatus());
+            fundInfoDto.setStartDate(fund.getStartDate());
+            fundInfoDto.setEndDate(fund.getEndDate());
+            fundInfoDto.setName(fund.getFundName());
+            fundInfoDto.setMoney(fund.getMoneyPerKid());
+            fundInfoDto.setFundSessionId(fund.getSessionId());
+            fundInfoDto.setClassSessionId(fund.getClassId().getClassName());
+
+
+            return ResponseEntity.ok(fundInfoDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/get/all/my/funds")
+    public ResponseEntity<?> getAllMyFunds(@RequestHeader("Authorization") String token) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            User user = userService.getUserByEmail(claims.getSubject());
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            List<Fund> funds = fundService.getFundsByUser(user);
+            if(funds == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funds not found");
+            }
+
+            List<FundInfoForCRUDDTO> fundDTOList = new ArrayList<FundInfoForCRUDDTO>();
+            for (Fund fund : funds) {
+                FundInfoForCRUDDTO fundDto = new FundInfoForCRUDDTO();
+                fundDto.setName(fund.getFundName());
+                fundDto.setSessionId(fund.getSessionId());
+                fundDto.setGoal(fund.getMoneyPerKid());
+                fundDto.setDescription(fundDto.getDescription());
+                fundDto.setStartDate(fundDto.getStartDate());
+                fundDto.setEndDate(fundDto.getEndDate());
+                fundDto.setClassSessionId(fund.getClassId().getClassName());
+
+                fundDTOList.add(fundDto);
+            }
+
+            return ResponseEntity.ok(fundDTOList);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/deactive/fund/{sessionId}")
+    public ResponseEntity<?> deativeFund(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            Fund fund = fundService.getFundBySessionId(sessionId);
+            if(fund == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fund not found");
+            }
+
+            fund.setStatus(StatusType.CLOSED);
+
+            fundService.updateFund(fund);
+
+
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/resign/fund/{sessionId}")
+    public ResponseEntity<?> resignFund(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            Fund fund = fundService.getFundBySessionId(sessionId);
+            if(fund == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fund not found");
+            }
+
+            List<BillsHistory> billsHistoryList = billsHistoryService.getBillsHistoryByFund(fund);
+
+            for(BillsHistory billsHistory : billsHistoryList) {
+                BillsHistory newBill = new BillsHistory();
+                newBill.setSender(billsHistory.getReciver());
+                newBill.setReciver(billsHistory.getSender());
+                newBill.setSubject(billsHistory.getSender());
+                newBill.setDate(LocalDate.now());
+                newBill.setOperationType(OperationType.REFUND);
+                newBill.setText("Zwrot gotówki z:" + fund.getFundName());
+                newBill.setAmount(billsHistory.getAmount());
+
+                billsHistoryService.saveBillsHistory(newBill);
+
+                Bills reciver = billsHistory.getSender();
+                Bills sender = billsHistory.getReciver();
+
+                reciver.setBalance(billsHistory.getAmount() + reciver.getBalance());
+                sender.setBalance(sender.getBalance() - billsHistory.getAmount());
+
+                billsService.saveBills(reciver);
+                billsService.saveBills(sender);
+            }
+
+            fund.setStatus(StatusType.CLOSED);
+
+            fundService.updateFund(fund);
+
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
 
 }

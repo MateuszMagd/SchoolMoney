@@ -81,10 +81,10 @@ export const editChild = async (data: ChildInfo) => {
 
     } catch (error) {     
         if (axios.isAxiosError(error) && error.response) {
-            console.error("Error response:", error.response);
+            console.log("Error response:", error.response);
             alert(error.response.data.message || "Błąd logowania");
         } else {
-            console.error("Unknown error:", error);
+            console.log("Unknown error:", error);
             alert("Wystąpił nieznany błąd.");
         }
         return false;

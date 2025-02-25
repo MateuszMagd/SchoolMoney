@@ -15,4 +15,6 @@ public interface IFundService {
     Fund getFundByBills(Bills bills);
 
     void createFund(Fund fund);
+
+    void updateFund(Fund fund);
 }

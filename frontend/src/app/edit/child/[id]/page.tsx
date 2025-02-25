@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ChildInfo } from "@/data/interfacesUser";
 import { editChild, getChildBySessionId } from "@/connection/childAPI";
 import RouterButton from '@/components/routerButton';
+import Image from "next/image";
 
 const ChildEditPage =() => {
   const { id } = useParams();
@@ -34,6 +35,18 @@ const ChildEditPage =() => {
         [name]: value
       };
     });
+  };
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as String;
+        setFormData({...formData, photo:base64String.split(",")[1]}) 
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -102,24 +115,22 @@ const ChildEditPage =() => {
               type="date"
               id="birthDate"
               name="birthDate"
-              value={formData.birthDate || ""}
+              value={formData.birthday || ""}
               onChange={handleChange}
               className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
             />
           </div>
   
           <div className="ml-9 mb-12 mt-5">
-            <label htmlFor="photo" className="block text-[17px] font-medium text-dark_blue font-[Open_Sans]">
-              Zdjęcie profilowe:
+            <label htmlFor="photo" className="block text-sm font-medium text-gray-700">
+                <Image src={formData.photo} alt="Uploaded Preview" width={100} height={100} />
             </label>
-            <input
-              type="text"
-              id="photo"
-              name="photo"
-              value={formData.photo || ""}
-              onChange={handleChange}
-              className="w-[93%] p-2 border border-gray-300 font-[Open_Sans] rounded-md focus:border-dark_blue focus:outline-none text-dark_blue"
-            />
+              <input
+                type="file"
+                id="photo"
+                name="photo"
+                onChange={handlePhotoChange}
+                className="w-full p-2 border border-gray-300 rounded-md" />
           </div>
   
           <div className="flex justify-center">

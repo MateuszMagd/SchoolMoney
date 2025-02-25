@@ -141,8 +141,11 @@ const FundForm = () => {
                 </div>
             </form>
             }
+            <div className="space-x-4 mt-4"> 
+                <RouterButton page="/" buttonString="Wróć do głównej" color="bg-marine" width="w-[300px]" height="h-[50px]"/>
 
-
+                <RouterButton page="fund-page/fund-manager"  buttonString="Pokaż wszystkie moje zbiórki" color="bg-marine" width="w-[300px]" height="h-[50px]" />
+            </div>
         </>     
     )
 }

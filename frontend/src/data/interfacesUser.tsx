@@ -50,6 +50,7 @@ export interface ClassInfo {
 
 export interface ExtendedClassInfo extends ClassInfo {
     children: ChildInfo[],
+    fundSessionId: string,
 };
 
 export interface ChildClassInfo extends ClassInfo {
@@ -76,6 +77,10 @@ export interface FundInfo {
     description: string,
     classSessionId: string,
 };
+
+export interface FundExtendedInfo extends FundInfo {
+    sessionId: string,
+}
 
 // -------------------- Transaction -----------------------
 

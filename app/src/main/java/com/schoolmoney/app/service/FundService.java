@@ -24,7 +24,7 @@ public class FundService implements IFundService {
     @Override
     public List<Fund> getFundsByUser(User user)
     {
-        return null;
+        return fundRepository.findByPatron(user);
     }
 
     @Override
@@ -51,6 +51,11 @@ public class FundService implements IFundService {
 
     @Override
     public void createFund(Fund fund) {
+        fundRepository.save(fund);
+    }
+
+    @Override
+    public void updateFund(Fund fund) {
         fundRepository.save(fund);
     }
 }
