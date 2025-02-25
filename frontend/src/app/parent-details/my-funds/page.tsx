@@ -2,10 +2,11 @@
 
 import RouterButton from "@/components/routerButton";
 import { getAllMyFunds } from "@/connection/fundAPI";
+import { ExtendedClassInfo } from "@/data/interfacesUser";
 import { useEffect, useState } from "react";
 
 const MyFundsPage = () => {
-    const [funds, setFunds] = useState([]);
+    const [funds, setFunds] = useState<ExtendedClassInfo[]>([]);
 
     useEffect(() => {
         const getData = async () => {
@@ -16,7 +17,6 @@ const MyFundsPage = () => {
         getData();
     }, []);
 
-    console.log(funds)
 
     return (
         <div className="p-4 min-h-screen"  style={{
@@ -64,7 +64,7 @@ const MyFundsPage = () => {
                                     </td>
                                     <td className="text-center text-[15px]">
                                         <RouterButton
-                                            page={`/fund-page/${fund.sessionId}`}
+                                            page={`fund-page/${fund.fundSessionId}`}
                                             buttonString="Zobacz zbiórkę"
                                             color="bg-dark_blue"
                                             width="w-[150px]"
