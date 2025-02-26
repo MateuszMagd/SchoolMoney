@@ -284,12 +284,12 @@ public class RaportController {
                 fundDto.setName(fund.getFundName());
                 fundDto.setSessionId(fund.getSessionId());
                 fundDto.setGoal(fund.getMoneyPerKid());
-                fundDto.setDescription(fundDto.getDescription());
-                fundDto.setStartDate(fundDto.getStartDate());
-                fundDto.setEndDate(fundDto.getEndDate());
+                fundDto.setDescription(fund.getDescription());
+                fundDto.setStartDate(fund.getStartDate());
+                fundDto.setEndDate(fund.getEndDate());
                 fundDto.setClassSessionId(fund.getClassId().getClassName());
                 fundDto.setPhoto(fund.getPhoto());
-
+                System.out.println(fundDto.getStartDate() + " " + fundDto.getEndDate());
                 fundDTOList.add(fundDto);
             }
 

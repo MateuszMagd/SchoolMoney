@@ -5,12 +5,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
 import lombok.Data;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDate;
 
 @Data
 public class FundInfoForCRUDDTO {
     private String name;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private float goal;
     private String description;
     private String classSessionId;

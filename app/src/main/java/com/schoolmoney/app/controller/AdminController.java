@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -310,4 +311,42 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }
     }
+
+    @PostMapping("/child/add/parents/{sessionId}")
+    public ResponseEntity<?> addParentToChild(
+            @RequestHeader("Authorization") String token,
+            @PathVariable String sessionId,
+            @RequestBody Map<String, String> requestBody // <-- Oczekujemy JSON-a
+    ) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if (!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+
+            Child child = childService.getChildBySessionId(sessionId);
+            if (child == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Child not found");
+            }
+
+            String email = requestBody.get("email"); // <-- Pobieramy email z JSON-a
+            System.out.println("Received email: " + email);
+
+            User user = userService.getUserByEmail(email);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            List<User> users = new ArrayList<>();
+            users.add(user);
+            child.setParents(users);
+            childService.saveChild(child);
+
+            return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+    }
+
+
 }

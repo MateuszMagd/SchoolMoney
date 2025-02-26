@@ -201,3 +201,41 @@ export const getParentByChildSessionId = async (sessionId: string) => {
         return false;
     }  
 }
+
+export const assignParentToChild = async (sessionId: string, email: string) => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return false;
+        }
+
+        // Zamieniamy %40 na @
+        const decodedEmail = decodeURIComponent(email);
+
+        const response = await axios.post(
+            `http://localhost:8090/api/admin/child/add/parents/${sessionId}`,
+            { email: decodedEmail }, // <-- Wysyłamy mapę (obiekt JSON)
+            {
+                headers: {
+                    'Authorization': token,
+                    'Content-Type': 'application/json', // <-- Poprawny nagłówek
+                },
+                withCredentials: true,
+            }
+        );
+
+        return true;
+    } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd przypisywania rodzica");
+        } else {
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return false;
+    }
+};
+
+

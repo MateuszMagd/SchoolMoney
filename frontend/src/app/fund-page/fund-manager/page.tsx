@@ -64,7 +64,7 @@ const FundManagerPage = () => {
                                 >
                                     Deactivate
                                 </button>
-                                <RouterButton page={`fund-page/edit/${fund.sessionId}`} buttonString="Przelewy" color="bg-light_blue" width="w-[200px]" height="h-[100px]"/>
+                                {/*<RouterButton page={`fund-page/edit/${fund.sessionId}`} buttonString="Przelewy" color="bg-light_blue" width="w-[200px]" height="h-[100px]"/> */}
                             </td>
                         </tr>
                     ))}

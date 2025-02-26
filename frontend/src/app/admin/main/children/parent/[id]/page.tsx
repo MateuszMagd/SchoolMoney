@@ -1,5 +1,5 @@
 "use client"
-import { getParentByChildSessionId} from "@/connection/adminAPI";
+import { assignParentToChild, getParentByChildSessionId} from "@/connection/adminAPI";
 import { UserInfo } from "@/data/interfacesUser";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -34,13 +34,13 @@ const ShowAddParentPage = () => {
         }
 
         try {
-            //const success = await assignParentToChild(id as string, selectedParent);
-            //if (success) {
-            //    alert("Rodzic został przypisany!");
-            //    location.reload(); // Odświeżenie strony po przypisaniu
-           // } else {
-            //    alert("Błąd przy przypisywaniu rodzica.");
-            //}
+            const success = await assignParentToChild(id as string, selectedParent);
+            if (success) {
+                alert("Rodzic został przypisany!");
+                location.reload(); // Odświeżenie strony po przypisaniu
+            } else {
+                alert("Błąd przy przypisywaniu rodzica.");
+            }
         } catch (error) {
             console.error("Błąd przypisywania rodzica:", error);
             alert("Wystąpił błąd.");
@@ -63,7 +63,7 @@ const ShowAddParentPage = () => {
                             {parents
                                 .filter((parent) => parent.firstName !== "CONTROL" || parent.lastName !== "CONTROL")
                                 .map((parent) => (
-                                    <option key={parent.pesel} value={parent.pesel}>
+                                    <option key={parent.email} value={parent.email}>
                                         {parent.firstName} {parent.lastName}
                                     </option>
                                 ))}
