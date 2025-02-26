@@ -5,9 +5,12 @@ import com.schoolmoney.app.dto.ChildDto;
 import com.schoolmoney.app.dto.NewChildRegister;
 import com.schoolmoney.app.dto.UserDto;
 import com.schoolmoney.app.dto.UserInfoDto;
+import com.schoolmoney.app.entities.Bills;
+import com.schoolmoney.app.entities.BillsHistory;
 import com.schoolmoney.app.entities.Child;
 import com.schoolmoney.app.entities.User;
 import com.schoolmoney.app.enums.UserType;
+import com.schoolmoney.app.service.interfaces.IBillsService;
 import com.schoolmoney.app.service.interfaces.IChildService;
 import com.schoolmoney.app.service.interfaces.IUserService;
 import com.schoolmoney.app.utils.PasswordHash;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,10 +36,12 @@ public class AdminController {
     private final IUserService userService;
     private final IChildService childService;
 
+    private final IBillsService billsService;
     @Autowired
-    public AdminController(IUserService userService, IChildService childService) {
+    public AdminController(IUserService userService, IChildService childService, IBillsService billsService) {
         this.userService = userService;
         this.childService = childService;
+        this.billsService = billsService;
     }
 
     @GetMapping("/users/all")
@@ -119,6 +125,12 @@ public class AdminController {
             child.setPesel(newChildRegister.getPesel());
             child.setBirthday(newChildRegister.getBirthday());
             child.setPhoto(Utils.loadPhoto("default.png"));
+
+            Bills bills = new Bills();
+            child.setBills(bills);
+            billsService.saveBills(bills);
+
+            child.setParents(null);
 
             childService.saveChild(child);
 
@@ -252,9 +264,48 @@ public class AdminController {
             user.setPassword(PasswordHash.hashPasswordWithSalt(userDto.getPassword(), salt));
             user.setSalt(salt);
 
+            Bills bills = new Bills();
+            billsService.saveBills(bills);
+
+            user.setBills(bills);
             userService.addUser(user);
 
             return ResponseEntity.ok("Ok");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+        }
+    }
+
+    @GetMapping("/child/parents/{sessionId}")
+    public ResponseEntity<?> getChildParentsOrListOfParentsToChoose(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            if(!claims.get("typ", String.class).equals("ADMIN")) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
+            }
+
+            Child child = childService.getChildBySessionId(sessionId);
+            if(child == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Child not found");
+            }
+            List<UserInfoDto> userDtos = new ArrayList<>();
+            if(child.getParents().isEmpty()) {
+                List<User> users = userService.getAllUsers();
+                System.out.println("users "+ users.size());
+                List<UserInfoDto> temp = UserToUserInfoDtoConverter.ConvertListToDto(users);
+                System.out.println("temp "+temp.size());
+                userDtos.addAll(temp);
+                UserInfoDto control = new UserInfoDto();
+                control.setFirstName("CONTROL");
+                control.setLastName("CONTROL");
+                userDtos.add(control);
+            }
+            else {
+                List<User> users = child.getParents();
+                userDtos.addAll(UserToUserInfoDtoConverter.ConvertListToDto(users));
+            }
+            System.out.println("SIZE " + userDtos.size());
+            return ResponseEntity.ok(userDtos);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access");
         }

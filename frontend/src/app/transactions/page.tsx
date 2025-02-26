@@ -11,6 +11,7 @@ const TransactionPage = () => {
     // There will be all possible transactions
     const [transactionData, setTransactionData] = useState<Transaction[]>([]);
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+    const [fixedAmount, setFixedAmount] = useState<boolean>(false);
     const [amount, setAmount] = useState<number>(0);
     const [text, setText] = useState<string>("");
     
@@ -31,6 +32,14 @@ const TransactionPage = () => {
           (transaction) => transaction.name === selectedName
         );
         setSelectedTransaction(foundTransaction || null);
+        if(foundTransaction?.amountNeeded ) {
+            setFixedAmount(true);
+            setAmount(foundTransaction.amountNeeded);
+        }
+        else {
+            setFixedAmount(false);
+        }
+        console.log(selectedTransaction?.amountNeeded)
     };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -110,13 +119,29 @@ const TransactionPage = () => {
                     ) :
                     (<></>)}
                     <form onSubmit={() => onSubmit()} className="flex flex-col items-center space-y-4">
-                        <input type="number" id="amount" placeholder="Podaj kwotę" onChange={(e) => onChange(e)}
-                        className="w-[400px] mt-10 p-3 border border-gray rounded-md focus:outline-none focus:border-dark_blue placeholder-dark_blue resize-none">
-                        </input>
+                    {fixedAmount !== true ? (
+                        <input 
+                        type="number"
+                        id="amount"
+                        onChange={(e) => onChange(e)}
+                        className="w-[400px] mt-10 p-3 border border-gray rounded-md focus:outline-none focus:border-dark_blue placeholder-dark_blue resize-none"
+                        placeholder="Podaj kwotę"/>
+                    ) : (
+                        <input 
+                        type="number"
+                        id="amount"
+                        value={amount}  
+                        className="w-[400px] mt-10 p-3 border border-gray rounded-md focus:outline-none focus:border-dark_blue placeholder-dark_blue resize-none"
+                        placeholder="Podaj kwotę"
+                        readOnly/>
+                    )}
+
+
+                        
                         <textarea id="text" placeholder="Opis" onChange={(e) => setText(e.target.value)}
-                        className="w-[400px] h-[120px] mt-10 p-3 border border-gray rounded-md focus:outline-none focus:border-dark_blue placeholder-dark_blue resize-none">
+                            className="w-[400px] h-[120px] mt-10 p-3 border border-gray rounded-md focus:outline-none focus:border-dark_blue placeholder-dark_blue resize-none">
                         </textarea>
-                       
+                        <button className="w-[280px] h-[60px] p-5 bg-dark_blue text-white text-center rounded-lg hover:opacity-90 transition" type="submit">Zrób przelew</button>
                     </form>   
                 </div>
             ) : (
@@ -128,7 +153,7 @@ const TransactionPage = () => {
 
             <div className="flex flex-col justify-center items-center mt-10 space-y-5"  >
             
-            <button className="w-[280px] h-[60px] p-5 bg-dark_blue text-white text-center rounded-lg hover:opacity-90 transition" type="submit">Zrób przelew</button>
+           
             <RouterButton
                 page="transactions/my-all"
                 buttonString="Pokaż płatności"

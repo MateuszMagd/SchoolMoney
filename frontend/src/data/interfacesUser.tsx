@@ -79,6 +79,7 @@ export interface FundInfo {
 };
 
 export interface FundExtendedInfo extends FundInfo {
+    photo: string,
     sessionId: string,
 }
 

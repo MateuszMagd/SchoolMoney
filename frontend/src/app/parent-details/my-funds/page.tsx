@@ -12,6 +12,7 @@ const MyFundsPage = () => {
         const getData = async () => {
             const data = await getAllMyFunds(); 
             setFunds(data); 
+            console.log(data)
         };
 
         getData();

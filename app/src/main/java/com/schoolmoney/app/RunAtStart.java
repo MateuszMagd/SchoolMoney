@@ -128,9 +128,21 @@ public class RunAtStart {
             // <---------------- fundusz --------------------->
             Bills billsFund = new Bills();
             billsRepository.save(billsFund);
+            Bills billsFund2 = new Bills();
+            billsRepository.save(billsFund2);
+            Bills billsFund3 = new Bills();
+            billsRepository.save(billsFund3);
 
-            Fund fund = new Fund("Zbiórka na wycieczke", "Wycieczka do częstochowy", 10, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.OPEN, classes , billsFund, parent1);
+
+            Fund fund = new Fund("Zbiórka na wycieczke do Częstwochowy", "Wycieczka do częstochowy", 10, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.OPEN, classes , billsFund, parent1);
             fundRepository.save(fund);
+
+            Fund fund1 = new Fund("Zbiórka na wycieczke do Warszawy", "Wycieczka do Warszawy", 100, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.OPEN, classes , billsFund2, parent1);
+            fundRepository.save(fund1);
+
+            Fund fund2 = new Fund("Zbiórka naczke do Wars", "Wycieczka ", 100, 0, 10,Utils.loadPhoto("default.png"), LocalDate.parse("2024-01-25"), LocalDate.parse("2024-01-27"), StatusType.CLOSED, classes , billsFund3, parent1);
+            fundRepository.save(fund2);
+
 
             BillsHistory billsHistory = new BillsHistory(bills, billsFund, bills4, 10, OperationType.TRANSFER, "Zapłacono za wycieczke za Mateusz Kristian", LocalDate.parse("2024-01-25"));
             billsHistoryRepository.save(billsHistory);
@@ -138,9 +150,7 @@ public class RunAtStart {
             // <---------------- ADMIN -------------------->
             System.out.println("[Starting] All done! Get started!");
 
-//            System.out.println("po sesid: " + billsHistoryRepository.findBillsHistoryBySessionId(fund.getSessionId()).size());
-//            System.out.println("po id: " + billsHistoryRepository.findBillsHistoryByFundId(fund.getId()).size());
-//            System.out.println("wynik: " + UUID.fromString(billsHistoryRepository.findBillsHistoryByFundId(fund.getId()).getFirst().getSessionId()) + "    " + UUID.fromString(fund.getSessionId()));
+
             PDFService pdfService = new PDFService(fundRepository, userRepository, billsHistoryRepository);
             pdfService.generatePdf(fund);
 

@@ -50,7 +50,7 @@ const ChildrenPage = () => {
     }
 
     const handleShowParent = (sessionId: string) => {
-        window.location.href = `/admin/main/edit/show/parent/${sessionId}`;
+        window.location.href = `/admin/main/children/parent/${sessionId}`;
     }
 
     return (

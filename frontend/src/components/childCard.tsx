@@ -53,8 +53,6 @@ const ChildCard = ({childInfo}: {childInfo: ChildInfo}) => {
                     
                 }
                 
-
-                {/* TODO: Add functionality after class module done! */}
                 <div className="flex justify-center font-anton text-normal_blue mt-6" style={{ fontSize: '23px' }}>Opiekun</div>
                 {isChildClassInfo(classData) ?
                     <div className="flex justify-center font-oswald text-normal_blue" style={{ fontSize: '22px' }}>{classData.patronFirstName + " " + classData.patronLastName}</div> :

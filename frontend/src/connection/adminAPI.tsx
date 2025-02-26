@@ -105,10 +105,10 @@ export const getChildBySessionId = async (sessionId: string) => {
     }
     catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-            console.error("Error response:", error.response);
+            console.log("Error response:", error.response);
             alert(error.response.data.message || "Błąd logowania");
         } else {
-            console.error("Unknown error:", error);
+            console.log("Unknown error:", error);
             alert("Wystąpił nieznany błąd.");
         }
         return false;
@@ -133,10 +133,10 @@ export const deleteUser = async(email: string) => {
     }
     catch (error) {
         if (axios.isAxiosError(error) && error.response) {
-            console.error("Error response:", error.response);
+            console.log("Error response:", error.response);
             alert(error.response.data.message || "Błąd logowania");
         } else {
-            console.error("Unknown error:", error);
+            console.log("Unknown error:", error);
             alert("Wystąpił nieznany błąd.");
         }
         return false;
@@ -167,7 +167,35 @@ export const modifyUser = async(userInfo: UserInfoExtended, email: String) => {
         if (axios.isAxiosError(error) && error.response) {
             alert(error.response.data.message || "Błąd podczas próby modyfikacji");
         } else {
-            console.error("Unknown error:", error);
+            console.log("Unknown error:", error);
+            alert("Wystąpił nieznany błąd.");
+        }
+        return false;
+    }  
+}
+
+export const getParentByChildSessionId = async (sessionId: string) => {
+    try {
+        const token = getToken();
+        if (!token) {
+            alert("You are not logged.");
+            return;
+        }
+        const response = await axios.get(`http://localhost:8090/api/admin/child/parents/${sessionId}`,  {
+            headers: {
+                'Authorization': token,
+            },
+            withCredentials: true,
+        });
+        response.data.photo = `data:image/jpeg;base64,${response.data.photo}`;
+        return response.data;
+    }
+    catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+            console.log("Error response:", error.response);
+            alert(error.response.data.message || "Błąd logowania");
+        } else {
+            console.log("Unknown error:", error);
             alert("Wystąpił nieznany błąd.");
         }
         return false;

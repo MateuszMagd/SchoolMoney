@@ -5,6 +5,7 @@ import com.schoolmoney.app.dto.BillsHistoryDto;
 import com.schoolmoney.app.dto.TransactionInfoDto;
 import com.schoolmoney.app.entities.*;
 import com.schoolmoney.app.enums.OperationType;
+import com.schoolmoney.app.enums.StatusType;
 import com.schoolmoney.app.service.FundService;
 import com.schoolmoney.app.service.interfaces.*;
 import io.jsonwebtoken.Claims;
@@ -70,17 +71,33 @@ public class TransactionController {
                 if(child.getClassId() == null) {
                     continue;
                 }
+                List<BillsHistory> billsHistories = billsHistoryService.getBillsHistoriesBySubject(child.getBills());
                 Classes classes = child.getClassId();
                 List<Fund> funds = fundService.getFundByClass(classes);
                 for(Fund fund: funds) {
-                    TransactionInfoDto info = new TransactionInfoDto();
-                    info.setName(fund.getFundName() + " - " + child.getName() + " " + child.getLastName());
-                    info.setDescription(fund.getDescription());
-                    info.setPayForWho(child.getName() + " " + child.getLastName() );
-                    info.setSessionId(fund.getBills().getSessionId());
-                    info.setAmountNeeded(fund.getMoneyPerKid());
+                    if(fund.getStatus() == StatusType.CLOSED)
+                        continue;
 
-                    resultList.add(info);
+                    boolean flag = true;
+                    for(BillsHistory billsHistory : billsHistories )
+                    {
+                        if(billsHistory.getReciver().equals(fund.getBills())) {
+                            flag = false;
+                            break;
+                        }
+                    }
+
+                    if(flag) {
+                        TransactionInfoDto info = new TransactionInfoDto();
+                        info.setName(fund.getFundName() + " - " + child.getName() + " " + child.getLastName());
+                        info.setDescription(fund.getDescription());
+                        info.setPayForWho(child.getName() + " " + child.getLastName() );
+                        info.setSessionId(fund.getBills().getSessionId());
+                        info.setAmountNeeded(fund.getMoneyPerKid());
+
+                        resultList.add(info);
+                    }
+
                 }
 
             }

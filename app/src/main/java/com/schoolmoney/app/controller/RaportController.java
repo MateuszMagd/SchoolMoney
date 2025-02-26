@@ -144,36 +144,37 @@ public class RaportController {
             List<Child> children = childService.getChildrenByParentEmail(user.getEmail());
 
             for(Child child : children) {
-                FundInfoDto fundInfoDto = new FundInfoDto();
                 Classes classes = child.getClassId();
                 if(classes == null)
                     continue;
-
                 List<Fund> fundsList = fundService.getFundByClass(classes);
+                System.out.println("Size" + " " + fundsList.size());
 
                 for(Fund fund: fundsList) {
+                    if(fund.getStatus() == StatusType.CLOSED)
+                        continue;
+                    FundInfoDto fundInfoDto = new FundInfoDto();
                     ChildDto childDto = ChildToChildDtoConverter.ChildToChildDto(child);
                     fundInfoDto.setChildDto(childDto);
                     fundInfoDto.setName(fund.getFundName());
                     fundInfoDto.setFundSessionId(fund.getSessionId());
                     fundInfoDto.setMoney(fund.getMoneyPerKid());
+                    fundInfoDto.setStatus(ChildFundStatusType.NOT_PAID);
 
-                    BillsHistory billsHistory = billsHistoryService.getBillsHistoryBySubject(child.getBills());
-                    if(billsHistory != null) {
-                        if(fund.getBills().getBillsNumber().equals(billsHistory.getReciver().getBillsNumber())){
+                    List<BillsHistory> billsHistory = billsHistoryService.getBillsHistoriesBySubject(child.getBills());
+                    if(billsHistory != null)
+                    {
+                        for(BillsHistory billsHistory1: billsHistory) {
+                            if(!billsHistory1.getReciver().equals(fund.getBills())) {
+                                continue;
+                            }
                             fundInfoDto.setStatus(ChildFundStatusType.PAID);
                         }
-                        else {
-                            fundInfoDto.setStatus(ChildFundStatusType.NOT_PAID);
-                        }
-                    }
-                    else {
-                        fundInfoDto.setStatus(ChildFundStatusType.NOT_PAID);
                     }
 
+                    fundInfoDtoList.add(fundInfoDto);
                 }
 
-                fundInfoDtoList.add(fundInfoDto);
             }
             return ResponseEntity.ok(fundInfoDtoList);
         } catch (Exception e) {
@@ -264,6 +265,40 @@ public class RaportController {
         }
     }
 
+    @GetMapping("/get/better")
+    public ResponseEntity<?> getAllMyFundsBetter(@RequestHeader("Authorization") String token) {
+        try {
+            Claims claims = JwtTokenUtil.verifyToken(token);
+            User user = userService.getUserByEmail(claims.getSubject());
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            List<Fund> funds = fundService.getFundsByUser(user);
+            if(funds == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Funds not found");
+            }
+
+            List<FundInfoForCRUDDTO> fundDTOList = new ArrayList<FundInfoForCRUDDTO>();
+            for (Fund fund : funds) {
+                FundInfoForCRUDDTO fundDto = new FundInfoForCRUDDTO();
+                fundDto.setName(fund.getFundName());
+                fundDto.setSessionId(fund.getSessionId());
+                fundDto.setGoal(fund.getMoneyPerKid());
+                fundDto.setDescription(fundDto.getDescription());
+                fundDto.setStartDate(fundDto.getStartDate());
+                fundDto.setEndDate(fundDto.getEndDate());
+                fundDto.setClassSessionId(fund.getClassId().getClassName());
+                fundDto.setPhoto(fund.getPhoto());
+
+                fundDTOList.add(fundDto);
+            }
+
+            return ResponseEntity.ok(fundDTOList);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/deactive/fund/{sessionId}")
     public ResponseEntity<?> deativeFund(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
         try {
@@ -288,6 +323,7 @@ public class RaportController {
     public ResponseEntity<?> resignFund(@RequestHeader("Authorization") String token, @PathVariable String sessionId) {
         try {
             Claims claims = JwtTokenUtil.verifyToken(token);
+            System.out.println(sessionId);
             Fund fund = fundService.getFundBySessionId(sessionId);
             if(fund == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fund not found");

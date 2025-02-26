@@ -1,6 +1,7 @@
 "use client";
 
-import { getAllMyFunds, getBetterAllMyFunds } from "@/connection/fundAPI";
+import RouterButton from "@/components/routerButton";
+import { deactivateFund, getAllMyFunds, getBetterAllMyFunds, resignFromFund } from "@/connection/fundAPI";
 import { FundExtendedInfo } from "@/data/interfacesUser";
 import { useEffect, useState } from "react";
 
@@ -17,14 +18,12 @@ const FundManagerPage = () => {
         fetchAllMyFunds();
     }, []);
 
-    const handleResign = (sessionId: string) => {
-        console.log(`Resigning from fund: ${sessionId}`);
-        // Tutaj dodaj logikę do rezygnacji
+    const handleResign =  async(sessionId: string) => {
+        await resignFromFund(sessionId);
     };
 
-    const handleDeactivate = (sessionId: string) => {
-        console.log(`Deactivating fund: ${sessionId}`);
-        // Tutaj dodaj logikę do dezaktywacji
+    const handleDeactivate = async (sessionId: string) => {
+        await deactivateFund(sessionId);
     };
 
     if (allMyFunds.length === 0) {
@@ -51,7 +50,7 @@ const FundManagerPage = () => {
                             <td className="border border-gray-300 px-4 py-2">{fund.startDate || "N/A"}</td>
                             <td className="border border-gray-300 px-4 py-2">{fund.endDate || "N/A"}</td>
                             <td className="border border-gray-300 px-4 py-2">{fund.goal}</td>
-                            <td className="border border-gray-300 px-4 py-2">{fund.description}</td>
+                            <td className="border border-gray-300 px-4 py-2">{fund.description || "N/A"}</td>
                             <td className="border border-gray-300 px-4 py-2">
                                 <button 
                                     className="bg-red-500 text-white px-3 py-1 rounded-md mr-2 hover:bg-red-600"
@@ -65,6 +64,7 @@ const FundManagerPage = () => {
                                 >
                                     Deactivate
                                 </button>
+                                <RouterButton page={`fund-page/edit/${fund.sessionId}`} buttonString="Przelewy" color="bg-light_blue" width="w-[200px]" height="h-[100px]"/>
                             </td>
                         </tr>
                     ))}
